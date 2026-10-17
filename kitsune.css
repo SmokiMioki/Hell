@@ -1,0 +1,81 @@
+/* ---------- кицунэ: маска ---------- */
+.mask{
+  position:absolute;left:clamp(14px,7vw,110px);top:20vh;width:clamp(110px,15vw,220px);height:auto;
+  opacity:.24;cursor:pointer;z-index:1;transition:opacity .6s,transform .6s,filter .6s;
+  filter:drop-shadow(0 0 22px rgba(242,58,82,.35));
+  animation:mask-float 7s ease-in-out infinite alternate;
+}
+.mask:hover{opacity:.8;transform:rotate(-2deg) scale(1.04);filter:drop-shadow(0 0 30px rgba(130,200,255,.45))}
+@keyframes mask-float{from{translate:0 0}to{translate:0 -10px}}
+.intro-on .mask{opacity:0}
+.m-face{fill:#efe3d2;stroke:var(--crimson);stroke-width:3;stroke-linejoin:round}
+.m-ear{fill:var(--crimson);opacity:.85}
+.m-mark{fill:none;stroke:var(--crimson);stroke-width:5;stroke-linecap:round}
+.m-eye{fill:#1a0f14;transition:fill .4s,filter .4s}
+.m-nose{fill:#1a0f14}
+.mask:hover .m-eye{fill:#a8e0ff;filter:drop-shadow(0 0 5px #6fb7ff)}
+.hero-core{position:relative;z-index:2}
+
+/* ---------- лисьи огни (кицунэ-би) ---------- */
+.foxfire-layer{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.foxfire{
+  position:absolute;border-radius:50% 50% 50% 50% / 68% 68% 32% 32%;
+  background:radial-gradient(ellipse at 50% 70%,#e6f7ff 0,#8fd0ff 35%,rgba(90,150,255,.35) 65%,transparent 80%);
+  box-shadow:0 0 18px 4px rgba(120,190,255,.45);
+  opacity:.75;
+  animation:fdrift 12s ease-in-out infinite alternate, fflick 1.6s ease-in-out infinite alternate;
+}
+@keyframes fdrift{
+  0%{transform:translate(0,0)}
+  33%{transform:translate(40px,-60px)}
+  66%{transform:translate(-30px,-110px)}
+  100%{transform:translate(25px,-170px)}
+}
+@keyframes fflick{from{opacity:.35;scale:.85}to{opacity:.9;scale:1.1}}
+.fire-burst{
+  position:fixed;z-index:60;width:14px;height:19px;margin:-9px 0 0 -7px;pointer-events:none;
+  border-radius:50% 50% 50% 50% / 68% 68% 32% 32%;
+  background:radial-gradient(ellipse at 50% 70%,#fff 0,#8fd0ff 40%,transparent 80%);
+  box-shadow:0 0 14px 3px rgba(120,190,255,.6);
+}
+[data-theme="light"] .foxfire{
+  background:radial-gradient(ellipse at 50% 70%,#cfe8ff 0,#5f9bf0 40%,rgba(60,110,220,.3) 65%,transparent 80%);
+  box-shadow:0 0 14px 3px rgba(80,140,230,.4);opacity:.6;
+}
+[data-theme="light"] .mask{filter:drop-shadow(0 0 14px rgba(163,15,28,.25))}
+[data-theme="light"] .m-face{fill:#fffaf0}
+
+/* ---------- ушки над строкой поиска ---------- */
+.ears{position:absolute;left:50%;top:-34px;width:300px;height:40px;margin-left:-150px;pointer-events:none;overflow:visible}
+.e-o{fill:#2b1220;stroke:var(--crimson);stroke-width:2;stroke-linejoin:round}
+.e-i{fill:var(--crimson);opacity:.75}
+.ear-l,.ear-r{transform-box:fill-box;transform-origin:50% 100%;transition:scale .4s}
+.ear-l{animation:twitch 7s infinite}
+.ear-r{animation:twitch 7s 2.4s infinite}
+@keyframes twitch{
+  0%,88%,100%{rotate:0deg}
+  91%{rotate:-8deg}
+  94%{rotate:4deg}
+  97%{rotate:-2deg}
+}
+.gate:focus-within .ear-l,.gate:focus-within .ear-r{animation:none;scale:1 1.14}
+
+/* ---------- тории-разделители ---------- */
+.guide::before,.about::before{
+  content:"";display:block;width:60px;height:44px;margin:0 auto 44px;opacity:.85;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 44'%3E%3Cpath d='M2 8Q30 2 58 8L56 14Q30 9 4 14Z M10 18H50V23H10Z M14 14V42H20V14Z M40 14V42H46V14Z' fill='%23f23a52'/%3E%3C/svg%3E") center/contain no-repeat;
+  filter:drop-shadow(0 0 8px rgba(242,58,82,.6));
+}
+.about::before{margin-left:0}
+
+.fox-note{color:var(--ash);font-style:italic}
+.fox-note b{color:#8fd0ff;font-weight:400;text-shadow:0 0 10px rgba(120,190,255,.7)}
+[data-theme="light"] .fox-note b{color:#3d74c9;text-shadow:none}
+
+@media (max-width:900px){
+  .mask{width:84px;top:11vh;left:12px;opacity:.2}
+}
+@media (prefers-reduced-motion:reduce){
+  .foxfire-layer{display:none}
+  .mask,.ear-l,.ear-r{animation:none}
+}
