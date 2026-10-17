@@ -3,126 +3,111 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#09070a">
-  <meta name="description" content="Тёмный архив расширений для SillyTavern.">
-  <title>地獄通信 — архив Tavern</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Врата расширений — каталог для SillyTavern</title>
+  <meta name="description" content="Каталог расширений для SillyTavern. Впиши имя — и найдёшь то, что искал.">
+  <meta name="theme-color" content="#07050a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=EB+Garamond:wght@400;500&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="paper-noise" aria-hidden="true"></div>
-  <div class="red-thread" aria-hidden="true"></div>
-  <header class="site-header">
-    <a class="wordmark" href="#"><span class="seal">地</span><span><b>地獄通信</b><small>HELL CORRESPONDENCE / TAVERN ARCHIVE</small></span></a>
-    <nav id="nav">
-      <a href="#archive">Архив</a><a href="#collections">Подборки</a><a href="#about">О проекте</a>
+  <canvas id="petals" aria-hidden="true"></canvas>
+  <div class="fog" aria-hidden="true"></div>
+  <div class="thread" aria-hidden="true"></div>
+
+  <header class="top">
+    <a class="logo" href="#top"><span class="jp">拡張</span> Врата</a>
+    <nav>
+      <a href="#catalog">Каталог</a>
+      <a href="#guide">Как установить</a>
+      <a href="#about">О месте</a>
     </nav>
-    <div class="header-actions">
-      <button id="themeToggle" class="theme-toggle" title="Сменить тон оформления" aria-label="Сменить тон оформления">☾</button>
-      <a class="github-link" href="https://github.com/" target="_blank" rel="noreferrer">GITHUB ↗</a>
-      <button id="menuToggle" class="menu-toggle" aria-label="Открыть меню">☰</button>
-    </div>
   </header>
 
-  <main>
+  <main id="top">
+    <!-- HERO -->
     <section class="hero">
-      <div class="hero-copy">
-        <p class="overline"><span></span> 午前零時 — ПОЛНОЧНЫЙ АРХИВ</p>
-        <p class="japanese-vertical" aria-hidden="true">あなたの怨み、晴らします。</p>
-        <h1>Если есть то,<br>что ты <em>ищешь…</em></h1>
-        <p class="intro">В полночь открывается архив. Здесь собраны расширения, инструменты и лорбуки, которые меняют твою SillyTavern — тихо, точно, по твоим правилам.</p>
-        <div class="hero-buttons"><a class="red-button" href="#archive">Открыть архив <span>↘</span></a><a class="under-link" href="#about">Что скрывает архив <span>→</span></a></div>
-        <div class="hero-foot"><span><i class="live-dot"></i> АРХИВ ДОСТУПЕН</span><span>記録番号 — 0001</span></div>
+      <div class="vertical jp" aria-hidden="true">拡張通信</div>
+
+      <div class="hero-core">
+        <p class="clock" id="clock" aria-hidden="true">00:00</p>
+        <h1>Врата расширений</h1>
+        <p class="lead">Когда наступит полночь, впиши имя расширения,<br>которое ищешь…</p>
+
+        <form class="gate" id="gate" role="search" autocomplete="off">
+          <label for="q" class="sr">Поиск расширения</label>
+          <input id="q" type="search" placeholder="впиши имя" spellcheck="false">
+          <button type="submit" aria-label="Искать">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+        </form>
+        <p class="hint">нажми Enter — и нить натянется</p>
       </div>
-      <div class="hero-visual" aria-label="Декоративная композиция из красной нити, луны и бумажного талисмана">
-        <div class="moon-disc"></div>
-        <div class="moon-shadow"></div>
-        <div class="torii"><i></i><i></i><i></i><i></i></div>
-        <div class="paper-charm"><span class="charm-top">怨</span><span class="charm-kanji">地獄</span><span class="charm-bottom">通信</span></div>
-        <div class="thread-loop"></div>
-        <span class="visual-note note-left">午夜<br><small>полночь</small></span>
-        <span class="visual-note note-right">NO. 001 / ARCHIVE</span>
-        <span class="visual-coordinates">35° 41′ 22″ N — 139° 41′ 30″ E</span>
-      </div>
-      <div class="hero-bottom"><span>SCROLL TO ENTER</span><span class="down-mark">↓</span><span>静かな夜に、記録は開く</span></div>
+
+      <a class="scroll" href="#catalog" aria-label="К каталогу"><span></span></a>
     </section>
 
-    <section class="archive-section" id="archive">
-      <div class="section-intro">
-        <div><p class="overline"><span></span> 記録 — ЗАПИСИ</p><h2>Архив <em>желаний.</em></h2></div>
-        <p>Найди нужный инструмент среди записей. Никакого шума — только то, что помогает настроить твою Tavern.</p>
-      </div>
-      <div class="archive-tools">
-        <label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Найти запись..." autocomplete="off"><kbd>Ctrl K</kbd></label>
-        <div class="filter-list" role="group" aria-label="Категории">
-          <button class="filter active" data-filter="all">Все <sup>06</sup></button>
-          <button class="filter" data-filter="ui">Интерфейс</button>
-          <button class="filter" data-filter="lore">Лорбуки</button>
-          <button class="filter" data-filter="tools">Инструменты</button>
-        </div>
-      </div>
-
-      <div class="entries" id="extensionGrid">
-        <article class="entry" data-category="ui" data-name="phone st телефон мобильный интерфейс">
-          <div class="entry-head"><span>記録 001</span><span class="entry-type">UI / MOBILE</span></div><div class="entry-glyph">携</div>
-          <h3>Phone-ST</h3><p>Мобильный интерфейс для тех, кто хочет управлять Tavern с телефона без бесконечной прокрутки.</p>
-          <div class="entry-bottom"><span class="category">ИНТЕРФЕЙС</span><a href="#" class="details" data-detail="Phone-ST">Читать запись <b>↗</b></a></div>
-        </article>
-        <article class="entry" data-category="lore" data-name="lorebook manager лорбук управление">
-          <div class="entry-head"><span>記録 002</span><span class="entry-type">LORE / INDEX</span></div><div class="entry-glyph">書</div>
-          <h3>Lorebook Manager</h3><p>Управление большими коллекциями лорбуков: искать, сортировать и находить нужное быстрее.</p>
-          <div class="entry-bottom"><span class="category">ЛОРБУКИ</span><a href="#" class="details" data-detail="Lorebook Manager">Читать запись <b>↗</b></a></div>
-        </article>
-        <article class="entry" data-category="tools" data-name="prompt toolkit промпты шаблоны">
-          <div class="entry-head"><span>記録 003</span><span class="entry-type">PROMPT / TOOLS</span></div><div class="entry-glyph">言</div>
-          <h3>Prompt Toolkit</h3><p>Храни инструкции и шаблоны в одном месте и переключайся между ними без рутины.</p>
-          <div class="entry-bottom"><span class="category">ИНСТРУМЕНТЫ</span><a href="#" class="details" data-detail="Prompt Toolkit">Читать запись <b>↗</b></a></div>
-        </article>
-        <article class="entry" data-category="ui" data-name="quiet panels панели интерфейс">
-          <div class="entry-head"><span>記録 004</span><span class="entry-type">UI / CUSTOM</span></div><div class="entry-glyph">影</div>
-          <h3>Quiet Panels</h3><p>Спокойные панели, аккуратные интервалы и визуальная иерархия, которая не отвлекает.</p>
-          <div class="entry-bottom"><span class="category">ИНТЕРФЕЙС</span><a href="#" class="details" data-detail="Quiet Panels">Читать запись <b>↗</b></a></div>
-        </article>
-        <article class="entry" data-category="lore" data-name="lorebook presets пресеты подборки">
-          <div class="entry-head"><span>記録 005</span><span class="entry-type">LORE / COLLECTION</span></div><div class="entry-glyph">糸</div>
-          <h3>Lorebook Presets</h3><p>Тематические наборы для разных историй. Выбирай атмосферу, а не десятки файлов вручную.</p>
-          <div class="entry-bottom"><span class="category">ЛОРБУКИ</span><a href="#" class="details" data-detail="Lorebook Presets">Читать запись <b>↗</b></a></div>
-        </article>
-        <article class="entry" data-category="tools" data-name="quick notes заметки блокнот">
-          <div class="entry-head"><span>記録 006</span><span class="entry-type">NOTES / MEMORY</span></div><div class="entry-glyph">墨</div>
-          <h3>Quick Notes</h3><p>Блокнот для идей, деталей персонажей и заметок, которые должны оставаться под рукой.</p>
-          <div class="entry-bottom"><span class="category">ИНСТРУМЕНТЫ</span><a href="#" class="details" data-detail="Quick Notes">Читать запись <b>↗</b></a></div>
-        </article>
-      </div>
-      <div id="emptyState" class="empty-state" hidden>Запись не найдена. Попробуй другой запрос.</div>
-      <div class="archive-count"><span>ЗАПИСЕЙ НА ЭКРАНЕ: <b id="visibleCount">06</b></span><span>すべての記録は仮のものです</span></div>
+    <!-- CATALOG -->
+    <section class="catalog" id="catalog">
+      <header class="section-head">
+        <span class="jp">一覧</span>
+        <h2>Каталог</h2>
+        <p id="count" class="muted"></p>
+      </header>
+      <div class="chips" id="chips" role="group" aria-label="Фильтр по тегам"></div>
+      <div class="grid" id="grid"></div>
+      <p class="empty" id="empty" hidden>Это имя не значится в списке…<br><small>попробуй написать иначе</small></p>
     </section>
 
-    <section class="collections" id="collections">
-      <div class="collection-heading"><p class="overline"><span></span> おすすめ — ПОДБОРКИ</p><h2>Нить приведёт<br><em>к нужному.</em></h2><p>Несколько путей для разных способов пользоваться Tavern.</p></div>
-      <div class="collection-list">
-        <a href="#archive" class="collection"><span class="collection-number">壱</span><span><b>Маленький экран</b><small>Мобильный интерфейс и быстрый доступ</small></span><span class="collection-arrow">↗</span></a>
-        <a href="#archive" class="collection"><span class="collection-number">弐</span><span><b>Память истории</b><small>Лорбуки, пресеты и организации знаний</small></span><span class="collection-arrow">↗</span></a>
-        <a href="#archive" class="collection"><span class="collection-number">参</span><span><b>Тихая настройка</b><small>Инструменты для своего рабочего процесса</small></span><span class="collection-arrow">↗</span></a>
-      </div>
-      <div class="red-thread-decoration" aria-hidden="true"></div>
+    <!-- GUIDE -->
+    <section class="guide" id="guide">
+      <header class="section-head">
+        <span class="jp">手順</span>
+        <h2>Как установить</h2>
+      </header>
+      <ol class="steps">
+        <li>
+          <b>I</b>
+          <h3>Открой SillyTavern</h3>
+          <p>Перейди во вкладку <em>Extensions</em> (значок с кубиками).</p>
+        </li>
+        <li>
+          <b>II</b>
+          <h3>Install extension</h3>
+          <p>Нажми <em>Install extension</em> вверху панели расширений.</p>
+        </li>
+        <li>
+          <b>III</b>
+          <h3>Вставь ссылку</h3>
+          <p>Скопируй ссылку на репозиторий с карточки и вставь в окно установки.</p>
+        </li>
+      </ol>
     </section>
 
+    <!-- ABOUT -->
     <section class="about" id="about">
-      <div class="about-seal">地<br><small>獄通信</small></div>
-      <div class="about-text"><p class="overline"><span></span> この場所について — О ПРОЕКТЕ</p><h2>Не проклятие.<br><em>Твоя настройка.</em></h2><p>Фанатский каталог расширений SillyTavern, оформленный как загадочная полночная переписка из мира «Адской девочки». Здесь нет отправки настоящих сообщений в ад — только удобная библиотека инструментов для твоей Tavern.</p></div>
-      <aside class="disclaimer"><span>※ ВАЖНО</span><p>Карточки сейчас демонстрационные. Перед публикацией замени их реальными расширениями, описаниями, ссылками на репозитории и инструкциями.</p></aside>
+      <header class="section-head">
+        <span class="jp">序</span>
+        <h2>О месте</h2>
+      </header>
+      <p>Это тихий уголок для расширений SillyTavern. Здесь нет суеты — только список того, что можно подключить к своим историям.</p>
+      <p class="muted">Неофициальный фан-проект: вдохновлён эстетикой аниме, не связан с правообладателями и не использует их материалы.</p>
     </section>
   </main>
 
-  <footer><a class="wordmark" href="#"><span class="seal">地</span><span><b>地獄通信</b><small>THE TAVERN ARCHIVE</small></span></a><span>静かな夜に、記録は開く</span><span>FAN-MADE CONCEPT · 2026</span></footer>
+  <footer class="foot">
+    <span class="jp">終</span>
+    <p>© <span id="year"></span> · сделано с любовью к мрачным вещам</p>
+  </footer>
 
-  <dialog id="detailDialog" class="detail-dialog">
-    <button id="dialogClose" class="dialog-close" aria-label="Закрыть">×</button>
-    <p class="overline"><span></span> 記録 — ЗАПИСЬ АРХИВА</p><small class="dialog-id">HELL CORRESPONDENCE / ENTRY</small>
-    <h2 id="dialogTitle">Название расширения</h2><p id="dialogText"></p>
-    <div class="dialog-note">Добавь сюда реальную ссылку на GitHub, инструкцию установки и информацию о совместимости.</div>
-    <a class="red-button" href="https://github.com/" target="_blank" rel="noreferrer">Открыть GitHub <span>↗</span></a>
+  <!-- MODAL -->
+  <dialog id="modal">
+    <form method="dialog"><button class="x" aria-label="Закрыть">×</button></form>
+    <div id="modal-body"></div>
   </dialog>
+
+  <script src="data.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
