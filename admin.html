@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Печать · управление каталогом</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=EB+Garamond:wght@400;500&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="fog" aria-hidden="true"></div>
+
+  <header class="top">
+    <a class="logo" href="./"><span class="jp">拡張</span> Врата</a>
+    <nav><a href="./">← На сайт</a></nav>
+  </header>
+
+  <main class="admin">
+    <header class="section-head">
+      <span class="jp">印</span>
+      <h2>Печать</h2>
+      <p class="muted">управление каталогом</p>
+    </header>
+
+    <p id="status" class="status" role="status" hidden></p>
+
+    <!-- 1. ПОДКЛЮЧЕНИЕ -->
+    <section class="panel" id="p-connect">
+      <h3>1 · Подключение</h3>
+      <div class="two">
+        <label class="field">Аккаунт GitHub<input id="owner" placeholder="username"></label>
+        <label class="field">Репозиторий сайта<input id="repo" placeholder="extensions"></label>
+      </div>
+      <div class="two">
+        <label class="field">Ветка<input id="branch" value="main"></label>
+        <label class="field">Токен доступа<input id="token" type="password" placeholder="github_pat_…" autocomplete="off"></label>
+      </div>
+      <label class="check"><input type="checkbox" id="remember" checked> запомнить на этом устройстве</label>
+      <div class="row"><button class="btn" id="connect">Подключиться</button></div>
+
+      <details>
+        <summary>Где взять токен</summary>
+        <ol>
+          <li>Открой <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">создание токена</a>.</li>
+          <li>Repository access → <b>Only select repositories</b> → выбери репозиторий сайта.</li>
+          <li>Permissions → Repository permissions → <b>Contents: Read and write</b>.</li>
+          <li>Generate token, скопируй и вставь сюда.</li>
+        </ol>
+        <p class="small">Токен хранится только в твоём браузере и отправляется только на api.github.com. Без него эта страница ничего не умеет, так что посторонние ничего не изменят.</p>
+      </details>
+    </section>
+
+    <!-- 2. ДОБАВИТЬ -->
+    <section class="panel" id="p-add" hidden>
+      <h3 id="form-title">2 · Добавить расширение</h3>
+
+      <div class="fetchrow">
+        <input id="url" placeholder="https://github.com/автор/репозиторий">
+        <button class="btn ghost" id="pull" type="button">Подтянуть</button>
+      </div>
+      <p class="small">Вставь ссылку: название, автор, описание и теги заполнятся сами. Всё можно поправить.</p>
+
+      <form id="form" autocomplete="off">
+        <div class="two">
+          <label class="field">Название<input id="f-name" required></label>
+          <label class="field">Автор<input id="f-by"></label>
+        </div>
+        <label class="field">Описание<textarea id="f-desc" rows="3"></textarea></label>
+        <label class="field">Теги через запятую<input id="f-tags" placeholder="Память, Утилиты"></label>
+        <label class="field">Ссылка на репозиторий<input id="f-repo" required placeholder="https://github.com/…"></label>
+        <div class="row">
+          <button class="btn" id="submit" type="submit">Отправить в каталог</button>
+          <button class="btn ghost" id="cancel" type="button" hidden>Отмена</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- 3. СПИСОК -->
+    <section class="panel" id="p-list" hidden>
+      <h3>3 · Уже в каталоге <span id="n" class="muted"></span></h3>
+      <ul class="list" id="list"></ul>
+      <p class="small">После сохранения сайт обновляется примерно через минуту.</p>
+    </section>
+  </main>
+
+  <script src="admin.js"></script>
+</body>
+</html>

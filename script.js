@@ -1,6 +1,6 @@
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
-  const data = window.EXTENSIONS || [];
+  let data = [];
   const state = { q: '', tag: 'all' };
   const kanji = ['一','二','三','四','五','六','七','八','九','十'];
   const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -10,7 +10,7 @@
   const modal = $('#modal'), body = $('#modal-body');
 
   /* ---------- фильтры ---------- */
-  const tags = [...new Set(data.flatMap(e => e.tags || []))];
+  let tags = [];
   function renderChips() {
     chips.innerHTML = ['all', ...tags].map(t =>
       `<button class="chip${state.tag === t ? ' on' : ''}" data-tag="${esc(t)}">${t === 'all' ? 'Все' : esc(t)}</button>`
@@ -120,5 +120,17 @@
     })(0);
   }
 
-  renderChips(); renderCards();
+  fetch('extensions.json', { cache: 'no-store' })
+    .then(r => { if (!r.ok) throw 0; return r.json(); })
+    .then(j => {
+      data = Array.isArray(j) ? j : [];
+      tags = [...new Set(data.flatMap(e => e.tags || []))];
+      if (!data.length) empty.innerHTML = 'Здесь пока тихо…<br><small>расширения появятся позже</small>';
+      renderChips(); renderCards();
+      if (!data.length) empty.hidden = false;
+    })
+    .catch(() => {
+      empty.innerHTML = 'Не удалось открыть список…<br><small>на сайте через GitHub Pages всё заработает</small>';
+      empty.hidden = false;
+    });
 })();
