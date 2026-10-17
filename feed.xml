@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0"><channel>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>
 <title>Врата расширений</title>
-<link>https://example.github.io/</link>
+<link>https://smokimioki.github.io/Hell/</link>
 <description>Новые расширения для SillyTavern</description>
 <language>ru</language>
+<atom:link href="https://smokimioki.github.io/Hell/feed.xml" rel="self" type="application/rss+xml"/>
+<lastBuildDate>Sat, 17 Oct 2026 03:10:58 GMT</lastBuildDate>
+<item><title>Phone ST</title><link>https://smokimioki.github.io/Hell/#phone-st</link><guid isPermaLink="false">phone-st-2026-10-17T03:10:55.564Z</guid><pubDate>Sat, 17 Oct 2026 03:10:55 GMT</pubDate><description>Телефон для таверны с кучей функционала.</description></item>
 </channel></rss>
