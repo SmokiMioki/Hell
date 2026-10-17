@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "name": "Phone ST",
+    "by": "Delidgi-meow",
+    "desc": "Телефон для таверны с кучей функционала.",
+    "tags": [
+      "Телефон",
+      "смс",
+      "звонки",
+      "банк"
+    ],
+    "repo": "https://github.com/Delidgi-meow/Phone-ST",
+    "added": "2026-10-17T03:10:55.564Z"
+  }
+]
