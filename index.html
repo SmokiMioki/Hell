@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>地獄通信 — Jigoku Tsushin</title>
+<style>
+:root{color-scheme:dark;--red:#a60000}*{box-sizing:border-box}html,body{min-height:100%;margin:0}body{background:#000;color:#b60000;font-family:Georgia,'Times New Roman',serif;overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,#26000044,transparent 58%);opacity:.7}.page{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:32px 18px}.portal{text-align:center;width:min(100%,440px);position:relative;animation:appear 2s ease both}.jp{font-family:'Yu Mincho','Hiragino Mincho ProN','Noto Serif CJK JP',serif;font-weight:400;font-size:clamp(44px,11vw,72px);letter-spacing:.14em;text-shadow:0 0 20px #a0000055;margin:0 0 8px}.roman{font-size:12px;letter-spacing:.4em;color:#670000;margin:0 0 70px}.prompt{font-size:15px;letter-spacing:.08em;color:#990000;margin-bottom:20px}.entry{display:flex;flex-direction:column;align-items:center;gap:22px}.entry input{width:min(100%,340px);height:42px;border:1px solid #640000;background:#090000;color:#d3a4a4;text-align:center;font:16px Georgia,serif;outline:none;border-radius:0;transition:border-color .3s,box-shadow .3s}.entry input:focus{border-color:#b00000;box-shadow:0 0 15px #74000044}.entry input::placeholder{color:#6d4848}.entry button,.again{background:#100000;color:#bc0000;border:1px solid #770000;padding:11px 36px;letter-spacing:.2em;font:15px Georgia,serif;cursor:pointer;transition:.3s}.entry button:hover,.again:hover{background:#450000;color:#f44;box-shadow:0 0 20px #9e000066}.note{margin-top:54px;font-size:12px;line-height:1.9;color:#653535}.note strong{color:#a60000;font-weight:normal}.switch{display:inline-block;margin-top:20px;color:#5b3030;font-size:11px;cursor:pointer;text-decoration:underline;text-underline-offset:4px;background:none;border:0}.status{min-height:25px;color:#9c4747;font-size:13px;margin-top:18px}.veil{position:fixed;inset:0;background:#000;display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:25px;z-index:10}.veil.show{display:flex;animation:appear 2s both}.veil .message{font-family:'Yu Mincho',serif;color:#c00000;font-size:clamp(20px,5vw,30px);letter-spacing:.1em;line-height:2;animation:pulse 3s infinite}.veil .sub{color:#7b3434;font-size:13px;margin:20px 0 45px}.again{font-size:12px}@keyframes appear{from{opacity:0}to{opacity:1}}@keyframes pulse{50%{text-shadow:0 0 30px #f00000;opacity:.7}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="page"><section class="portal" aria-label="Адская переписка">
+<h1 class="jp" lang="ja">地獄通信</h1><p class="roman">JIGOKU TSUSHIN</p>
+<p class="prompt">Введите имя того, кто вас мучает.</p>
+<form class="entry" id="form"><input id="name" maxlength="70" required autocomplete="off" aria-label="Имя" placeholder="Имя"/><button type="submit">送信する</button></form>
+<p class="status" id="status" aria-live="polite"></p>
+<p class="note">Этот сайт открывает свои двери <strong>только в полночь</strong>.<br>Это фанатская художественная реконструкция.</p>
+<button class="switch" id="mode" type="button">Демо-режим: выключен</button>
+</section></main>
+<section class="veil" id="veil" role="dialog" aria-modal="true" aria-label="Ответ адской переписки" aria-hidden="true"><div class="message" lang="ja">あなたの怨み、晴らします。</div><div class="sub">Ваша просьба услышана…</div><button class="again" id="again">Вернуться</button></section>
+<script>
+(()=>{'use strict';const form=document.querySelector('#form'),name=document.querySelector('#name'),status=document.querySelector('#status'),mode=document.querySelector('#mode'),veil=document.querySelector('#veil'),again=document.querySelector('#again');let demo=false;mode.addEventListener('click',()=>{demo=!demo;mode.textContent='Демо-режим: '+(demo?'включён':'выключен');status.textContent=''});form.addEventListener('submit',e=>{e.preventDefault();if(!name.value.trim()){status.textContent='Введите имя.';return}const now=new Date();if(!demo){if(now.getHours()!==0){status.textContent='Адская переписка доступна только с 00:00 до 00:59.';return}}status.textContent='';veil.classList.add('show');veil.setAttribute('aria-hidden','false');again.focus()});function close(){veil.classList.remove('show');veil.setAttribute('aria-hidden','true');name.value='';name.focus()}again.addEventListener('click',close);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&veil.classList.contains('show'))close()})})();
+</script>
+</body></html>
