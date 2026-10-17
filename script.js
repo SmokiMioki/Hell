@@ -89,14 +89,18 @@
   }
   function renderCards() {
     const list = data.filter(matches);
-    grid.innerHTML = list.map((e, i) => `
-      <article class="card" tabindex="0" data-i="${data.indexOf(e)}" style="animation-delay:${i * 70}ms">
+    grid.innerHTML = list.map((e, i) => {
+      const im = e.images || [];
+      return `
+      <article class="card${im.length ? ' has-shot' : ''}" tabindex="0" data-i="${data.indexOf(e)}" style="animation-delay:${i * 70}ms">
+        ${im.length ? `<div class="shot"><img src="${esc(im[0])}" alt="" loading="lazy" decoding="async">${im.length > 1 ? `<span class="cnt">${im.length}</span>` : ''}</div>` : ''}
         <span class="num jp">${kanji[i] || i + 1}</span>
         <h3>${esc(e.name)}</h3>
         <div class="by">${esc(e.by || '')}</div>
         <p>${esc(e.desc || '')}</p>
         <div class="tags">${(e.tags || []).map(t => `<span>${esc(t)}</span>`).join('')}</div>
-      </article>`).join('');
+      </article>`;
+    }).join('');
     empty.hidden = list.length > 0;
     count.textContent = list.length ? `найдено: ${list.length}` : '';
     grid.appendChild(linkSvg);
@@ -106,7 +110,14 @@
   /* ---------- модалка ---------- */
   function openCard(i) {
     const e = data[i]; if (!e) return;
+    const im = e.images || [];
+    const gal = im.length ? `
+      <div class="gal">
+        <button class="gal-main" type="button" aria-label="Увеличить"><img id="gal-img" src="${esc(im[0])}" alt="${esc(e.name)}"></button>
+        ${im.length > 1 ? `<div class="gal-strip">${im.map((p, k) => `<button class="gal-t${k ? '' : ' on'}" type="button" data-k="${k}" aria-label="Картинка ${k + 1}"><img src="${esc(p)}" alt="" loading="lazy"></button>`).join('')}</div>` : ''}
+      </div>` : '';
     body.innerHTML = `
+      ${gal}
       <h3>${esc(e.name)}</h3>
       <div class="by">${esc(e.by || '')}</div>
       <p>${esc(e.desc || '')}</p>
@@ -121,6 +132,16 @@
         <button class="btn ghost" id="share" type="button">Ссылка на карточку</button>
       </div>`;
     const anchor = '#' + encodeURIComponent(slug(e.name));
+    if (im.length) {
+      let cur = 0;
+      $('.gal-main', body).addEventListener('click', () => openLightbox(im, cur));
+      const strip = $('.gal-strip', body);
+      if (strip) strip.addEventListener('click', ev => {
+        const t = ev.target.closest('.gal-t'); if (!t) return;
+        cur = +t.dataset.k; $('#gal-img').src = im[cur];
+        body.querySelectorAll('.gal-t').forEach(b => b.classList.toggle('on', b === t));
+      });
+    }
     if (!modal.open) modal.showModal();
     history.replaceState(null, '', location.pathname + location.search + anchor);
     $('#share').addEventListener('click', ev => copyText(location.origin + location.pathname + anchor, ev.target, 'Ссылка на карточку'));
@@ -131,6 +152,30 @@
       setTimeout(() => ev.target.textContent = 'Копировать', 1800);
     });
   }
+  /* ---------- лайтбокс ---------- */
+  const lb = document.createElement('dialog');
+  lb.id = 'lightbox';
+  lb.innerHTML = '<button class="x" type="button" aria-label="Закрыть">×</button><button class="lb-nav prev" type="button" aria-label="Назад">‹</button><img alt=""><button class="lb-nav next" type="button" aria-label="Вперёд">›</button><span class="lb-n"></span>';
+  document.body.appendChild(lb);
+  let lbList = [], lbI = 0;
+  function lbShow(k) {
+    lbI = (k + lbList.length) % lbList.length;
+    $('img', lb).src = lbList[lbI];
+    $('.lb-n', lb).textContent = lbList.length > 1 ? `${lbI + 1} / ${lbList.length}` : '';
+  }
+  function openLightbox(arr, k) {
+    lbList = arr; lb.classList.toggle('single', arr.length < 2);
+    lbShow(k); lb.showModal();
+  }
+  lb.addEventListener('click', e => {
+    if (e.target.closest('.x') || e.target === lb) lb.close();
+    else if (e.target.closest('.prev')) lbShow(lbI - 1);
+    else if (e.target.closest('.next')) lbShow(lbI + 1);
+  });
+  lb.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') lbShow(lbI - 1); else if (e.key === 'ArrowRight') lbShow(lbI + 1);
+  });
+
   /* ---------- красная нить к соседней карточке ---------- */
   const NS = 'http://www.w3.org/2000/svg';
   const linkSvg = document.createElementNS(NS, 'svg');

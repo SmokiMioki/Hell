@@ -234,3 +234,32 @@ dialog[open]{animation:rise .4s}
   *,*::before,*::after{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
 }
+
+/* картинки расширений */
+.card .shot{position:relative;margin:-30px -26px 20px;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid var(--line);background:rgba(0,0,0,.4)}
+.card .shot img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.card:hover .shot img,.card:focus-visible .shot img{transform:scale(1.05)}
+.card.has-shot::before{z-index:2}
+.card.has-shot .num.jp{z-index:2;-webkit-text-stroke-color:rgba(255,255,255,.75);text-shadow:0 0 10px rgba(0,0,0,.7)}
+.card .cnt{position:absolute;left:10px;bottom:10px;padding:2px 9px;font-size:.75rem;letter-spacing:.12em;background:rgba(21,15,26,.8);border:1px solid var(--line);color:var(--bone)}
+
+.gal{margin:-6px 0 22px}
+.gal-main{display:block;width:100%;aspect-ratio:16/10;padding:0;overflow:hidden;border:1px solid var(--line);background:rgba(0,0,0,.45);cursor:zoom-in}
+.gal-main img{display:block;width:100%;height:100%;object-fit:contain}
+.gal-strip{display:flex;gap:8px;margin-top:8px;padding-bottom:4px;overflow-x:auto}
+.gal-t{flex:0 0 78px;aspect-ratio:16/10;padding:0;overflow:hidden;border:1px solid var(--line);background:none;opacity:.6;cursor:pointer;transition:.3s}
+.gal-t img{display:block;width:100%;height:100%;object-fit:cover}
+.gal-t:hover{opacity:1}
+.gal-t.on{opacity:1;border-color:var(--crimson);box-shadow:0 0 12px rgba(224,36,58,.4)}
+
+#lightbox{width:auto;max-width:96vw;padding:0;overflow:hidden;background:#0b070d;border:1px solid var(--line);box-shadow:0 0 80px rgba(0,0,0,.8)}
+#lightbox::backdrop{background:rgba(0,0,0,.92)}
+#lightbox img{display:block;max-width:96vw;max-height:88vh;margin:0 auto;object-fit:contain}
+#lightbox .x{z-index:2;color:#fff;text-shadow:0 0 8px #000}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:44px;height:64px;border:0;background:rgba(0,0,0,.45);color:#fff;font-size:2.2rem;line-height:1;cursor:pointer;transition:background .3s}
+.lb-nav:hover{background:var(--blood)}
+.lb-nav.prev{left:0}
+.lb-nav.next{right:0}
+#lightbox.single .lb-nav{display:none}
+.lb-n{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);padding:2px 10px;font-size:.8rem;letter-spacing:.14em;background:rgba(0,0,0,.6);color:#fff}
+.lb-n:empty{display:none}

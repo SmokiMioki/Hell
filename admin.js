@@ -52,6 +52,88 @@ ${items.map(e => `<item><title>${xesc(e.name)}</title><link>${xesc(b + '#' + enc
   async function feedSave() { try { await saveFeed(); return true; } catch { return false; } }
   /*FEED-END*/
 
+  /* ---------- картинки ---------- */
+  const MAX_IMG = 8;
+  let pics = []; // { path, preview } — уже в репо; { blob, preview } — ещё не загружена
+
+  const fileApi = p => `/repos/${cfg.owner}/${cfg.repo}/contents/${p.split('/').map(encodeURIComponent).join('/')}`;
+  const blobB64 = b => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.onerror = rej; r.readAsDataURL(b); });
+
+  async function shrink(file) {
+    let bmp;
+    try { bmp = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+    catch { bmp = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = URL.createObjectURL(file); }); }
+    const w0 = bmp.width || bmp.naturalWidth, h0 = bmp.height || bmp.naturalHeight;
+    const k = Math.min(1, 1280 / Math.max(w0, h0));
+    const c = document.createElement('canvas');
+    c.width = Math.round(w0 * k); c.height = Math.round(h0 * k);
+    c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+    const toBlob = (t, q) => new Promise(r => c.toBlob(r, t, q));
+    let b = await toBlob('image/webp', .82);
+    if (!b || b.type !== 'image/webp') b = await toBlob('image/jpeg', .85);
+    return b;
+  }
+
+  async function putImage(blob, name, k) {
+    const ext = blob.type === 'image/webp' ? 'webp' : blob.type === 'image/jpeg' ? 'jpg' : 'png';
+    const stem = String(name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'ext';
+    const path = `img/${stem}-${Date.now().toString(36)}${k}.${ext}`;
+    const r = await api(fileApi(path), { method: 'PUT', body: JSON.stringify({ message: 'Add image: ' + name, content: await blobB64(blob), branch: cfg.branch }) });
+    if (!r.ok) {
+      let m = ''; try { m = (await r.json()).message; } catch {}
+      throw new Error('Картинка не загрузилась: ' + (m || r.status));
+    }
+    return { path, sha: (await r.json()).content.sha };
+  }
+
+  async function rmFile(path, sha) {
+    if (!/^img\/[\w.-]+$/.test(path)) return;
+    try {
+      if (!sha) {
+        const g = await api(`${fileApi(path)}?ref=${encodeURIComponent(cfg.branch)}&t=${Date.now()}`);
+        if (!g.ok) return;
+        sha = (await g.json()).sha;
+      }
+      await api(fileApi(path), { method: 'DELETE', body: JSON.stringify({ message: 'Remove image', sha, branch: cfg.branch }) });
+    } catch {}
+  }
+
+  function renderThumbs() {
+    $('#thumbs').innerHTML = pics.map((p, i) => `<div class="th${i ? '' : ' first'}" data-i="${i}"><img src="${esc(p.preview)}" alt=""><button class="rm" type="button" data-i="${i}" aria-label="Убрать">×</button></div>`).join('');
+  }
+
+  $('#add-img').addEventListener('click', () => $('#f-files').click());
+  $('#f-files').addEventListener('change', async e => {
+    const files = [...e.target.files].filter(f => f.type.startsWith('image/'));
+    e.target.value = '';
+    if (!files.length) return;
+    const room = MAX_IMG - pics.length;
+    if (room <= 0) return status(`Максимум ${MAX_IMG} картинок.`, 'err');
+    busy(true); status('Сжимаю…');
+    try {
+      for (const f of files.slice(0, room)) {
+        const blob = await shrink(f);
+        pics.push({ blob, preview: URL.createObjectURL(blob) });
+      }
+      renderThumbs();
+      if (files.length > room) status(`Влезло только ${room}, остальные пропущены.`, 'err'); else status('');
+    } catch { status('Не смог прочитать картинку.', 'err'); }
+    busy(false);
+  });
+
+  $('#thumbs').addEventListener('click', e => {
+    const rm = e.target.closest('.rm');
+    if (rm) {
+      const [p] = pics.splice(+rm.dataset.i, 1);
+      if (p.blob) URL.revokeObjectURL(p.preview);
+      renderThumbs(); return;
+    }
+    const th = e.target.closest('.th');
+    if (!th || th.dataset.i === '0') return;
+    pics.unshift(...pics.splice(+th.dataset.i, 1));
+    renderThumbs();
+  });
+
   /* ---------- автозаполнение полей подключения ---------- */
   try { Object.assign(cfg, JSON.parse(localStorage.getItem(LS) || '{}')); } catch {}
   if (!cfg.owner) {
@@ -136,14 +218,29 @@ ${items.map(e => `<item><title>${xesc(e.name)}</title><link>${xesc(b + '#' + enc
     item.added = (editing >= 0 && list[editing].added) || new Date().toISOString();
     const prev = list.slice();
     const wasEditing = editing;
-    if (editing >= 0) list[editing] = item; else list.push(item);
-    busy(true); status('Сохраняю…');
+    const oldImgs = wasEditing >= 0 ? (list[wasEditing].images || []) : [];
+    const fresh = pics.filter(p => p.blob);
+    busy(true);
     try {
+      /* сначала картинки, потом JSON — чтобы в каталоге не было битых ссылок */
+      let n = 0;
+      for (const p of fresh) {
+        status(`Загружаю картинки ${++n}/${fresh.length}…`);
+        Object.assign(p, await putImage(p.blob, item.name, n));
+      }
+      if (pics.length) item.images = pics.map(p => p.path);
+      status('Сохраняю…');
+      if (wasEditing >= 0) list[wasEditing] = item; else list.push(item);
       await save((wasEditing >= 0 ? 'Update: ' : 'Add: ') + item.name);
       const feedOk = await feedSave();
+      for (const p of oldImgs) if (!(item.images || []).includes(p)) await rmFile(p);
       resetForm(); render();
       status('Сохранено ✓ Сайт обновится через минуту.' + (feedOk ? '' : ' (RSS-ленту обновить не удалось.)'), 'ok');
-    } catch (err) { list = prev; render(); status(err.message, 'err'); }
+    } catch (err) {
+      list = prev; render(); status(err.message, 'err');
+      /* откатываем уже залитые новые картинки, чтобы не копились сироты */
+      for (const p of fresh) if (p.sha) { await rmFile(p.path, p.sha); delete p.path; delete p.sha; }
+    }
     busy(false);
   });
 
@@ -164,6 +261,8 @@ ${items.map(e => `<item><title>${xesc(e.name)}</title><link>${xesc(b + '#' + enc
       editing = i;
       $('#f-name').value = it.name; $('#f-by').value = it.by || ''; $('#f-desc').value = it.desc || '';
       $('#f-tags').value = (it.tags || []).join(', '); $('#f-repo').value = it.repo;
+      pics.forEach(p => p.blob && URL.revokeObjectURL(p.preview));
+      pics = (it.images || []).map(p => ({ path: p, preview: p })); renderThumbs();
       $('#form-title').textContent = 'Правка: ' + it.name;
       $('#submit').textContent = 'Сохранить изменения'; $('#cancel').hidden = false;
       $('#p-add').scrollIntoView({ behavior: 'smooth' });
@@ -171,7 +270,11 @@ ${items.map(e => `<item><title>${xesc(e.name)}</title><link>${xesc(b + '#' + enc
       if (!confirm(`Удалить «${it.name}» из каталога?`)) return;
       const prev = list.slice(); list.splice(i, 1);
       busy(true); status('Удаляю…');
-      try { await save('Remove: ' + it.name); await feedSave(); resetForm(); render(); status('Удалено ✓', 'ok'); }
+      try {
+        await save('Remove: ' + it.name); await feedSave();
+        for (const p of it.images || []) await rmFile(p);
+        resetForm(); render(); status('Удалено ✓', 'ok');
+      }
       catch (err) { list = prev; render(); status(err.message, 'err'); }
       busy(false);
     }
@@ -179,6 +282,7 @@ ${items.map(e => `<item><title>${xesc(e.name)}</title><link>${xesc(b + '#' + enc
 
   function resetForm() {
     editing = -1; $('#form').reset(); $('#url').value = '';
+    pics.forEach(p => p.blob && URL.revokeObjectURL(p.preview)); pics = []; renderThumbs();
     $('#form-title').textContent = '2 · Добавить расширение';
     $('#submit').textContent = 'Отправить в каталог'; $('#cancel').hidden = true;
   }

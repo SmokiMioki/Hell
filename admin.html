@@ -72,6 +72,15 @@
         <label class="field">Описание<textarea id="f-desc" rows="3"></textarea></label>
         <label class="field">Теги через запятую<input id="f-tags" placeholder="Память, Утилиты"></label>
         <label class="field">Ссылка на репозиторий<input id="f-repo" required placeholder="https://github.com/…"></label>
+
+        <div class="imgs">
+          <span class="lbl">Картинки · как выглядит расширение</span>
+          <div class="thumbs" id="thumbs"></div>
+          <button class="btn ghost" id="add-img" type="button">Добавить картинки</button>
+          <input id="f-files" type="file" accept="image/*" multiple hidden>
+          <p class="small">До 8 штук. Первая показывается на карточке; чтобы сделать другую первой — нажми на неё. Перед загрузкой сжимаются в webp.</p>
+        </div>
+
         <div class="row">
           <button class="btn" id="submit" type="submit">Отправить в каталог</button>
           <button class="btn ghost" id="cancel" type="button" hidden>Отмена</button>
