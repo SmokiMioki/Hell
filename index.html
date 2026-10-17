@@ -11,7 +11,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=EB+Garamond:wght@400;500&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script>try{var t=localStorage.getItem('gate-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
   <link rel="stylesheet" href="intro.css">
+  <link rel="stylesheet" href="features.css">
+  <link rel="alternate" type="application/rss+xml" title="Врата расширений" href="feed.xml">
 </head>
 <body>
   <!-- ЗАСТАВКА -->
@@ -64,6 +67,8 @@
           </button>
         </form>
         <p class="hint">нажми Enter — и нить натянется</p>
+        <p class="epigraph" id="epigraph"></p>
+        <p class="tally" id="tally" hidden></p>
       </div>
 
       <a class="scroll" href="#catalog" aria-label="К каталогу"><span></span></a>
@@ -119,8 +124,22 @@
 
   <footer class="foot">
     <span class="jp">終</span>
-    <p>© <span id="year"></span> · сделано с любовью к мрачным вещам</p>
+    <p>© <span id="year"></span> · сделано с любовью к мрачным вещам · <a class="rss" href="feed.xml">RSS</a></p>
   </footer>
+
+  <!-- СВЕЧА: ТЕМА -->
+  <button class="candle" id="candle" type="button" aria-label="Сменить тему" aria-pressed="false">
+    <svg viewBox="0 0 40 78" width="30" height="58" aria-hidden="true">
+      <path class="smoke" d="M20 36c-5-6 5-9 0-16c-3-5 3-9 1-14"/>
+      <g class="cf">
+        <path d="M20 6C23 16 31 22 29 33C28 40 24 43 20 43C16 43 12 40 11 33C9 22 17 16 20 6Z" fill="#ff7a3c"/>
+        <path d="M20 22C22 28 26 31 25 37C24 41 22 43 20 43C18 43 16 41 15 37C14 31 18 28 20 22Z" fill="#ffd36b"/>
+      </g>
+      <rect class="wick" x="19" y="40" width="2" height="6"/>
+      <rect class="wax" x="12" y="44" width="16" height="28" rx="2.5"/>
+      <rect class="dish" x="8" y="71" width="24" height="5" rx="2"/>
+    </svg>
+  </button>
 
   <!-- MODAL -->
   <dialog id="modal">
@@ -130,5 +149,6 @@
 
   <script src="script.js"></script>
   <script src="intro.js"></script>
+  <script src="theme.js"></script>
 </body>
 </html>

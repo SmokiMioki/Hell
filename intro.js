@@ -8,6 +8,7 @@
     if (intro) intro.remove();
     root.classList.remove('intro-on');
     try { sessionStorage.setItem(KEY, '1'); } catch {}
+    document.dispatchEvent(new Event('gate:ready'));
   }
 
   if (intro) {

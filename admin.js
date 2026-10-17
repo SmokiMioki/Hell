@@ -19,6 +19,39 @@
   }
   const base = () => `/repos/${cfg.owner}/${cfg.repo}/contents/${FILE}`;
 
+  /*FEED-START*/
+  const FEED = 'feed.xml';
+  const slug = n => String(n).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-+|-+$/g, '');
+  const xesc = s => String(s).replace(/[<>&'"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;',"'":'&apos;','"':'&quot;'}[c]));
+  const siteUrl = () => location.origin + location.pathname.replace(/[^\/]*$/, '');
+  function buildFeed() {
+    const b = siteUrl();
+    const items = list.filter(e => e.added).sort((x, y) => y.added.localeCompare(x.added)).slice(0, 50);
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>
+<title>Врата расширений</title>
+<link>${xesc(b)}</link>
+<description>Новые расширения для SillyTavern</description>
+<language>ru</language>
+<atom:link href="${xesc(b + FEED)}" rel="self" type="application/rss+xml"/>
+<lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+${items.map(e => `<item><title>${xesc(e.name)}</title><link>${xesc(b + '#' + encodeURIComponent(slug(e.name)))}</link><guid isPermaLink="false">${xesc(slug(e.name) + '-' + e.added)}</guid><pubDate>${new Date(e.added).toUTCString()}</pubDate><description>${xesc(e.desc || '')}</description></item>`).join('\n')}
+</channel></rss>
+`;
+  }
+  async function saveFeed() {
+    const path = `/repos/${cfg.owner}/${cfg.repo}/contents/${FEED}`;
+    let fsha = null;
+    const g = await api(`${path}?ref=${encodeURIComponent(cfg.branch)}&t=${Date.now()}`);
+    if (g.ok) fsha = (await g.json()).sha;
+    const body = { message: 'Update feed', content: toB64(buildFeed()), branch: cfg.branch };
+    if (fsha) body.sha = fsha;
+    const r = await api(path, { method: 'PUT', body: JSON.stringify(body) });
+    if (!r.ok) throw new Error('feed');
+  }
+  async function feedSave() { try { await saveFeed(); return true; } catch { return false; } }
+  /*FEED-END*/
+
   /* ---------- автозаполнение полей подключения ---------- */
   try { Object.assign(cfg, JSON.parse(localStorage.getItem(LS) || '{}')); } catch {}
   if (!cfg.owner) {
@@ -100,14 +133,16 @@
       repo: $('#f-repo').value.trim()
     };
     if (!item.name || !item.repo) return status('Нужны название и ссылка.', 'err');
+    item.added = (editing >= 0 && list[editing].added) || new Date().toISOString();
     const prev = list.slice();
     const wasEditing = editing;
     if (editing >= 0) list[editing] = item; else list.push(item);
     busy(true); status('Сохраняю…');
     try {
       await save((wasEditing >= 0 ? 'Update: ' : 'Add: ') + item.name);
+      const feedOk = await feedSave();
       resetForm(); render();
-      status('Сохранено ✓ Сайт обновится через минуту.', 'ok');
+      status('Сохранено ✓ Сайт обновится через минуту.' + (feedOk ? '' : ' (RSS-ленту обновить не удалось.)'), 'ok');
     } catch (err) { list = prev; render(); status(err.message, 'err'); }
     busy(false);
   });
@@ -136,7 +171,7 @@
       if (!confirm(`Удалить «${it.name}» из каталога?`)) return;
       const prev = list.slice(); list.splice(i, 1);
       busy(true); status('Удаляю…');
-      try { await save('Remove: ' + it.name); resetForm(); render(); status('Удалено ✓', 'ok'); }
+      try { await save('Remove: ' + it.name); await feedSave(); resetForm(); render(); status('Удалено ✓', 'ok'); }
       catch (err) { list = prev; render(); status(err.message, 'err'); }
       busy(false);
     }
