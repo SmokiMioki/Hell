@@ -5,19 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Врата расширений — каталог для SillyTavern</title>
   <meta name="description" content="Каталог расширений для SillyTavern. Впиши имя — и найдёшь то, что искал.">
-  <meta name="theme-color" content="#07050a">
+  <meta name="theme-color" content="#150f1a">
+  <script>try{if(!sessionStorage.getItem('gate-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro-on')}catch(e){}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=EB+Garamond:wght@400;500&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="intro.css">
 </head>
 <body>
+  <!-- ЗАСТАВКА -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro-core">
+      <span class="spark"></span><span class="spark"></span><span class="spark"></span><span class="spark"></span><span class="spark"></span>
+      <svg class="flame" viewBox="0 0 100 160" width="110" height="176">
+        <defs>
+          <radialGradient id="gO" cx="50%" cy="85%" r="75%"><stop offset="0" stop-color="#ff5a3c"/><stop offset="1" stop-color="#8a0c18"/></radialGradient>
+          <radialGradient id="gM" cx="50%" cy="85%" r="75%"><stop offset="0" stop-color="#ffb347"/><stop offset="1" stop-color="#ff5a2a"/></radialGradient>
+          <radialGradient id="gI" cx="50%" cy="85%" r="75%"><stop offset="0" stop-color="#fff7d6"/><stop offset="1" stop-color="#ffd36b"/></radialGradient>
+        </defs>
+        <path class="f-o" fill="url(#gO)" d="M50 4C58 34 92 58 88 100C85 134 66 156 50 156C34 156 15 134 12 100C9 66 38 48 50 4Z"/>
+        <path class="f-m" fill="url(#gM)" d="M50 40C56 62 76 78 74 106C72 130 62 146 50 146C38 146 28 130 26 106C24 80 44 66 50 40Z"/>
+        <path class="f-i" fill="url(#gI)" d="M50 84C54 98 64 106 62 122C61 134 56 142 50 142C44 142 39 134 38 122C36 106 46 98 50 84Z"/>
+      </svg>
+      <p class="intro-text">Врата открываются</p>
+    </div>
+    <button class="skip" id="skip" type="button">пропустить</button>
+  </div>
+
   <canvas id="petals" aria-hidden="true"></canvas>
   <div class="fog" aria-hidden="true"></div>
   <div class="thread" aria-hidden="true"></div>
 
   <header class="top">
-    <a class="logo" href="#top"><span class="jp">拡張</span> Врата</a>
+    <a class="logo" href="#top"><span class="mini-flame" aria-hidden="true"><svg viewBox="0 0 100 160"><path class="m-o" fill="#ff5a3c" d="M50 4C58 34 92 58 88 100C85 134 66 156 50 156C34 156 15 134 12 100C9 66 38 48 50 4Z"/><path class="m-i" fill="#ffd36b" d="M50 70C56 92 72 102 70 124C68 142 60 152 50 152C40 152 32 142 30 124C28 102 44 92 50 70Z"/></svg></span><span class="jp">拡張</span> Врата</a>
     <nav>
       <a href="#catalog">Каталог</a>
       <a href="#guide">Как установить</a>
@@ -108,5 +129,6 @@
   </dialog>
 
   <script src="script.js"></script>
+  <script src="intro.js"></script>
 </body>
 </html>
