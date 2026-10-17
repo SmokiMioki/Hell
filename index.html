@@ -3,157 +3,125 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#12090d">
-  <meta name="description" content="Тёмный каталог расширений и инструментов для SillyTavern.">
-  <title>Yomi — расширения для Tavern</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#09070a">
+  <meta name="description" content="Тёмный архив расширений для SillyTavern.">
+  <title>地獄通信 — архив Tavern</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="grain" aria-hidden="true"></div>
-  <header class="topbar">
-    <a class="brand" href="#" aria-label="Yomi — главная">
-      <span class="brand-mark">宵</span>
-      <span class="brand-name">yomi<span>.</span></span>
-    </a>
-    <nav class="nav" id="nav">
-      <a class="active" href="#catalog">Каталог</a>
-      <a href="#collections">Подборки</a>
-      <a href="#about">О проекте</a>
+  <div class="paper-noise" aria-hidden="true"></div>
+  <div class="red-thread" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="wordmark" href="#"><span class="seal">地</span><span><b>地獄通信</b><small>HELL CORRESPONDENCE / TAVERN ARCHIVE</small></span></a>
+    <nav id="nav">
+      <a href="#archive">Архив</a><a href="#collections">Подборки</a><a href="#about">О проекте</a>
     </nav>
-    <div class="top-actions">
-      <button class="icon-button" id="themeToggle" aria-label="Переключить оформление" title="Переключить оформление">◐</button>
-      <a class="github-button" href="https://github.com/" target="_blank" rel="noreferrer">GitHub <span>↗</span></a>
-      <button class="menu-button" id="menuToggle" aria-label="Открыть меню">☰</button>
+    <div class="header-actions">
+      <button id="themeToggle" class="theme-toggle" title="Сменить тон оформления" aria-label="Сменить тон оформления">☾</button>
+      <a class="github-link" href="https://github.com/" target="_blank" rel="noreferrer">GITHUB ↗</a>
+      <button id="menuToggle" class="menu-toggle" aria-label="Открыть меню">☰</button>
     </div>
   </header>
 
   <main>
     <section class="hero">
       <div class="hero-copy">
-        <div class="eyebrow"><span class="eyebrow-line"></span> ARCHIVE OF TAVERN EXTENSIONS</div>
-        <h1>Твоя таверна.<br><em>Твои правила.</em></h1>
-        <p class="hero-text">Место, где полезные расширения, лорбуки и маленькие улучшения находят свой путь к твоей SillyTavern.</p>
-        <div class="hero-actions">
-          <a class="primary-button" href="#catalog">Исследовать каталог <span>↘</span></a>
-          <a class="text-link" href="#about">Что это такое? <span>→</span></a>
-        </div>
-        <div class="hero-meta">
-          <div class="meta-item"><span class="meta-number">∞</span><span>возможностей</span></div>
-          <div class="meta-divider"></div>
-          <div class="meta-item"><span class="status-dot"></span><span>архив открыт</span></div>
-        </div>
+        <p class="overline"><span></span> 午前零時 — ПОЛНОЧНЫЙ АРХИВ</p>
+        <p class="japanese-vertical" aria-hidden="true">あなたの怨み、晴らします。</p>
+        <h1>Если есть то,<br>что ты <em>ищешь…</em></h1>
+        <p class="intro">В полночь открывается архив. Здесь собраны расширения, инструменты и лорбуки, которые меняют твою SillyTavern — тихо, точно, по твоим правилам.</p>
+        <div class="hero-buttons"><a class="red-button" href="#archive">Открыть архив <span>↘</span></a><a class="under-link" href="#about">Что скрывает архив <span>→</span></a></div>
+        <div class="hero-foot"><span><i class="live-dot"></i> АРХИВ ДОСТУПЕН</span><span>記録番号 — 0001</span></div>
       </div>
-      <div class="hero-art" aria-label="Декоративная иллюстрация в красно-чёрной эстетике">
-        <div class="moon"></div>
-        <div class="red-sun"></div>
-        <div class="vertical-label">宵の記録 · YOMI ARCHIVE</div>
-        <div class="art-frame">
-          <div class="art-ring ring-one"></div><div class="art-ring ring-two"></div>
-          <div class="art-kanji">宵</div>
-          <div class="art-caption"><span>NO. 001</span><span>THE NIGHT ARCHIVE</span></div>
-        </div>
-        <div class="floating-note">静寂<br><small>тишина между историями</small></div>
+      <div class="hero-visual" aria-label="Декоративная композиция из красной нити, луны и бумажного талисмана">
+        <div class="moon-disc"></div>
+        <div class="moon-shadow"></div>
+        <div class="torii"><i></i><i></i><i></i><i></i></div>
+        <div class="paper-charm"><span class="charm-top">怨</span><span class="charm-kanji">地獄</span><span class="charm-bottom">通信</span></div>
+        <div class="thread-loop"></div>
+        <span class="visual-note note-left">午夜<br><small>полночь</small></span>
+        <span class="visual-note note-right">NO. 001 / ARCHIVE</span>
+        <span class="visual-coordinates">35° 41′ 22″ N — 139° 41′ 30″ E</span>
       </div>
-      <div class="hero-bottomline"><span>01 / НАЧАЛО</span><span>SCROLL TO EXPLORE ↓</span></div>
+      <div class="hero-bottom"><span>SCROLL TO ENTER</span><span class="down-mark">↓</span><span>静かな夜に、記録は開く</span></div>
     </section>
 
-    <section class="catalog-section" id="catalog">
-      <div class="section-heading">
-        <div><div class="eyebrow"><span class="eyebrow-line"></span> БИБЛИОТЕКА</div><h2>Найди своё <em>расширение.</em></h2></div>
-        <p>Небольшая коллекция инструментов для более удобной и личной Tavern.</p>
+    <section class="archive-section" id="archive">
+      <div class="section-intro">
+        <div><p class="overline"><span></span> 記録 — ЗАПИСИ</p><h2>Архив <em>желаний.</em></h2></div>
+        <p>Найди нужный инструмент среди записей. Никакого шума — только то, что помогает настроить твою Tavern.</p>
       </div>
-
-      <div class="catalog-toolbar">
-        <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Поиск расширений..." autocomplete="off"><kbd>⌘ K</kbd></label>
-        <div class="filters" role="group" aria-label="Фильтр по категориям">
-          <button class="filter active" data-filter="all">Все <span>06</span></button>
+      <div class="archive-tools">
+        <label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Найти запись..." autocomplete="off"><kbd>Ctrl K</kbd></label>
+        <div class="filter-list" role="group" aria-label="Категории">
+          <button class="filter active" data-filter="all">Все <sup>06</sup></button>
           <button class="filter" data-filter="ui">Интерфейс</button>
           <button class="filter" data-filter="lore">Лорбуки</button>
           <button class="filter" data-filter="tools">Инструменты</button>
         </div>
       </div>
 
-      <div class="card-grid" id="extensionGrid">
-        <article class="extension-card" data-category="ui" data-name="phone st мобильный интерфейс телефон">
-          <div class="card-top"><span class="category-tag">ИНТЕРФЕЙС</span><span class="card-index">№ 01</span></div>
-          <div class="card-symbol symbol-phone">▣</div>
-          <h3>Phone-ST</h3>
-          <p>Мобильный телефонный интерфейс для Tavern — быстрый доступ к нужным разделам в компактном виде.</p>
-          <div class="card-footer"><span class="status-label"><i></i> UI / MOBILE</span><a href="#" class="card-link" data-detail="Phone-ST">Подробнее <span>↗</span></a></div>
+      <div class="entries" id="extensionGrid">
+        <article class="entry" data-category="ui" data-name="phone st телефон мобильный интерфейс">
+          <div class="entry-head"><span>記録 001</span><span class="entry-type">UI / MOBILE</span></div><div class="entry-glyph">携</div>
+          <h3>Phone-ST</h3><p>Мобильный интерфейс для тех, кто хочет управлять Tavern с телефона без бесконечной прокрутки.</p>
+          <div class="entry-bottom"><span class="category">ИНТЕРФЕЙС</span><a href="#" class="details" data-detail="Phone-ST">Читать запись <b>↗</b></a></div>
         </article>
-        <article class="extension-card" data-category="lore" data-name="lorebook manager лорбуки управление коллекция">
-          <div class="card-top"><span class="category-tag">ЛОРБУКИ</span><span class="card-index">№ 02</span></div>
-          <div class="card-symbol symbol-book">▤</div>
-          <h3>Lorebook Manager</h3>
-          <p>Удобная организация лорбуков: находи записи, управляй подборками и не теряйся в длинном списке.</p>
-          <div class="card-footer"><span class="status-label"><i></i> ORGANIZATION</span><a href="#" class="card-link" data-detail="Lorebook Manager">Подробнее <span>↗</span></a></div>
+        <article class="entry" data-category="lore" data-name="lorebook manager лорбук управление">
+          <div class="entry-head"><span>記録 002</span><span class="entry-type">LORE / INDEX</span></div><div class="entry-glyph">書</div>
+          <h3>Lorebook Manager</h3><p>Управление большими коллекциями лорбуков: искать, сортировать и находить нужное быстрее.</p>
+          <div class="entry-bottom"><span class="category">ЛОРБУКИ</span><a href="#" class="details" data-detail="Lorebook Manager">Читать запись <b>↗</b></a></div>
         </article>
-        <article class="extension-card" data-category="tools" data-name="prompt toolkit промпты шаблоны инструменты">
-          <div class="card-top"><span class="category-tag">ИНСТРУМЕНТЫ</span><span class="card-index">№ 03</span></div>
-          <div class="card-symbol symbol-prompt">⌘</div>
-          <h3>Prompt Toolkit</h3>
-          <p>Сохраняй часто используемые инструкции и переключайся между шаблонами без лишней рутины.</p>
-          <div class="card-footer"><span class="status-label"><i></i> WORKFLOW</span><a href="#" class="card-link" data-detail="Prompt Toolkit">Подробнее <span>↗</span></a></div>
+        <article class="entry" data-category="tools" data-name="prompt toolkit промпты шаблоны">
+          <div class="entry-head"><span>記録 003</span><span class="entry-type">PROMPT / TOOLS</span></div><div class="entry-glyph">言</div>
+          <h3>Prompt Toolkit</h3><p>Храни инструкции и шаблоны в одном месте и переключайся между ними без рутины.</p>
+          <div class="entry-bottom"><span class="category">ИНСТРУМЕНТЫ</span><a href="#" class="details" data-detail="Prompt Toolkit">Читать запись <b>↗</b></a></div>
         </article>
-        <article class="extension-card" data-category="ui" data-name="quiet panels панели минималистичный интерфейс">
-          <div class="card-top"><span class="category-tag">ИНТЕРФЕЙС</span><span class="card-index">№ 04</span></div>
-          <div class="card-symbol symbol-panels">▥</div>
-          <h3>Quiet Panels</h3>
-          <p>Более спокойные панели, аккуратные отступы и визуальная иерархия, которая не отвлекает.</p>
-          <div class="card-footer"><span class="status-label"><i></i> CUSTOM UI</span><a href="#" class="card-link" data-detail="Quiet Panels">Подробнее <span>↗</span></a></div>
+        <article class="entry" data-category="ui" data-name="quiet panels панели интерфейс">
+          <div class="entry-head"><span>記録 004</span><span class="entry-type">UI / CUSTOM</span></div><div class="entry-glyph">影</div>
+          <h3>Quiet Panels</h3><p>Спокойные панели, аккуратные интервалы и визуальная иерархия, которая не отвлекает.</p>
+          <div class="entry-bottom"><span class="category">ИНТЕРФЕЙС</span><a href="#" class="details" data-detail="Quiet Panels">Читать запись <b>↗</b></a></div>
         </article>
-        <article class="extension-card" data-category="lore" data-name="lorebook presets пресеты подборки истории">
-          <div class="card-top"><span class="category-tag">ЛОРБУКИ</span><span class="card-index">№ 05</span></div>
-          <div class="card-symbol symbol-preset">✳</div>
-          <h3>Lorebook Presets</h3>
-          <p>Готовые тематические наборы для разных историй. Выбирай настроение, а не сотню файлов вручную.</p>
-          <div class="card-footer"><span class="status-label"><i></i> COLLECTIONS</span><a href="#" class="card-link" data-detail="Lorebook Presets">Подробнее <span>↗</span></a></div>
+        <article class="entry" data-category="lore" data-name="lorebook presets пресеты подборки">
+          <div class="entry-head"><span>記録 005</span><span class="entry-type">LORE / COLLECTION</span></div><div class="entry-glyph">糸</div>
+          <h3>Lorebook Presets</h3><p>Тематические наборы для разных историй. Выбирай атмосферу, а не десятки файлов вручную.</p>
+          <div class="entry-bottom"><span class="category">ЛОРБУКИ</span><a href="#" class="details" data-detail="Lorebook Presets">Читать запись <b>↗</b></a></div>
         </article>
-        <article class="extension-card" data-category="tools" data-name="quick notes заметки идеи быстрые заметки">
-          <div class="card-top"><span class="category-tag">ИНСТРУМЕНТЫ</span><span class="card-index">№ 06</span></div>
-          <div class="card-symbol symbol-notes">✎</div>
-          <h3>Quick Notes</h3>
-          <p>Маленький блокнот для идей, деталей персонажей и заметок, которые должны быть под рукой.</p>
-          <div class="card-footer"><span class="status-label"><i></i> PRODUCTIVITY</span><a href="#" class="card-link" data-detail="Quick Notes">Подробнее <span>↗</span></a></div>
+        <article class="entry" data-category="tools" data-name="quick notes заметки блокнот">
+          <div class="entry-head"><span>記録 006</span><span class="entry-type">NOTES / MEMORY</span></div><div class="entry-glyph">墨</div>
+          <h3>Quick Notes</h3><p>Блокнот для идей, деталей персонажей и заметок, которые должны оставаться под рукой.</p>
+          <div class="entry-bottom"><span class="category">ИНСТРУМЕНТЫ</span><a href="#" class="details" data-detail="Quick Notes">Читать запись <b>↗</b></a></div>
         </article>
       </div>
-      <div class="empty-state" id="emptyState" hidden>Ничего не найдено. Попробуй другое название или категорию.</div>
-      <div class="catalog-foot"><span>ПОКАЗАНО <b id="visibleCount">06</b> ИЗ 06</span><span>КОЛЛЕКЦИЯ ПОПОЛНЯЕТСЯ</span></div>
+      <div id="emptyState" class="empty-state" hidden>Запись не найдена. Попробуй другой запрос.</div>
+      <div class="archive-count"><span>ЗАПИСЕЙ НА ЭКРАНЕ: <b id="visibleCount">06</b></span><span>すべての記録は仮のものです</span></div>
     </section>
 
-    <section class="collections-section" id="collections">
-      <div class="collection-panel">
-        <div class="collection-copy"><div class="eyebrow"><span class="eyebrow-line"></span> ВЫБРАННОЕ</div><h2>Собери свой<br><em>идеальный набор.</em></h2><p>Не обязательно менять всё сразу. Начни с одной маленькой детали — и настрой Tavern под себя.</p><a class="primary-button" href="#catalog">Выбрать инструменты <span>↗</span></a></div>
-        <div class="collection-list">
-          <div class="collection-row"><span class="collection-no">01</span><span class="collection-name">Для мобильного экрана</span><span class="collection-arrow">↗</span></div>
-          <div class="collection-row"><span class="collection-no">02</span><span class="collection-name">Для больших лорбуков</span><span class="collection-arrow">↗</span></div>
-          <div class="collection-row"><span class="collection-no">03</span><span class="collection-name">Для чистого интерфейса</span><span class="collection-arrow">↗</span></div>
-          <div class="collection-row"><span class="collection-no">04</span><span class="collection-name">Для творческого процесса</span><span class="collection-arrow">↗</span></div>
-        </div>
-        <div class="panel-stamp">夜<br><small>YOMI</small></div>
+    <section class="collections" id="collections">
+      <div class="collection-heading"><p class="overline"><span></span> おすすめ — ПОДБОРКИ</p><h2>Нить приведёт<br><em>к нужному.</em></h2><p>Несколько путей для разных способов пользоваться Tavern.</p></div>
+      <div class="collection-list">
+        <a href="#archive" class="collection"><span class="collection-number">壱</span><span><b>Маленький экран</b><small>Мобильный интерфейс и быстрый доступ</small></span><span class="collection-arrow">↗</span></a>
+        <a href="#archive" class="collection"><span class="collection-number">弐</span><span><b>Память истории</b><small>Лорбуки, пресеты и организации знаний</small></span><span class="collection-arrow">↗</span></a>
+        <a href="#archive" class="collection"><span class="collection-number">参</span><span><b>Тихая настройка</b><small>Инструменты для своего рабочего процесса</small></span><span class="collection-arrow">↗</span></a>
       </div>
+      <div class="red-thread-decoration" aria-hidden="true"></div>
     </section>
 
-    <section class="about-section" id="about">
-      <div class="about-mark">宵</div>
-      <div class="about-copy"><div class="eyebrow"><span class="eyebrow-line"></span> О ПРОЕКТЕ</div><h2>Немного мрака.<br><em>Много удобства.</em></h2><p>Yomi — концепт-каталог расширений для SillyTavern с атмосферой тёмного японского фольклора, аккуратной типографикой и интерфейсом, который одинаково хорошо работает на телефоне и компьютере.</p></div>
-      <div class="about-note"><span class="note-line"></span><p>Это независимый фанатский проект. Названия и описания карточек сейчас демонстрационные — замени их на свои реальные расширения и ссылки.</p></div>
+    <section class="about" id="about">
+      <div class="about-seal">地<br><small>獄通信</small></div>
+      <div class="about-text"><p class="overline"><span></span> この場所について — О ПРОЕКТЕ</p><h2>Не проклятие.<br><em>Твоя настройка.</em></h2><p>Фанатский каталог расширений SillyTavern, оформленный как загадочная полночная переписка из мира «Адской девочки». Здесь нет отправки настоящих сообщений в ад — только удобная библиотека инструментов для твоей Tavern.</p></div>
+      <aside class="disclaimer"><span>※ ВАЖНО</span><p>Карточки сейчас демонстрационные. Перед публикацией замени их реальными расширениями, описаниями, ссылками на репозитории и инструкциями.</p></aside>
     </section>
   </main>
 
-  <footer class="footer"><a class="brand" href="#"><span class="brand-mark">宵</span><span class="brand-name">yomi<span>.</span></span></a><span>СОЗДАНО ДЛЯ ТВОЕЙ TAVERN</span><span>© 2026 · THE NIGHT ARCHIVE</span></footer>
+  <footer><a class="wordmark" href="#"><span class="seal">地</span><span><b>地獄通信</b><small>THE TAVERN ARCHIVE</small></span></a><span>静かな夜に、記録は開く</span><span>FAN-MADE CONCEPT · 2026</span></footer>
 
-  <dialog class="detail-dialog" id="detailDialog">
-    <button class="dialog-close" id="dialogClose" aria-label="Закрыть">×</button>
-    <div class="eyebrow"><span class="eyebrow-line"></span> ЗАПИСЬ АРХИВА</div>
-    <div class="dialog-number">YOMI / EXTENSION</div>
-    <h2 id="dialogTitle">Название расширения</h2>
-    <p id="dialogText">Описание расширения.</p>
-    <div class="dialog-hint">Демонстрационная карточка — добавь сюда ссылку на репозиторий, инструкцию установки и совместимость.</div>
-    <a class="primary-button" href="https://github.com/" target="_blank" rel="noreferrer">Открыть GitHub <span>↗</span></a>
+  <dialog id="detailDialog" class="detail-dialog">
+    <button id="dialogClose" class="dialog-close" aria-label="Закрыть">×</button>
+    <p class="overline"><span></span> 記録 — ЗАПИСЬ АРХИВА</p><small class="dialog-id">HELL CORRESPONDENCE / ENTRY</small>
+    <h2 id="dialogTitle">Название расширения</h2><p id="dialogText"></p>
+    <div class="dialog-note">Добавь сюда реальную ссылку на GitHub, инструкцию установки и информацию о совместимости.</div>
+    <a class="red-button" href="https://github.com/" target="_blank" rel="noreferrer">Открыть GitHub <span>↗</span></a>
   </dialog>
   <script src="script.js"></script>
 </body>
