@@ -53,15 +53,8 @@
   <main id="top">
     <!-- HERO -->
     <section class="hero">
-      <svg class="mask" id="mask" viewBox="0 0 200 240" aria-hidden="true">
-        <path class="m-face" d="M100 40C120 40 140 34 164 10C172 60 176 100 166 140C156 180 130 210 100 232C70 210 44 180 34 140C24 100 28 60 36 10C60 34 80 40 100 40Z"/>
-        <path class="m-ear" d="M46 26C50 46 56 56 70 60C60 44 54 34 46 26Z"/>
-        <path class="m-ear" d="M154 26C150 46 144 56 130 60C140 44 146 34 154 26Z"/>
-        <path class="m-mark" d="M40 118C58 124 72 140 82 164M160 118C142 124 128 140 118 164M56 78C70 70 86 72 94 80M144 78C130 70 114 72 106 80M100 52V80"/>
-        <path class="m-eye" d="M52 96C70 86 88 92 92 104C76 102 62 102 52 96Z"/>
-        <path class="m-eye" d="M148 96C130 86 112 92 108 104C124 102 138 102 148 96Z"/>
-        <path class="m-nose" d="M92 204C96 198 104 198 108 204C106 212 94 212 92 204Z"/>
-      </svg>
+      <!-- Свой PNG: положи файл рядом с index.html (например art.png) и раскомментируй строку ниже -->
+      <!-- <img class="hero-art" src="art.png" alt=""> -->
       <div class="vertical jp" aria-hidden="true">拡張通信</div>
 
       <div class="hero-core">
@@ -70,10 +63,6 @@
         <p class="lead">Когда наступит полночь, впиши имя расширения,<br>которое ищешь…</p>
 
         <form class="gate" id="gate" role="search" autocomplete="off">
-          <svg class="ears" viewBox="0 0 300 40" aria-hidden="true">
-            <g class="ear-l"><path class="e-o" d="M72 40L92 2L122 40Z"/><path class="e-i" d="M88 40L93 14L108 40Z"/></g>
-            <g class="ear-r"><path class="e-o" d="M178 40L208 2L228 40Z"/><path class="e-i" d="M192 40L207 14L212 40Z"/></g>
-          </svg>
           <label for="q" class="sr">Поиск расширения</label>
           <input id="q" type="search" placeholder="впиши имя" spellcheck="false">
           <button type="submit" aria-label="Искать">
