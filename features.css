@@ -1,27 +1,103 @@
-[
-  {
-    "name": "Phone ST",
-    "by": "Delidgi-meow",
-    "desc": "Телефон для таверны с кучей функционала.",
-    "cat": "Телефон",
-    "tags": [
-      "кошка"
-    ],
-    "repo": "https://github.com/Delidgi-meow/Phone-ST",
-    "added": "2026-10-17T03:10:55.564Z",
-    "images": [
-      "img/phone-st-mvbun4os1.webp"
-    ]
-  },
-  {
-    "name": "SpendingTracker",
-    "by": "niemandswasser",
-    "desc": "Расширение считает токены ввода/вывода на каждую генерацию, ведёт дневную статистику расходов и общения с персонажами, а также показывает всё это в удобном дашборде с графиками, ачивками и викториной.",
-    "cat": "Трекер",
-    "tags": [
-      "токены"
-    ],
-    "repo": "https://github.com/niemandswasser/SpendingTracker",
-    "added": "2026-10-19T04:25:17.537Z"
-  }
-]
+/* ---------- красная нить между карточками ---------- */
+.grid{position:relative}
+.card-link{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2}
+.lk{
+  fill:none;stroke:var(--crimson);stroke-width:2;stroke-linecap:round;
+  stroke-dasharray:1;stroke-dashoffset:1;animation:draw .7s ease forwards;
+  filter:drop-shadow(0 0 5px rgba(242,58,82,.85));
+}
+.lk-dot{fill:var(--crimson);opacity:0;animation:dot .4s .1s forwards;filter:drop-shadow(0 0 6px rgba(242,58,82,.9))}
+.lk-dot.end{animation-delay:.6s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes dot{to{opacity:1}}
+
+/* ---------- эпиграф и счётчик ---------- */
+.epigraph{
+  margin:38px auto 0;max-width:520px;font-family:var(--serif);font-style:italic;
+  font-size:1.3rem;line-height:1.5;color:var(--bone);text-shadow:0 0 18px rgba(242,58,82,.35);
+}
+.epigraph::before{content:"「 ";color:var(--crimson);font-style:normal}
+.epigraph::after{content:" 」";color:var(--crimson);font-style:normal}
+.tally{
+  display:inline-block;margin-top:26px;padding-top:14px;border-top:1px solid var(--line);
+  font-size:.82rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ash);
+}
+.tally b{font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:.05em;color:var(--crimson);margin:0 .15em;text-shadow:0 0 12px rgba(242,58,82,.5)}
+
+/* ---------- подвал / RSS ---------- */
+.rss{color:var(--crimson);border-bottom:1px solid var(--line);padding-bottom:1px}
+.rss:hover{color:#fff;border-color:var(--crimson)}
+
+/* ---------- свеча-переключатель темы ---------- */
+.candle{
+  position:fixed;right:22px;bottom:22px;z-index:30;width:50px;height:76px;padding:0;cursor:pointer;
+  display:grid;place-items:center;border:1px solid var(--line);border-radius:26px;
+  background:rgba(21,15,26,.75);backdrop-filter:blur(4px);transition:transform .3s,border-color .3s,box-shadow .3s;
+}
+.candle:hover{transform:translateY(-3px);border-color:var(--crimson);box-shadow:0 0 22px rgba(242,58,82,.35)}
+.candle:focus-visible{outline:2px solid var(--crimson);outline-offset:3px}
+.intro-on .candle{display:none}
+.candle .wax{fill:#efe4d2}
+.candle .dish{fill:#b3121f}
+.candle .wick{fill:#2a1a1e}
+.candle .cf{
+  transform-box:fill-box;transform-origin:50% 100%;animation:lick 1s ease-in-out infinite alternate;
+  filter:drop-shadow(0 0 6px rgba(255,100,60,.9));transition:opacity .4s;
+}
+.candle .smoke{fill:none;stroke:#8d7f86;stroke-width:1.6;stroke-linecap:round;opacity:0}
+@keyframes puff{0%{opacity:0;transform:translateY(8px)}30%{opacity:.75}100%{opacity:0;transform:translateY(-10px)}}
+
+/* ---------- светлая тема («свеча погашена») ---------- */
+:root[data-theme="light"]{
+  --ink:#f5eddf;--ink-2:#ece2d0;--wine:#ead3cb;
+  --blood:#a30f1c;--crimson:#c2152b;
+  --bone:#2b1a20;--ash:#6a5860;
+  --line:rgba(163,15,28,.35);
+}
+[data-theme="light"] body{
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(194,21,43,.14), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(163,15,28,.08), transparent 70%);
+}
+[data-theme="light"] body::after{box-shadow:inset 0 0 160px 10px rgba(120,60,50,.18)}
+[data-theme="light"] .top{background:linear-gradient(rgba(245,237,223,.96),transparent)}
+[data-theme="light"] .thread{background:linear-gradient(#5a0a12,var(--crimson) 40%,var(--blood))}
+[data-theme="light"] .card,
+[data-theme="light"] .panel{background:linear-gradient(160deg,rgba(255,250,240,.92),rgba(236,226,208,.96))}
+[data-theme="light"] .card p,
+[data-theme="light"] .steps p,
+[data-theme="light"] details{color:#3d2a30}
+[data-theme="light"] .gate{
+  background:rgba(255,250,240,.88);
+  box-shadow:0 0 0 6px rgba(245,237,223,.95),0 0 0 7px var(--line),0 0 30px rgba(163,15,28,.15);
+}
+[data-theme="light"] .gate:focus-within{
+  box-shadow:0 0 0 6px rgba(245,237,223,.95),0 0 0 7px var(--crimson),0 0 40px rgba(194,21,43,.3);
+}
+[data-theme="light"] .gate input::placeholder{color:rgba(106,88,96,.65)}
+[data-theme="light"] .hint{color:var(--ash)}
+[data-theme="light"] h1{text-shadow:0 0 30px rgba(194,21,43,.22)}
+[data-theme="light"] .epigraph{text-shadow:none}
+[data-theme="light"] .vertical{-webkit-text-stroke-color:rgba(163,15,28,.7);text-shadow:none}
+[data-theme="light"] .card .num{-webkit-text-stroke-color:rgba(163,15,28,.4)}
+[data-theme="light"] dialog{background:linear-gradient(160deg,#fbf4e6,#eadfca);box-shadow:0 0 60px rgba(120,40,40,.3)}
+[data-theme="light"] dialog::backdrop{background:rgba(40,20,25,.62)}
+[data-theme="light"] .install{background:rgba(255,255,255,.55)}
+[data-theme="light"] .install code{color:var(--bone)}
+[data-theme="light"] .field input,
+[data-theme="light"] .field textarea,
+[data-theme="light"] .fetchrow input{background:rgba(255,255,255,.65)}
+[data-theme="light"] .cursor-glow{display:none}
+[data-theme="light"] .candle{background:rgba(255,250,240,.85)}
+[data-theme="light"] .candle .cf{opacity:0;animation:none}
+[data-theme="light"] .candle .smoke{animation:puff 2.6s ease-out 1}
+[data-theme="light"] .candle .wax{fill:#fffaf0;stroke:var(--line)}
+
+@media (max-width:700px){
+  .candle{right:14px;bottom:14px;width:44px;height:68px}
+  .epigraph{font-size:1.1rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .lk{stroke-dashoffset:0}
+  .lk-dot{opacity:1}
+}

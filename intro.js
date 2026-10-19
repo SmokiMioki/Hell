@@ -1,179 +1,47 @@
-<!doctype html>
-<html lang="ru">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Врата расширений — каталог для SillyTavern</title>
-  <meta name="description" content="Каталог расширений для SillyTavern. Впиши имя — и найдёшь то, что искал.">
-  <meta name="theme-color" content="#150f1a">
-  <script>try{if(!sessionStorage.getItem('gate-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro-on')}catch(e){}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=EB+Garamond:wght@400;500&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <script>try{var t=localStorage.getItem('gate-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
-  <link rel="stylesheet" href="intro.css">
-  <link rel="stylesheet" href="features.css">
-  <link rel="stylesheet" href="kitsune.css">
-  <link rel="stylesheet" href="filters.css">
-  <link rel="alternate" type="application/rss+xml" title="Врата расширений" href="feed.xml">
-</head>
-<body>
-  <!-- ЗАСТАВКА -->
-  <div class="intro" id="intro" aria-hidden="true">
-    <div class="intro-core">
-      <span class="spark"></span><span class="spark"></span><span class="spark"></span><span class="spark"></span><span class="spark"></span>
-      <svg class="flame" viewBox="0 0 100 160" width="110" height="176">
-        <defs>
-          <radialGradient id="gO" cx="50%" cy="85%" r="75%"><stop offset="0" stop-color="#ff5a3c"/><stop offset="1" stop-color="#8a0c18"/></radialGradient>
-          <radialGradient id="gM" cx="50%" cy="85%" r="75%"><stop offset="0" stop-color="#ffb347"/><stop offset="1" stop-color="#ff5a2a"/></radialGradient>
-          <radialGradient id="gI" cx="50%" cy="85%" r="75%"><stop offset="0" stop-color="#fff7d6"/><stop offset="1" stop-color="#ffd36b"/></radialGradient>
-        </defs>
-        <path class="f-o" fill="url(#gO)" d="M50 4C58 34 92 58 88 100C85 134 66 156 50 156C34 156 15 134 12 100C9 66 38 48 50 4Z"/>
-        <path class="f-m" fill="url(#gM)" d="M50 40C56 62 76 78 74 106C72 130 62 146 50 146C38 146 28 130 26 106C24 80 44 66 50 40Z"/>
-        <path class="f-i" fill="url(#gI)" d="M50 84C54 98 64 106 62 122C61 134 56 142 50 142C44 142 39 134 38 122C36 106 46 98 50 84Z"/>
-      </svg>
-      <p class="intro-text">Врата открываются</p>
-    </div>
-    <button class="skip" id="skip" type="button">пропустить</button>
-  </div>
+(() => {
+  const root = document.documentElement;
+  const intro = document.getElementById('intro');
+  const KEY = 'gate-intro';
 
-  <canvas id="petals" aria-hidden="true"></canvas>
-  <div class="fog" aria-hidden="true"></div>
-  <div class="thread" aria-hidden="true"></div>
+  /* ---------- заставка ---------- */
+  function finish() {
+    if (intro) intro.remove();
+    root.classList.remove('intro-on');
+    try { sessionStorage.setItem(KEY, '1'); } catch {}
+    document.dispatchEvent(new Event('gate:ready'));
+  }
 
-  <header class="top">
-    <a class="logo" href="#top"><span class="mini-flame" aria-hidden="true"><svg viewBox="0 0 100 160"><path class="m-o" fill="#ff5a3c" d="M50 4C58 34 92 58 88 100C85 134 66 156 50 156C34 156 15 134 12 100C9 66 38 48 50 4Z"/><path class="m-i" fill="#ffd36b" d="M50 70C56 92 72 102 70 124C68 142 60 152 50 152C40 152 32 142 30 124C28 102 44 92 50 70Z"/></svg></span><span class="jp">拡張</span> Врата</a>
-    <nav>
-      <a href="#catalog">Каталог</a>
-      <a href="#guide">Как установить</a>
-      <a href="#about">О месте</a>
-    </nav>
-  </header>
+  if (intro) {
+    if (!root.classList.contains('intro-on')) {
+      intro.remove();
+    } else {
+      let opened = false;
+      const open = () => {
+        if (opened) return; opened = true;
+        intro.classList.add('open');
+        setTimeout(() => {                 // дальше: растворяем остатки и убираем слой
+          intro.style.transition = 'opacity .5s';
+          intro.style.opacity = '0';
+          setTimeout(finish, 520);
+        }, 1700);
+      };
+      const timer = setTimeout(open, 3200);
+      document.getElementById('skip').addEventListener('click', () => { clearTimeout(timer); open(); });
+    }
+  }
 
-  <main id="top">
-    <!-- HERO -->
-    <section class="hero">
-      <!-- Свой PNG: положи файл рядом с index.html (например art.png) и раскомментируй строку ниже -->
-      <!-- <img class="hero-art" src="art.png" alt=""> -->
-      <div class="vertical jp" aria-hidden="true">拡張通信</div>
-
-      <div class="hero-core">
-        <p class="clock" id="clock" aria-hidden="true">00:00</p>
-        <h1>Врата расширений</h1>
-        <p class="lead">Когда наступит полночь, впиши имя расширения,<br>которое ищешь…</p>
-
-        <form class="gate" id="gate" role="search" autocomplete="off">
-          <label for="q" class="sr">Поиск расширения</label>
-          <input id="q" type="search" placeholder="впиши имя" spellcheck="false">
-          <button type="submit" aria-label="Искать">
-            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-          </button>
-        </form>
-        <p class="hint">нажми Enter — и нить натянется</p>
-        <p class="epigraph" id="epigraph"></p>
-        <p class="tally" id="tally" hidden></p>
-      </div>
-
-      <a class="scroll" href="#catalog" aria-label="К каталогу"><span></span></a>
-    </section>
-
-    <!-- CATALOG -->
-    <section class="catalog" id="catalog">
-      <header class="section-head">
-        <span class="jp">一覧</span>
-        <h2>Каталог</h2>
-        <p id="count" class="muted"></p>
-      </header>
-      <div class="filters" id="filters">
-        <div class="chips" id="chips" role="group" aria-label="Категории"></div>
-        <div class="toolbar">
-          <button class="more" id="more" type="button" aria-expanded="false" aria-controls="extra" hidden>Прочее<span class="more-n" id="more-n" hidden></span><span class="caret" aria-hidden="true">▾</span></button>
-          <button class="reset" id="reset" type="button" hidden>Сбросить</button>
-          <label class="sort"><span class="sort-lbl">Порядок</span>
-            <select id="sort">
-              <option value="new">Сначала новые</option>
-              <option value="old">Сначала старые</option>
-              <option value="name">По названию А → Я</option>
-              <option value="author">По автору</option>
-            </select>
-          </label>
-        </div>
-        <div class="extra" id="extra" hidden>
-          <p class="extra-title">Прочие теги</p>
-          <div class="extra-chips" id="extra-chips" role="group" aria-label="Прочие теги"></div>
-          <button class="showall" id="showall" type="button" hidden></button>
-        </div>
-      </div>
-      <div class="grid" id="grid"></div>
-      <p class="empty" id="empty" hidden>Это имя не значится в списке…<br><small>попробуй написать иначе</small></p>
-    </section>
-
-    <!-- GUIDE -->
-    <section class="guide" id="guide">
-      <header class="section-head">
-        <span class="jp">手順</span>
-        <h2>Как установить</h2>
-      </header>
-      <ol class="steps">
-        <li>
-          <b>I</b>
-          <h3>Открой SillyTavern</h3>
-          <p>Перейди во вкладку <em>Extensions</em> (значок с кубиками).</p>
-        </li>
-        <li>
-          <b>II</b>
-          <h3>Install extension</h3>
-          <p>Нажми <em>Install extension</em> вверху панели расширений.</p>
-        </li>
-        <li>
-          <b>III</b>
-          <h3>Вставь ссылку</h3>
-          <p>Скопируй ссылку на репозиторий с карточки и вставь в окно установки.</p>
-        </li>
-      </ol>
-    </section>
-
-    <!-- ABOUT -->
-    <section class="about" id="about">
-      <header class="section-head">
-        <span class="jp">序</span>
-        <h2>О месте</h2>
-      </header>
-      <p>Это тихий уголок для расширений SillyTavern. Здесь нет суеты — только список того, что можно подключить к своим историям.</p>
-      <p class="fox-note">Говорят, по ночам здесь бродит лиса. Если увидишь <b>голубой огонёк</b>, иди за ним: он ведёт к нужному расширению.</p>
-      <p class="muted">Неофициальный фан-проект: вдохновлён эстетикой аниме, не связан с правообладателями и не использует их материалы.</p>
-    </section>
-  </main>
-
-  <footer class="foot">
-    <span class="jp">狐火</span>
-    <p>© <span id="year"></span> · сделано с любовью к мрачным вещам · <a class="rss" href="feed.xml">RSS</a></p>
-  </footer>
-
-  <!-- СВЕЧА: ТЕМА -->
-  <button class="candle" id="candle" type="button" aria-label="Сменить тему" aria-pressed="false">
-    <svg viewBox="0 0 40 78" width="30" height="58" aria-hidden="true">
-      <path class="smoke" d="M20 36c-5-6 5-9 0-16c-3-5 3-9 1-14"/>
-      <g class="cf">
-        <path d="M20 6C23 16 31 22 29 33C28 40 24 43 20 43C16 43 12 40 11 33C9 22 17 16 20 6Z" fill="#ff7a3c"/>
-        <path d="M20 22C22 28 26 31 25 37C24 41 22 43 20 43C18 43 16 41 15 37C14 31 18 28 20 22Z" fill="#ffd36b"/>
-      </g>
-      <rect class="wick" x="19" y="40" width="2" height="6"/>
-      <rect class="wax" x="12" y="44" width="16" height="28" rx="2.5"/>
-      <rect class="dish" x="8" y="71" width="24" height="5" rx="2"/>
-    </svg>
-  </button>
-
-  <!-- MODAL -->
-  <dialog id="modal">
-    <form method="dialog"><button class="x" aria-label="Закрыть">×</button></form>
-    <div id="modal-body"></div>
-  </dialog>
-
-  <script src="script.js"></script>
-  <script src="intro.js"></script>
-  <script src="theme.js"></script>
-  <script src="kitsune.js"></script>
-</body>
-</html>
+  /* ---------- свет от курсора ---------- */
+  if (matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const g = document.createElement('div');
+    g.className = 'cursor-glow';
+    document.body.appendChild(g);
+    let x = innerWidth / 2, y = innerHeight / 2, tx = x, ty = y;
+    addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; g.classList.add('on'); }, { passive: true });
+    document.addEventListener('mouseleave', () => g.classList.remove('on'));
+    (function follow() {
+      x += (tx - x) * .12; y += (ty - y) * .12;
+      g.style.transform = `translate(${x}px,${y}px)`;
+      requestAnimationFrame(follow);
+    })();
+  }
+})();

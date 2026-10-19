@@ -1,11 +1,65 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>
-<title>Врата расширений</title>
-<link>https://smokimioki.github.io/Hell/</link>
-<description>Новые расширения для SillyTavern</description>
-<language>ru</language>
-<atom:link href="https://smokimioki.github.io/Hell/feed.xml" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Mon, 19 Oct 2026 04:25:20 GMT</lastBuildDate>
-<item><title>SpendingTracker</title><link>https://smokimioki.github.io/Hell/#spendingtracker</link><guid isPermaLink="false">spendingtracker-2026-10-19T04:25:17.537Z</guid><pubDate>Mon, 19 Oct 2026 04:25:17 GMT</pubDate><description>Расширение считает токены ввода/вывода на каждую генерацию, ведёт дневную статистику расходов и общения с персонажами, а также показывает всё это в удобном дашборде с графиками, ачивками и викториной.</description></item>
-<item><title>Phone ST</title><link>https://smokimioki.github.io/Hell/#phone-st</link><guid isPermaLink="false">phone-st-2026-10-17T03:10:55.564Z</guid><pubDate>Sat, 17 Oct 2026 03:10:55 GMT</pubDate><description>Телефон для таверны с кучей функционала.</description></item>
-</channel></rss>
+/* ---------- фильтры: главный тег + «Прочее» + порядок ---------- */
+.filters{margin-bottom:40px}
+.filters [hidden]{display:none!important}
+.filters .chips{margin-bottom:16px}
+.chip .n{margin-left:.6em;font-size:.9em;letter-spacing:.04em;opacity:.55}
+.chip.on .n{opacity:.9}
+.chip.zero:not(.on){opacity:.4}
+
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.more,.reset{
+  font:inherit;font-family:var(--serif);letter-spacing:.14em;text-transform:uppercase;font-size:.8rem;
+  padding:7px 16px;background:none;color:var(--bone);border:1px solid var(--line);cursor:pointer;transition:.3s;
+}
+.more:hover,.reset:hover{border-color:var(--crimson);color:#fff}
+.more[aria-expanded="true"]{border-color:var(--crimson);box-shadow:0 0 16px rgba(224,36,58,.25)}
+.more .caret{display:inline-block;margin-left:.6em;transition:transform .3s}
+.more[aria-expanded="true"] .caret{transform:rotate(180deg)}
+.more-n{
+  display:inline-grid;place-items:center;min-width:1.5em;height:1.5em;margin-left:.7em;padding:0 .35em;
+  border-radius:99px;background:var(--blood);color:#fff;font-size:.85em;letter-spacing:0;line-height:1;
+}
+.reset{border-style:dashed;color:var(--ash)}
+
+.sort{margin-left:auto;display:flex;align-items:center;gap:10px}
+.sort-lbl{font-family:var(--serif);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash)}
+.sort select{
+  -webkit-appearance:none;appearance:none;border-radius:0;cursor:pointer;
+  font-family:var(--serif);letter-spacing:.14em;text-transform:uppercase;font-size:.8rem;
+  padding:7px 40px 7px 16px;color:var(--bone);border:1px solid var(--line);transition:.3s;
+  background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23f23a52' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 14px center;
+}
+.sort select:hover,.sort select:focus-visible{border-color:var(--crimson);outline:0}
+.sort select option{background:var(--ink-2);color:var(--bone);text-transform:none;letter-spacing:0}
+
+.extra{
+  margin-top:16px;padding:18px 20px 20px;border:1px solid var(--line);
+  background:linear-gradient(160deg,rgba(72,17,32,.35),rgba(30,22,38,.6));animation:rise .4s both;
+}
+.extra-title{margin-bottom:12px;font-family:var(--serif);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ash)}
+.extra-chips{display:flex;flex-wrap:wrap;gap:8px}
+.tagchip{
+  font:inherit;font-family:var(--serif);letter-spacing:.1em;text-transform:uppercase;font-size:.72rem;
+  padding:4px 12px;border:1px solid var(--line);border-radius:99px;background:none;color:var(--ash);cursor:pointer;transition:.25s;
+}
+.tagchip:hover{color:var(--bone);border-color:var(--crimson)}
+.tagchip.on{color:#fff;background:var(--blood);border-color:var(--blood);box-shadow:0 0 14px rgba(224,36,58,.35)}
+.tagchip .n{margin-left:.5em;opacity:.6}
+.showall{
+  margin-top:14px;padding:0;background:none;border:0;border-bottom:1px solid var(--line);cursor:pointer;
+  font:inherit;font-size:.85rem;letter-spacing:.08em;color:var(--crimson);
+}
+.showall:hover{color:var(--bone);border-color:var(--crimson)}
+
+/* на карточках: главный тег выделен, остальные тише */
+.tags span.cat{background:var(--blood);border-color:var(--blood);color:#fff}
+.tags span.rest{border-style:dashed;color:var(--ash)}
+
+[data-theme="light"] .extra{background:linear-gradient(160deg,rgba(255,250,240,.92),rgba(236,226,208,.96))}
+[data-theme="light"] .more,[data-theme="light"] .sort select{color:var(--bone)}
+
+@media (max-width:600px){
+  .toolbar{gap:10px}
+  .sort{margin-left:0;width:100%}
+  .sort select{flex:1}
+}

@@ -1,105 +1,49 @@
-/* ---------- заставка с огоньком ---------- */
-@property --r{syntax:'<length>';inherits:false;initial-value:-15vmax}
+.hero-core{position:relative;z-index:2}
 
-.intro{display:none}
-.intro-on{overflow:hidden}
-.intro-on .intro{
-  --r:-15vmax;
-  position:fixed;inset:0;z-index:100;display:grid;place-items:center;
-  background:radial-gradient(circle at 50% 46%, transparent var(--r), #07050a calc(var(--r) + 14vmax));
+/* ---------- место под твой PNG (раскомментируй <img class="hero-art"> в index.html) ---------- */
+.hero-art{
+  position:absolute;left:clamp(14px,7vw,110px);top:18vh;width:clamp(120px,18vw,260px);height:auto;
+  pointer-events:none;z-index:1;transition:opacity .6s;
+  filter:drop-shadow(0 0 24px rgba(242,58,82,.35));
 }
-.intro.open{animation:reveal 1.7s cubic-bezier(.5,0,.2,1) forwards}
-@keyframes reveal{to{--r:140vmax}}
+.intro-on .hero-art{opacity:0}
 
-.intro-core{position:relative;display:grid;justify-items:center;margin-top:-4vh}
-.intro-core::before{ /* ореол */
-  content:"";position:absolute;top:50%;left:50%;width:520px;height:520px;margin:-300px 0 0 -260px;
-  background:radial-gradient(circle,rgba(255,90,60,.38),rgba(179,18,31,.16) 40%,transparent 68%);
-  opacity:0;animation:halo 2.2s .5s ease-out forwards,pulse 2.4s 2.7s ease-in-out infinite alternate;
+/* ---------- лисьи огни (кицунэ-би) ---------- */
+.foxfire-layer{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.foxfire{
+  position:absolute;border-radius:50% 50% 50% 50% / 68% 68% 32% 32%;
+  background:radial-gradient(ellipse at 50% 70%,#e6f7ff 0,#8fd0ff 35%,rgba(90,150,255,.35) 65%,transparent 80%);
+  box-shadow:0 0 18px 4px rgba(120,190,255,.45);
+  opacity:.75;
+  animation:fdrift 12s ease-in-out infinite alternate, fflick 1.6s ease-in-out infinite alternate;
 }
-@keyframes halo{to{opacity:1}}
-@keyframes pulse{from{transform:scale(1);opacity:.85}to{transform:scale(1.12);opacity:1}}
-
-.flame{
-  position:relative;overflow:visible;
-  opacity:0;transform:scale(.15);transform-origin:50% 100%;
-  animation:ignite 1.9s .3s cubic-bezier(.2,.8,.2,1) forwards;
-  filter:drop-shadow(0 0 22px rgba(255,90,60,.85));
+@keyframes fdrift{
+  0%{transform:translate(0,0)}
+  33%{transform:translate(40px,-60px)}
+  66%{transform:translate(-30px,-110px)}
+  100%{transform:translate(25px,-170px)}
 }
-@keyframes ignite{
-  0%{opacity:0;transform:scale(.15)}
-  25%{opacity:1;transform:scale(.45,.3)}
-  100%{opacity:1;transform:scale(1)}
-}
-.flame path{transform-box:fill-box;transform-origin:50% 100%}
-.f-o{animation:lick 1.1s ease-in-out infinite alternate}
-.f-m{animation:lick .8s .1s ease-in-out infinite alternate}
-.f-i{animation:lick .6s .2s ease-in-out infinite alternate}
-@keyframes lick{
-  0%{transform:scale(1,1) skewX(0)}
-  50%{transform:scale(.94,1.08) skewX(-2.5deg)}
-  100%{transform:scale(1.04,.95) skewX(2.5deg)}
+@keyframes fflick{from{opacity:.35;scale:.85}to{opacity:.9;scale:1.1}}
+[data-theme="light"] .foxfire{
+  background:radial-gradient(ellipse at 50% 70%,#cfe8ff 0,#5f9bf0 40%,rgba(60,110,220,.3) 65%,transparent 80%);
+  box-shadow:0 0 14px 3px rgba(80,140,230,.4);opacity:.6;
 }
 
-.intro-text{
-  margin-top:26px;font-family:var(--serif);font-size:1.15rem;letter-spacing:.5em;text-transform:uppercase;
-  color:var(--bone);opacity:0;animation:txt 1.2s 1.7s ease-out forwards;text-shadow:0 0 14px rgba(242,58,82,.7);
+/* ---------- тории-разделители ---------- */
+.guide::before,.about::before{
+  content:"";display:block;width:60px;height:44px;margin:0 auto 44px;opacity:.85;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 44'%3E%3Cpath d='M2 8Q30 2 58 8L56 14Q30 9 4 14Z M10 18H50V23H10Z M14 14V42H20V14Z M40 14V42H46V14Z' fill='%23f23a52'/%3E%3C/svg%3E") center/contain no-repeat;
+  filter:drop-shadow(0 0 8px rgba(242,58,82,.6));
 }
-@keyframes txt{from{opacity:0;transform:translateY(8px)}to{opacity:.9;transform:none}}
+.about::before{margin-left:0}
 
-.spark{
-  position:absolute;bottom:60%;left:50%;width:4px;height:4px;border-radius:50%;
-  background:#ffb347;box-shadow:0 0 8px #ff7a3c;opacity:0;
-  animation:rise-spark 2.6s ease-out infinite;
-}
-.spark:nth-child(1){margin-left:-14px;animation-delay:1.4s}
-.spark:nth-child(2){margin-left:10px;animation-delay:1.9s;animation-duration:3s}
-.spark:nth-child(3){margin-left:-4px;animation-delay:2.3s}
-.spark:nth-child(4){margin-left:20px;animation-delay:2.8s;animation-duration:2.2s}
-.spark:nth-child(5){margin-left:-22px;animation-delay:3.1s;animation-duration:3.2s}
-@keyframes rise-spark{
-  0%{opacity:0;transform:translate(0,0) scale(1)}
-  15%{opacity:1}
-  100%{opacity:0;transform:translate(var(--dx,12px),-190px) scale(.2)}
-}
-.spark:nth-child(odd){--dx:-18px}
+.fox-note{color:var(--ash);font-style:italic}
+.fox-note b{color:#8fd0ff;font-weight:400;text-shadow:0 0 10px rgba(120,190,255,.7)}
+[data-theme="light"] .fox-note b{color:#3d74c9;text-shadow:none}
 
-.intro.open .intro-core{animation:core-out 1.2s ease-in forwards}
-@keyframes core-out{to{opacity:0;transform:scale(1.5)}}
-
-.skip{
-  position:absolute;bottom:30px;right:30px;background:none;border:1px solid var(--line);color:var(--ash);
-  font-family:var(--serif);font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;
-  padding:8px 16px;cursor:pointer;transition:.3s;opacity:0;animation:txt 1s 1s forwards;
-}
-.skip:hover{color:#fff;border-color:var(--crimson)}
-
-/* появление героя после заставки */
-.hero-core{transition:opacity 1.2s .25s ease,transform 1.2s .25s ease}
-.intro-on .hero-core{opacity:0;transform:translateY(16px)}
-
-/* огонёк у логотипа */
-.mini-flame{display:inline-block;width:12px;height:19px;margin-right:2px;filter:drop-shadow(0 0 6px rgba(255,100,60,.9))}
-.mini-flame svg{display:block;width:100%;height:100%;overflow:visible}
-.mini-flame .m-o{transform-box:fill-box;transform-origin:50% 100%;animation:lick 1s ease-in-out infinite alternate}
-.mini-flame .m-i{transform-box:fill-box;transform-origin:50% 100%;animation:lick .7s .1s ease-in-out infinite alternate}
-
-/* свет от курсора */
-.cursor-glow{
-  position:fixed;top:0;left:0;width:520px;height:520px;margin:-260px 0 0 -260px;z-index:3;pointer-events:none;
-  background:radial-gradient(circle,rgba(255,110,70,.14),rgba(179,18,31,.06) 45%,transparent 70%);
-  opacity:0;transition:opacity .6s;will-change:transform;
-}
-.cursor-glow.on{opacity:1}
-
-@media (max-width:700px){
-  .intro-core::before{width:340px;height:340px;margin:-200px 0 0 -170px}
-  .intro-text{font-size:.95rem;letter-spacing:.35em}
-  .skip{right:16px;bottom:18px}
+@media (max-width:900px){
+  .hero-art{width:90px;top:11vh;left:12px;opacity:.6}
 }
 @media (prefers-reduced-motion:reduce){
-  .intro-on .intro{display:none}
-  .intro-on{overflow:auto}
-  .intro-on .hero-core{opacity:1;transform:none}
-  .cursor-glow{display:none}
+  .foxfire-layer{display:none}
 }

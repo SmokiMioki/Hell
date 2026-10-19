@@ -1,105 +1,57 @@
-<!doctype html>
-<html lang="ru">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex,nofollow">
-  <title>Печать · управление каталогом</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=EB+Garamond:wght@400;500&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="admin.css">
-</head>
-<body>
-  <div class="fog" aria-hidden="true"></div>
+body::after{display:none}
+.admin{position:relative;z-index:2;max-width:820px;margin:0 auto;padding:130px clamp(20px,5vw,40px) 90px}
+.panel{padding:0;margin-bottom:34px;border:1px solid var(--line);background:linear-gradient(160deg,rgba(42,9,16,.5),rgba(15,10,16,.92));padding:28px clamp(18px,4vw,32px)}
+.panel h3{font-family:var(--serif);font-size:1.5rem;letter-spacing:.08em;margin-bottom:20px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{display:block;margin-bottom:18px;font-family:var(--serif);font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ash)}
+.field input,.field textarea,.fetchrow input{
+  display:block;width:100%;margin-top:6px;padding:11px 14px;
+  background:rgba(0,0,0,.45);border:1px solid var(--line);color:var(--bone);
+  font:inherit;font-size:1rem;letter-spacing:.02em;text-transform:none;outline:0;transition:.3s;
+}
+.field textarea{resize:vertical}
+.field input:focus,.field textarea:focus,.fetchrow input:focus{border-color:var(--crimson);box-shadow:0 0 18px rgba(224,36,58,.3)}
+.check{display:flex;align-items:center;gap:10px;color:var(--ash);font-size:.95rem;margin-bottom:6px;cursor:pointer}
+.check input{accent-color:var(--blood)}
+.fetchrow{display:flex;gap:12px;align-items:stretch;margin-bottom:6px}
+.fetchrow input{margin:0;flex:1}
+.fetchrow .btn{white-space:nowrap}
+#form{margin-top:24px}
+details{margin-top:22px;color:#cdbfb0}
+summary{cursor:pointer;color:var(--crimson);letter-spacing:.1em}
+details ol{margin:12px 0 10px 22px}
+details a{color:var(--crimson);text-decoration:underline}
+.status{margin-bottom:24px;padding:12px 18px;border:1px solid var(--line);font-size:1rem}
+.status.ok{border-color:#3f9b5a;color:#9be0b1;background:rgba(63,155,90,.08)}
+.status.err{border-color:var(--crimson);color:#ff9aa6;background:rgba(179,18,31,.12)}
+.status.wait{color:var(--ash)}
+.list{list-style:none}
+.list li{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.list li:last-child{border-bottom:0}
+.list .t{flex:1;min-width:0}
+.list .t b{font-family:var(--serif);font-size:1.2rem;font-weight:600;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.list .t span{font-size:.85rem;color:var(--ash)}
+.list button{background:none;border:1px solid var(--line);color:var(--bone);padding:6px 12px;cursor:pointer;font:inherit;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;transition:.3s}
+.list button:hover{border-color:var(--crimson);color:#fff}
+.list button.del:hover{background:var(--blood)}
+.list .none{color:var(--ash);font-style:italic;padding:10px 0}
+.imgs{margin-bottom:18px}
+.imgs .lbl{display:block;margin-bottom:10px;font-family:var(--serif);font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ash)}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-bottom:12px}
+.thumbs:empty{display:none}
+.th{position:relative;aspect-ratio:16/10;border:1px solid var(--line);background:rgba(0,0,0,.45);overflow:hidden;cursor:pointer}
+.th img{display:block;width:100%;height:100%;object-fit:cover}
+.th.first{border-color:var(--crimson);box-shadow:0 0 14px rgba(224,36,58,.35);cursor:default}
+.th.first::after{content:"обложка";position:absolute;left:0;bottom:0;padding:1px 7px;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;background:var(--blood);color:#fff}
+.th .rm{position:absolute;top:3px;right:3px;width:24px;height:24px;padding:0;border:0;background:rgba(0,0,0,.7);color:#fff;font-size:1rem;line-height:1;cursor:pointer;transition:.3s}
+.th .rm:hover{background:var(--blood)}
+.imgs .small{margin-top:10px}
+button:disabled{opacity:.5;cursor:wait}
+@media (max-width:640px){.two{grid-template-columns:1fr;gap:0}.fetchrow{flex-direction:column}}
 
-  <header class="top">
-    <a class="logo" href="./"><span class="jp">拡張</span> Врата</a>
-    <nav><a href="./">← На сайт</a></nav>
-  </header>
-
-  <main class="admin">
-    <header class="section-head">
-      <span class="jp">印</span>
-      <h2>Печать</h2>
-      <p class="muted">управление каталогом</p>
-    </header>
-
-    <p id="status" class="status" role="status" hidden></p>
-
-    <!-- 1. ПОДКЛЮЧЕНИЕ -->
-    <section class="panel" id="p-connect">
-      <h3>1 · Подключение</h3>
-      <div class="two">
-        <label class="field">Аккаунт GitHub<input id="owner" placeholder="username"></label>
-        <label class="field">Репозиторий сайта<input id="repo" placeholder="extensions"></label>
-      </div>
-      <div class="two">
-        <label class="field">Ветка<input id="branch" value="main"></label>
-        <label class="field">Токен доступа<input id="token" type="password" placeholder="github_pat_…" autocomplete="off"></label>
-      </div>
-      <label class="check"><input type="checkbox" id="remember" checked> запомнить на этом устройстве</label>
-      <div class="row"><button class="btn" id="connect">Подключиться</button></div>
-
-      <details>
-        <summary>Где взять токен</summary>
-        <ol>
-          <li>Открой <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">создание токена</a>.</li>
-          <li>Repository access → <b>Only select repositories</b> → выбери репозиторий сайта.</li>
-          <li>Permissions → Repository permissions → <b>Contents: Read and write</b>.</li>
-          <li>Generate token, скопируй и вставь сюда.</li>
-        </ol>
-        <p class="small">Токен хранится только в твоём браузере и отправляется только на api.github.com. Без него эта страница ничего не умеет, так что посторонние ничего не изменят.</p>
-      </details>
-    </section>
-
-    <!-- 2. ДОБАВИТЬ -->
-    <section class="panel" id="p-add" hidden>
-      <h3 id="form-title">2 · Добавить расширение</h3>
-
-      <div class="fetchrow">
-        <input id="url" placeholder="https://github.com/автор/репозиторий">
-        <button class="btn ghost" id="pull" type="button">Подтянуть</button>
-      </div>
-      <p class="small">Вставь ссылку: название, автор, описание и прочие теги заполнятся сами. Главный тег выбери сам. Всё можно поправить.</p>
-
-      <form id="form" autocomplete="off">
-        <div class="two">
-          <label class="field">Название<input id="f-name" required></label>
-          <label class="field">Автор<input id="f-by"></label>
-        </div>
-        <label class="field">Описание<textarea id="f-desc" rows="3"></textarea></label>
-        <label class="field">Главный тег (категория)<input id="f-cat" list="cats" required placeholder="Например: Интерфейс"></label>
-        <datalist id="cats"></datalist>
-        <div class="catpick" id="catpick"></div>
-        <label class="field">Прочие теги через запятую<input id="f-tags" placeholder="кошка, память"></label>
-        <p class="small tagnote">Главный тег — это кнопка-фильтр на сайте, он один. Остальные уйдут в раздел «Прочее» и не будут засорять каталог.</p>
-        <label class="field">Ссылка на репозиторий<input id="f-repo" required placeholder="https://github.com/…"></label>
-
-        <div class="imgs">
-          <span class="lbl">Картинки · как выглядит расширение</span>
-          <div class="thumbs" id="thumbs"></div>
-          <button class="btn ghost" id="add-img" type="button">Добавить картинки</button>
-          <input id="f-files" type="file" accept="image/*" multiple hidden>
-          <p class="small">До 8 штук. Первая показывается на карточке; чтобы сделать другую первой — нажми на неё. Перед загрузкой сжимаются в webp.</p>
-        </div>
-
-        <div class="row">
-          <button class="btn" id="submit" type="submit">Отправить в каталог</button>
-          <button class="btn ghost" id="cancel" type="button" hidden>Отмена</button>
-        </div>
-      </form>
-    </section>
-
-    <!-- 3. СПИСОК -->
-    <section class="panel" id="p-list" hidden>
-      <h3>3 · Уже в каталоге <span id="n" class="muted"></span></h3>
-      <ul class="list" id="list"></ul>
-      <p class="small">После сохранения сайт обновляется примерно через минуту.</p>
-    </section>
-  </main>
-
-  <script src="admin.js"></script>
-</body>
-</html>
+/* главный тег */
+.catpick{display:flex;flex-wrap:wrap;gap:8px;margin:-6px 0 18px}
+.catpick:empty{display:none}
+.catpick .chip{padding:4px 12px;font-size:.72rem}
+.tagnote{margin:-8px 0 18px}
+.list .t em{color:var(--crimson);font-style:normal;letter-spacing:.08em;text-transform:uppercase;font-size:.75rem;margin-right:6px}
