@@ -23,5 +23,16 @@
     ],
     "repo": "https://github.com/niemandswasser/SpendingTracker",
     "added": "2026-10-19T04:25:17.537Z"
+  },
+  {
+    "name": "GameCollection",
+    "by": "KiskaSora",
+    "desc": "мини игры внутри SillyTavern \nигры: Block Blast, сапёр, 2048, мемори, Flappy Bird",
+    "cat": "Развлечение",
+    "tags": [
+      "игры"
+    ],
+    "repo": "https://github.com/KiskaSora/GameCollection",
+    "added": "2026-10-19T10:24:52.368Z"
   }
 ]
