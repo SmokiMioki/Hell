@@ -291,6 +291,7 @@
     e.preventDefault();
     state.q = q.value; refresh();
     $('#catalog').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+    document.dispatchEvent(new CustomEvent('gate:search', { detail: { q: q.value, found: grid.querySelectorAll('.card').length } }));
   });
 
   /* ---------- часы ---------- */

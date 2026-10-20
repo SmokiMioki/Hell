@@ -1,0 +1,48 @@
+/* ---------- лиса-проводник ---------- */
+#fox{
+  --fox-w:clamp(190px,21vw,290px);
+  position:fixed;left:0;top:0;z-index:60;width:var(--fox-w);
+  pointer-events:none;will-change:transform;opacity:0;transition:opacity .6s;
+}
+#fox.show{opacity:1}
+.fox-flip{width:100%;transform-origin:50% 100%}
+.fox-flip.left{transform:scaleX(-1)}
+.fox-body{
+  display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none;
+  transform-origin:50% 100%;filter:drop-shadow(0 8px 14px rgba(0,0,0,.45));
+}
+.fox-body.breathe{animation:fox-breathe 3.8s ease-in-out infinite}
+.fox-body.walking{animation:fox-bob .42s ease-in-out infinite}
+@keyframes fox-breathe{0%,100%{transform:scale(1,1)}50%{transform:scale(.996,1.014)}}
+@keyframes fox-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+/* кликабельна только сама лиса, а не весь прозрачный холст */
+.fox-hit{position:absolute;left:34%;top:30%;width:34%;height:62%;border-radius:40%;pointer-events:auto;cursor:pointer}
+
+.fox-bubble{
+  position:absolute;left:50%;bottom:calc(100% - 10px);
+  transform:translateX(calc(-50% + var(--bx,0px)));
+  width:max-content;max-width:min(280px,78vw);padding:10px 16px 11px;
+  font-family:var(--serif);font-size:1.12rem;line-height:1.35;color:var(--bone);
+  background:linear-gradient(160deg,rgba(72,17,32,.94),rgba(29,21,35,.97));
+  border:1px solid var(--crimson);box-shadow:0 8px 30px rgba(0,0,0,.5),0 0 18px rgba(224,36,58,.25);
+  opacity:0;transition:opacity .25s;pointer-events:none;
+}
+.fox-bubble.on{opacity:1}
+.fox-bubble::after{
+  content:"";position:absolute;bottom:-6px;left:calc(50% - var(--bx,0px));width:10px;height:10px;margin-left:-5px;
+  background:rgba(29,21,35,.97);border:solid var(--crimson);border-width:0 1px 1px 0;transform:rotate(45deg);
+}
+[data-theme="light"] .fox-bubble{background:linear-gradient(160deg,#fff7ea,#efe2cb);color:#2a1d22;border-color:#b3142c}
+[data-theme="light"] .fox-bubble::after{background:#efe2cb}
+
+.fox-toggle{
+  margin-left:.8em;padding:0;background:none;border:0;border-bottom:1px solid var(--line);cursor:pointer;
+  font:inherit;color:inherit;opacity:.8;
+}
+.fox-toggle:hover{opacity:1;border-color:var(--crimson)}
+
+@media (prefers-reduced-motion:reduce){
+  #fox{transition:none}
+  .fox-body.breathe,.fox-body.walking{animation:none}
+}
