@@ -5,7 +5,8 @@
 <description>Новые расширения для SillyTavern</description>
 <language>ru</language>
 <atom:link href="https://smokimioki.github.io/Hell/feed.xml" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 24 Oct 2026 10:20:40 GMT</lastBuildDate>
+<lastBuildDate>Sat, 24 Oct 2026 10:22:58 GMT</lastBuildDate>
+<item><title>My lorebook manager</title><link>https://smokimioki.github.io/Hell/#my-lorebook-manager</link><guid isPermaLink="false">my-lorebook-manager-2026-10-24T10:22:56.062Z</guid><pubDate>Sat, 24 Oct 2026 10:22:56 GMT</pubDate><description>Расширенный менеджер лорбуков для SillyTavern с папками, вложенными каталогами, тегами, статистикой токенов, массовым управлением и экспортом в JSON или ZIP</description></item>
 <item><title>ST ThemeAssist</title><link>https://smokimioki.github.io/Hell/#st-themeassist</link><guid isPermaLink="false">st-themeassist-2026-10-24T10:20:38.365Z</guid><pubDate>Sat, 24 Oct 2026 10:20:38 GMT</pubDate><description>Упрощает управление темами SillyTavern: позволяет импортировать, искать, отмечать избранное, применять и массово удалять темы в одной панели.</description></item>
 <item><title>BB Cleanup Manager</title><link>https://smokimioki.github.io/Hell/#bb-cleanup-manager</link><guid isPermaLink="false">bb-cleanup-manager-2026-10-24T10:15:56.659Z</guid><pubDate>Sat, 24 Oct 2026 10:15:56 GMT</pubDate><description>Находит старые короткие чаты и неиспользуемые лорбуки, позволяя проверить их перед удалением и создать ZIP-резервную копию.</description></item>
 <item><title>BB Extension Sorter</title><link>https://smokimioki.github.io/Hell/#bb-extension-sorter</link><guid isPermaLink="false">bb-extension-sorter-2026-10-24T10:15:17.679Z</guid><pubDate>Sat, 24 Oct 2026 10:15:17 GMT</pubDate><description>Позволяет сортировать расширения SillyTavern по цветным папкам и колонкам с сохранением пользовательского порядка.</description></item>
