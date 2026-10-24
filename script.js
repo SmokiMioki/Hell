@@ -1,7 +1,8 @@
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   let data = [];
-  const state = { q: '', cat: 'all', extra: new Set(), sort: 'new', all: false };
+  const state = { q: '', cat: 'all', auth: 'all', extra: new Set(), sort: 'new', all: false, page: 1, per: 10 };
+  const PER_OPTIONS = [10, 24, 50];
   const kanji = ['一','二','三','四','五','六','七','八','九','十'];
   const root = document.documentElement;
 
@@ -78,7 +79,15 @@
   const showAll = $('#showall'), resetBtn = $('#reset'), sortSel = $('#sort');
   const tagFind = $('#tagfind'), tagEmpty = $('#tagempty');
   const catBtn = $('#catbtn'), catLbl = $('#cat-l'), catN = $('#cat-n'), catModal = $('#catmodal');
+  const authBtn = $('#authbtn'), authLbl = $('#auth-l'), authN = $('#auth-n'), authModal = $('#authmodal');
+  const authChips = $('#authchips'), authFind = $('#authfind');
+  const perSel = $('#per'), pager = $('#pager');
   let panelOpen = false;
+
+  /* ---------- авторы: список собирается из данных сам ---------- */
+  const NOBY = 'Без автора';
+  const aLabels = new Map();                      // ключ автора (нижний регистр) → как показывать
+  const regAuthor = s => { const a = String(s || '').trim() || NOBY, k = a.toLowerCase(); if (!aLabels.has(k)) aLabels.set(k, a); return k; };
 
   // Синонимы тегов: «что встретили» (нижний регистр) → «как показывать».
   // Дописывай сюда новые пары — данные в extensions.json трогать не нужно.
@@ -109,12 +118,14 @@
     let cat = String(e.cat || '').trim(), rest = tags;
     if (!cat) { cat = tags[0] || NOCAT; rest = tags.slice(1); }   // старые записи без cat
     e._raw = (e.tags || []).join(' ');             // исходные теги — чтобы поиск «RP» находил и после слияния
+    e._by = regAuthor(e.by);
     e._cat = reg(cat);
     e._extra = [...new Set(rest.map(reg))].filter(k => k !== e._cat);
   }
 
   function ok(e, o = {}) {
     if (!o.noCat && state.cat !== 'all' && e._cat !== state.cat) return false;
+    if (!o.noAuth && state.auth !== 'all' && e._by !== state.auth) return false;
     for (const t of state.extra) if (!e._extra.includes(t)) return false;
     const q = state.q.trim().toLowerCase();
     if (!q) return true;
@@ -143,6 +154,8 @@
     catN.hidden = picked; catN.textContent = cats.length;
     catBtn.classList.toggle('active', picked);
 
+    renderAuthors();
+
     // «Прочее»: теги только из того, что сейчас видно, со счётчиками
     const c = {};
     data.filter(e => ok(e)).forEach(e => e._extra.forEach(t => c[t] = (c[t] || 0) + 1));
@@ -164,15 +177,43 @@
     moreN.hidden = !state.extra.size; moreN.textContent = state.extra.size;
     more.setAttribute('aria-expanded', String(panelOpen && !!full.length));
     extraBox.hidden = !panelOpen || !full.length;
-    resetBtn.hidden = state.cat === 'all' && !state.extra.size;
+    resetBtn.hidden = state.cat === 'all' && state.auth === 'all' && !state.extra.size;
   }
-  const refresh = () => { renderFilters(); renderCards(); };
+
+  // окно «Авторы»: счётчики учитывают остальные фильтры; новые авторы из extensions.json появляются сами
+  function renderAuthors() {
+    const total = {}; data.forEach(e => total[e._by] = (total[e._by] || 0) + 1);
+    const nobyKey = NOBY.toLowerCase();
+    const authors = Object.keys(total).sort((a, b) =>
+      (a === nobyKey) - (b === nobyKey) || total[b] - total[a] || aLabels.get(a).localeCompare(aLabels.get(b), 'ru'));
+    const cnt = {}; data.forEach(e => { if (ok(e, { noAuth: true })) cnt[e._by] = (cnt[e._by] || 0) + 1; });
+    const sum = Object.values(cnt).reduce((x, y) => x + y, 0);
+    authFind.hidden = authors.length <= 12;
+    const aq = authFind.hidden ? '' : authFind.value.trim().toLowerCase();
+    const list = aq ? authors.filter(k => aLabels.get(k).toLowerCase().includes(aq) || k === state.auth) : authors;
+    authChips.innerHTML = [['all', 'Все', sum], ...list.map(k => [k, aLabels.get(k), cnt[k] || 0])].map(([k, l, n]) =>
+      `<button class="chip${state.auth === k ? ' on' : ''}${n || state.auth === k ? '' : ' zero'}" type="button" data-k="${esc(k)}" aria-pressed="${state.auth === k}">${esc(l)}<span class="n">${n}</span></button>`
+    ).join('');
+    const picked = state.auth !== 'all';
+    authLbl.textContent = picked ? aLabels.get(state.auth) : 'Авторы';
+    authN.hidden = picked; authN.textContent = authors.length;
+    authBtn.classList.toggle('active', picked);
+  }
+  const refresh = () => { state.page = 1; renderFilters(); renderCards(); };
 
   chips.addEventListener('click', e => {
     const b = e.target.closest('.chip'); if (!b) return;
     state.cat = b.dataset.k; state.extra.clear(); state.all = false; refresh();
     catModal.close();
   });
+  authBtn.addEventListener('click', () => { if (!authModal.open) authModal.showModal(); });
+  authModal.addEventListener('click', e => { if (e.target === authModal) authModal.close(); });
+  authChips.addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (!b) return;
+    state.auth = b.dataset.k; refresh();
+    authModal.close();
+  });
+  authFind.addEventListener('input', renderAuthors);
   // кнопка «Категории» — выскакивает окно с выбором (Esc, крестик и клик мимо закрывают)
   catBtn.addEventListener('click', () => { if (!catModal.open) catModal.showModal(); });
   catModal.addEventListener('click', e => { if (e.target === catModal) catModal.close(); });
@@ -183,12 +224,20 @@
   more.addEventListener('click', () => { panelOpen = !panelOpen; renderFilters(); });
   showAll.addEventListener('click', () => { state.all = !state.all; renderFilters(); });
   tagFind.addEventListener('input', renderFilters);
-  resetBtn.addEventListener('click', () => { state.cat = 'all'; state.extra.clear(); state.all = false; tagFind.value = ''; refresh(); });
+  resetBtn.addEventListener('click', () => { state.cat = 'all'; state.auth = 'all'; state.extra.clear(); state.all = false; tagFind.value = ''; authFind.value = ''; refresh(); });
   try { const sv = localStorage.getItem('gate-sort'); if (sv && [...sortSel.options].some(o => o.value === sv)) state.sort = sv; } catch {}
   sortSel.value = state.sort;
   sortSel.addEventListener('change', () => {
     state.sort = sortSel.value;
     try { localStorage.setItem('gate-sort', state.sort); } catch {}
+    state.page = 1;
+    renderCards();
+  });
+  try { const pv = +localStorage.getItem('gate-per'); if (PER_OPTIONS.includes(pv)) state.per = pv; } catch {}
+  perSel.value = String(state.per);
+  perSel.addEventListener('change', () => {
+    state.per = +perSel.value; state.page = 1;
+    try { localStorage.setItem('gate-per', state.per); } catch {}
     renderCards();
   });
 
@@ -204,12 +253,39 @@
     return `<span class="cat">${esc(labels.get(e._cat))}</span>` + v.map(t => `<span>${esc(t)}</span>`).join('') +
       (max && x.length > max ? `<span class="rest">+${x.length - max}</span>` : '');
   }
+  let found = 0;                                    // сколько расширений подошло всего (не только на странице)
+  function renderPager(pages) {
+    pager.hidden = pages < 2;
+    if (pages < 2) { pager.innerHTML = ''; return; }
+    const cur = state.page;
+    const nums = [...new Set([1, pages, cur - 1, cur, cur + 1])].filter(n => n >= 1 && n <= pages).sort((a, b) => a - b);
+    let out = `<button class="pg nav" type="button" data-p="${cur - 1}" aria-label="Назад"${cur === 1 ? ' disabled' : ''}>‹</button>`;
+    let prev = 0;
+    for (const n of nums) {
+      if (n - prev > 1) out += '<span class="pg gap" aria-hidden="true">…</span>';
+      out += `<button class="pg${n === cur ? ' on' : ''}" type="button" data-p="${n}"${n === cur ? ' aria-current="page"' : ''}>${n}</button>`;
+      prev = n;
+    }
+    out += `<button class="pg nav" type="button" data-p="${cur + 1}" aria-label="Вперёд"${cur === pages ? ' disabled' : ''}>›</button>`;
+    pager.innerHTML = out;
+  }
+  pager.addEventListener('click', e => {
+    const b = e.target.closest('button[data-p]'); if (!b || b.disabled) return;
+    state.page = +b.dataset.p;
+    renderCards();
+    $('#catalog').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+  });
   function renderCards() {
     const list = data.filter(e => ok(e)).sort(cmp[state.sort] || cmp.new);
-    grid.innerHTML = list.map((e, i) => {
-      const im = e.images || [];
+    found = list.length;
+    const pages = Math.max(1, Math.ceil(list.length / state.per));
+    if (state.page > pages) state.page = pages;
+    const start = (state.page - 1) * state.per;
+    const part = list.slice(start, start + state.per);
+    grid.innerHTML = part.map((e, k) => {
+      const im = e.images || [], i = start + k;
       return `
-      <article class="card${im.length ? ' has-shot' : ''}" tabindex="0" data-i="${data.indexOf(e)}" style="animation-delay:${i * 70}ms">
+      <article class="card${im.length ? ' has-shot' : ''}" tabindex="0" data-i="${data.indexOf(e)}" style="animation-delay:${Math.min(k, 12) * 70}ms">
         ${im.length ? `<div class="shot"><img src="${esc(im[0])}" alt="" loading="lazy" decoding="async">${im.length > 1 ? `<span class="cnt">${im.length}</span>` : ''}</div>` : ''}
         <span class="num jp">${kanji[i] || i + 1}</span>
         <h3>${esc(e.name)}</h3>
@@ -219,7 +295,8 @@
       </article>`;
     }).join('');
     empty.hidden = list.length > 0;
-    count.textContent = list.length ? `найдено: ${list.length}` : '';
+    count.textContent = list.length ? `найдено: ${list.length}` + (pages > 1 ? ` · показано ${start + 1}–${start + part.length}` : '') : '';
+    renderPager(pages);
     grid.appendChild(linkSvg);
     clearLink();
   }
@@ -339,7 +416,7 @@
     e.preventDefault();
     state.q = q.value; refresh();
     $('#catalog').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
-    document.dispatchEvent(new CustomEvent('gate:search', { detail: { q: q.value, found: grid.querySelectorAll('.card').length } }));
+    document.dispatchEvent(new CustomEvent('gate:search', { detail: { q: q.value, found } }));
   });
 
   /* ---------- часы ---------- */

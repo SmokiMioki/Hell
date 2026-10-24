@@ -90,6 +90,7 @@
       <div class="filters" id="filters">
         <div class="toolbar">
           <button class="more" id="catbtn" type="button" aria-haspopup="dialog" aria-controls="catmodal"><span id="cat-l">Категории</span><span class="more-n" id="cat-n" hidden></span><span class="caret" aria-hidden="true">▾</span></button>
+          <button class="more" id="authbtn" type="button" aria-haspopup="dialog" aria-controls="authmodal"><span id="auth-l">Авторы</span><span class="more-n" id="auth-n" hidden></span><span class="caret" aria-hidden="true">▾</span></button>
           <button class="more" id="more" type="button" aria-expanded="false" aria-controls="extra" hidden>Прочее<span class="more-n" id="more-n" hidden></span><span class="caret" aria-hidden="true">▾</span></button>
           <button class="reset" id="reset" type="button" hidden>Сбросить</button>
           <label class="sort"><span class="sort-lbl">Порядок</span>
@@ -98,6 +99,13 @@
               <option value="old">Сначала старые</option>
               <option value="name">По названию А → Я</option>
               <option value="author">По автору</option>
+            </select>
+          </label>
+          <label class="sort per"><span class="sort-lbl">Показывать</span>
+            <select id="per">
+              <option value="10">10</option>
+              <option value="24">24</option>
+              <option value="50">50</option>
             </select>
           </label>
         </div>
@@ -110,6 +118,7 @@
         </div>
       </div>
       <div class="grid" id="grid"></div>
+      <nav class="pager" id="pager" aria-label="Страницы каталога" hidden></nav>
       <p class="empty" id="empty" hidden>Это имя не значится в списке…<br><small>попробуй написать иначе</small></p>
     </section>
 
@@ -181,6 +190,14 @@
     <form method="dialog"><button class="x" aria-label="Закрыть">×</button></form>
     <h3 class="cat-title" id="cat-title">Категории</h3>
     <div class="chips" id="chips" role="group" aria-label="Категории"></div>
+  </dialog>
+
+  <!-- ОКНО АВТОРОВ -->
+  <dialog id="authmodal" aria-labelledby="auth-title">
+    <form method="dialog"><button class="x" aria-label="Закрыть">×</button></form>
+    <h3 class="cat-title" id="auth-title">Авторы</h3>
+    <input class="tagfind" id="authfind" type="search" placeholder="найти автора…" autocomplete="off" spellcheck="false" aria-label="Поиск по авторам" hidden>
+    <div class="chips" id="authchips" role="group" aria-label="Авторы"></div>
   </dialog>
 
   <script src="smart-search.js"></script>
