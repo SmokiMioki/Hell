@@ -1,11 +1,23 @@
+/* ---------- шрифты Spectral и Cormorant Garamond (свой хостинг, кириллица + латиница) ---------- */
+@font-face{font-family:'Spectral';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/spectral-cyrillic-400-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Spectral';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/spectral-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Spectral';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/spectral-cyrillic-500-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Spectral';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/spectral-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Spectral';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/spectral-cyrillic-600-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Spectral';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/spectral-latin-600-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/cormorant-garamond-cyrillic-600-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/cormorant-garamond-latin-600-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/cormorant-garamond-cyrillic-700-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/cormorant-garamond-latin-700-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
 /* ---------- читабельность: шрифты + матовое стекло ----------
    Подключается ПОСЛЕДНИМ в index.html (после fox.css), поэтому перебивает остальное.
    Cormorant Garamond остаётся только на крупных заголовках,
-   всё мелкое (кнопки, теги, текст) — на Inter без капса и широких разрядок. */
+   всё мелкое (кнопки, теги, текст) — на Spectral (засечки, но плотный и ровный), без капса и широких разрядок. */
 
 :root{
-  --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
-  --ui:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --body:'Spectral','EB Garamond',Georgia,'Times New Roman',serif;
+  --ui:'Spectral','EB Garamond',Georgia,'Times New Roman',serif;
   --glass:rgba(26,17,34,.58);
   --glass-strong:rgba(22,14,29,.78);
   --glass-edge:rgba(255,255,255,.07);
@@ -17,9 +29,9 @@
   --glass-edge:rgba(255,255,255,.7);
 }
 
-body{font-family:var(--body);font-size:17px;line-height:1.6}
+body{font-family:var(--body);font-size:18px;line-height:1.6}
 
-/* ----- шрифты: всё мелкое на Inter, без капса ----- */
+/* ----- шрифты: всё мелкое на Spectral, без капса ----- */
 .top,.chip,.more,.reset,.sort-lbl,.sort select,.extra-title,.tagchip,.showall,
 .btn,.skip,.hint,.clock,.tally,.count,.section-head p,.foot,.field,.install code,
 .list button,.imgs .lbl{
@@ -30,27 +42,27 @@ body{font-family:var(--body);font-size:17px;line-height:1.6}
   text-transform:none;
 }
 
-.top{font-size:.95rem;letter-spacing:.02em}
+.top{font-size:1rem;letter-spacing:.02em}
 .top nav a{font-weight:500}
 .hint{font-size:.9rem;letter-spacing:.02em}
 .clock{letter-spacing:.3em}
 .lead,.epigraph{font-family:var(--body);font-style:normal;font-size:1.1rem;color:var(--bone)}
 .lead{opacity:.88}
-.gate input{font-family:var(--ui);font-size:1.2rem;letter-spacing:.01em}
+.gate input{font-family:var(--ui);font-size:1.3rem;letter-spacing:.01em}
 .gate input::placeholder{font-style:normal}
 .foot{letter-spacing:.02em}
 
-.chip,.more,.reset,.sort select{font-size:.9rem;letter-spacing:.01em;font-weight:500}
+.chip,.more,.reset,.sort select{font-size:.95rem;letter-spacing:.01em;font-weight:500}
 .sort-lbl{font-size:.8rem;letter-spacing:.02em}
 .extra-title{font-size:.8rem;letter-spacing:.04em}
-.tagchip{font-size:.82rem;letter-spacing:.01em;font-weight:500}
-.btn{font-size:.9rem;letter-spacing:.02em;font-weight:500}
+.tagchip{font-size:.88rem;letter-spacing:.01em;font-weight:500}
+.btn{font-size:.95rem;letter-spacing:.02em;font-weight:500}
 .skip{font-size:.85rem;letter-spacing:.04em}
 
 .card .by{font-size:.9rem;letter-spacing:.02em}
 .card p{font-size:.98rem;line-height:1.55;color:var(--bone)}
 .tags span{
-  font-size:.78rem;letter-spacing:.02em;font-weight:500;padding:3px 10px;
+  font-size:.84rem;letter-spacing:.02em;font-weight:500;padding:3px 10px;
   color:color-mix(in srgb,var(--crimson) 60%,var(--bone));
 }
 .tags span.cat{color:#fff}
@@ -143,3 +155,6 @@ dialog::backdrop{background:rgba(0,0,0,.6);-webkit-backdrop-filter:blur(8px);bac
   :root{--glass:rgba(26,17,34,.9);--glass-strong:rgba(22,14,29,.95)}
   :root[data-theme="light"]{--glass:rgba(255,250,240,.95);--glass-strong:rgba(250,243,230,.97)}
 }
+
+/* заголовки: чуть плотнее, чтобы не терялись на стекле */
+h1,.section-head h2,.card h3,#modal-body h3,#catmodal .cat-title,.steps h3{font-weight:700}
