@@ -5,7 +5,8 @@
 <description>Новые расширения для SillyTavern</description>
 <language>ru</language>
 <atom:link href="https://smokimioki.github.io/Hell/feed.xml" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 24 Oct 2026 10:11:36 GMT</lastBuildDate>
+<lastBuildDate>Sat, 24 Oct 2026 10:12:11 GMT</lastBuildDate>
+<item><title>BB Interactive Map</title><link>https://smokimioki.github.io/Hell/#bb-interactive-map</link><guid isPermaLink="false">bb-interactive-map-2026-10-24T10:12:09.599Z</guid><pubDate>Sat, 24 Oct 2026 10:12:09 GMT</pubDate><description>Создаёт интерактивную карту локаций и проходов, позволяя размещать персонажей и предметы и передавать окружение ИИ.</description></item>
 <item><title>BB Comic Forge</title><link>https://smokimioki.github.io/Hell/#bb-comic-forge</link><guid isPermaLink="false">bb-comic-forge-2026-10-24T10:11:33.712Z</guid><pubDate>Sat, 24 Oct 2026 10:11:33 GMT</pubDate><description>Превращает сыгранные сцены в комиксы с редактируемыми кадрами, репликами, стилями и ИИ-генерацией изображений.</description></item>
 <item><title>BB Enhance Gen</title><link>https://smokimioki.github.io/Hell/#bb-enhance-gen</link><guid isPermaLink="false">bb-enhance-gen-2026-10-24T10:10:48.503Z</guid><pubDate>Sat, 24 Oct 2026 10:10:48 GMT</pubDate><description>Улучшает черновики ответов, помогает писать действия, добавлять сюжетные события и управлять игровым временем.</description></item>
 <item><title>BB UI Regex Pack</title><link>https://smokimioki.github.io/Hell/#bb-ui-regex-pack</link><guid isPermaLink="false">bb-ui-regex-pack-2026-10-24T10:09:58.303Z</guid><pubDate>Sat, 24 Oct 2026 10:09:58 GMT</pubDate><description>Добавляет в SillyTavern интерактивные RP-модули: телефон, переписки, радио, лор-сферы и состояние сцены.</description></item>
