@@ -851,5 +851,18 @@
     ],
     "repo": "https://github.com/stellvt/SillyTavern-AlternateDescriptionsPlus",
     "added": "2026-10-24T15:28:45.315Z"
+  },
+  {
+    "name": "Sillyimages",
+    "by": "0xl0cal",
+    "desc": "Оригинальное расширение по генерации картинок",
+    "cat": "Генерация изображений",
+    "tags": [
+      "Локал",
+      "картинки",
+      "генерация картинок"
+    ],
+    "repo": "https://github.com/0xl0cal/sillyimages",
+    "added": "2026-10-24T15:43:34.484Z"
   }
 ]
