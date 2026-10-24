@@ -1,0 +1,145 @@
+/* ---------- читабельность: шрифты + матовое стекло ----------
+   Подключается ПОСЛЕДНИМ в index.html (после fox.css), поэтому перебивает остальное.
+   Cormorant Garamond остаётся только на крупных заголовках,
+   всё мелкое (кнопки, теги, текст) — на Inter без капса и широких разрядок. */
+
+:root{
+  --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --ui:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --glass:rgba(26,17,34,.58);
+  --glass-strong:rgba(22,14,29,.78);
+  --glass-edge:rgba(255,255,255,.07);
+  --blur:blur(16px) saturate(1.2);
+}
+:root[data-theme="light"]{
+  --glass:rgba(255,250,240,.62);
+  --glass-strong:rgba(250,243,230,.86);
+  --glass-edge:rgba(255,255,255,.7);
+}
+
+body{font-family:var(--body);font-size:17px;line-height:1.6}
+
+/* ----- шрифты: всё мелкое на Inter, без капса ----- */
+.top,.chip,.more,.reset,.sort-lbl,.sort select,.extra-title,.tagchip,.showall,
+.btn,.skip,.hint,.clock,.tally,.count,.section-head p,.foot,.field,.install code,
+.list button,.imgs .lbl{
+  font-family:var(--ui);
+}
+.top,.chip,.more,.reset,.sort-lbl,.sort select,.extra-title,.tagchip,.btn,.skip,
+.hint,.field,.imgs .lbl,.list button,.tags span{
+  text-transform:none;
+}
+
+.top{font-size:.95rem;letter-spacing:.02em}
+.top nav a{font-weight:500}
+.hint{font-size:.9rem;letter-spacing:.02em}
+.clock{letter-spacing:.3em}
+.lead,.epigraph{font-family:var(--body);font-style:normal;font-size:1.1rem;color:var(--bone)}
+.lead{opacity:.88}
+.gate input{font-family:var(--ui);font-size:1.2rem;letter-spacing:.01em}
+.gate input::placeholder{font-style:normal}
+.foot{letter-spacing:.02em}
+
+.chip,.more,.reset,.sort select{font-size:.9rem;letter-spacing:.01em;font-weight:500}
+.sort-lbl{font-size:.8rem;letter-spacing:.02em}
+.extra-title{font-size:.8rem;letter-spacing:.04em}
+.tagchip{font-size:.82rem;letter-spacing:.01em;font-weight:500}
+.btn{font-size:.9rem;letter-spacing:.02em;font-weight:500}
+.skip{font-size:.85rem;letter-spacing:.04em}
+
+.card .by{font-size:.9rem;letter-spacing:.02em}
+.card p{font-size:.98rem;line-height:1.55;color:var(--bone)}
+.tags span{
+  font-size:.78rem;letter-spacing:.02em;font-weight:500;padding:3px 10px;
+  color:color-mix(in srgb,var(--crimson) 60%,var(--bone));
+}
+.tags span.cat{color:#fff}
+.steps p,.about p{color:var(--bone)}
+.steps h3{letter-spacing:.02em}
+.steps p,.about p,.about .muted{font-size:1rem}
+#modal-body p{font-size:1rem;line-height:1.6}
+#modal-body .small{font-size:.9rem}
+
+/* ----- матовое стекло ----- */
+.card,
+.extra,
+.steps li,
+.about p,
+.panel,
+.top{
+  -webkit-backdrop-filter:var(--blur);
+  backdrop-filter:var(--blur);
+}
+
+.card{
+  background:var(--glass);
+  border-color:rgba(242,58,82,.3);
+  box-shadow:inset 0 1px 0 var(--glass-edge),0 8px 30px rgba(0,0,0,.25);
+}
+.card:hover,.card:focus-visible{box-shadow:inset 0 1px 0 var(--glass-edge),0 14px 40px rgba(179,18,31,.3)}
+
+.extra{
+  background:var(--glass);
+  box-shadow:inset 0 1px 0 var(--glass-edge),0 8px 30px rgba(0,0,0,.2);
+}
+
+.steps li{
+  padding:24px 22px 22px;
+  background:var(--glass);
+  border:1px solid var(--line);
+  box-shadow:inset 0 1px 0 var(--glass-edge);
+}
+.steps li::before{top:-4px;left:22px}
+
+.about p{
+  padding:16px 20px;
+  background:var(--glass);
+  border:1px solid var(--line);
+  box-shadow:inset 0 1px 0 var(--glass-edge);
+}
+
+.top{
+  background:linear-gradient(var(--glass-strong),rgba(21,15,26,.35));
+  border-bottom:1px solid var(--line);
+}
+:root[data-theme="light"] .top{background:linear-gradient(var(--glass-strong),rgba(245,237,223,.45))}
+
+/* кнопки панели: тоже слегка матовые, чтобы не тонуть в фоне */
+.chip,.more,.reset,.sort select,.tagchip{
+  background-color:rgba(26,17,34,.4);
+  -webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(8px);
+}
+:root[data-theme="light"] .chip,
+:root[data-theme="light"] .more,
+:root[data-theme="light"] .reset,
+:root[data-theme="light"] .sort select,
+:root[data-theme="light"] .tagchip{background-color:rgba(255,250,240,.55)}
+.chip,.tagchip{color:var(--bone)}
+.chip.on,.tagchip.on{color:#fff;background-color:var(--blood)}
+
+/* модалка */
+dialog{
+  background:var(--glass-strong);
+  -webkit-backdrop-filter:blur(22px) saturate(1.2);
+  backdrop-filter:blur(22px) saturate(1.2);
+}
+dialog::backdrop{background:rgba(0,0,0,.6);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+:root[data-theme="light"] dialog{background:var(--glass-strong)}
+
+/* админка */
+.panel{background:var(--glass)}
+.field input,.field textarea,.fetchrow input{font-family:var(--ui)}
+
+/* светлая тема: перебиваем плотные градиенты из features.css */
+:root[data-theme="light"] .card,
+:root[data-theme="light"] .extra,
+:root[data-theme="light"] .panel{background:var(--glass)}
+:root[data-theme="light"] .card p,
+:root[data-theme="light"] .steps p{color:var(--bone)}
+
+/* если браузер не умеет blur — делаем фон плотнее, чтобы читалось */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  :root{--glass:rgba(26,17,34,.9);--glass-strong:rgba(22,14,29,.95)}
+  :root[data-theme="light"]{--glass:rgba(255,250,240,.95);--glass-strong:rgba(250,243,230,.97)}
+}

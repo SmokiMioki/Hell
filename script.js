@@ -76,7 +76,8 @@
   const reg = s => { const k = key(s); if (!labels.has(k)) labels.set(k, String(s).trim()); return k; };
   const more = $('#more'), moreN = $('#more-n'), extraBox = $('#extra'), extraChips = $('#extra-chips');
   const showAll = $('#showall'), resetBtn = $('#reset'), sortSel = $('#sort');
-  let panelOpen = false;
+  const catBtn = $('#catbtn'), catLbl = $('#cat-l'), catN = $('#cat-n'), catBox = $('#catbox');
+  let panelOpen = false, catOpen = false;
 
   // у каждого расширения: главный тег (cat) + остальные (tags)
   function prep(e) {
@@ -110,6 +111,14 @@
       `<button class="chip${state.cat === k ? ' on' : ''}${n || state.cat === k ? '' : ' zero'}" type="button" data-k="${esc(k)}" aria-pressed="${state.cat === k}">${esc(l)}<span class="n">${n}</span></button>`
     ).join('');
 
+    // кнопка «Категории»: показывает выбранную категорию или общее число
+    const picked = state.cat !== 'all';
+    catLbl.textContent = picked ? labels.get(state.cat) : 'Категории';
+    catN.hidden = picked; catN.textContent = cats.length;
+    catBtn.classList.toggle('active', picked);
+    catBtn.setAttribute('aria-expanded', String(catOpen));
+    catBox.hidden = !catOpen;
+
     // «Прочее»: теги только из того, что сейчас видно, со счётчиками
     const c = {};
     data.filter(e => ok(e)).forEach(e => e._extra.forEach(t => c[t] = (c[t] || 0) + 1));
@@ -131,13 +140,20 @@
 
   chips.addEventListener('click', e => {
     const b = e.target.closest('.chip'); if (!b) return;
-    state.cat = b.dataset.k; state.extra.clear(); state.all = false; refresh();
+    state.cat = b.dataset.k; state.extra.clear(); state.all = false; catOpen = false; refresh();
+  });
+  catBtn.addEventListener('click', () => { catOpen = !catOpen; if (catOpen) panelOpen = false; renderFilters(); });
+  document.addEventListener('click', e => {           // клик мимо панели категорий — закрыть
+    if (catOpen && !e.target.closest('#catbox, #catbtn')) { catOpen = false; renderFilters(); }
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && catOpen) { catOpen = false; renderFilters(); catBtn.focus(); }
   });
   extraChips.addEventListener('click', e => {
     const b = e.target.closest('.tagchip'); if (!b) return;
     const t = b.dataset.k; state.extra.has(t) ? state.extra.delete(t) : state.extra.add(t); refresh();
   });
-  more.addEventListener('click', () => { panelOpen = !panelOpen; renderFilters(); });
+  more.addEventListener('click', () => { panelOpen = !panelOpen; if (panelOpen) catOpen = false; renderFilters(); });
   showAll.addEventListener('click', () => { state.all = !state.all; renderFilters(); });
   resetBtn.addEventListener('click', () => { state.cat = 'all'; state.extra.clear(); state.all = false; refresh(); });
   try { const sv = localStorage.getItem('gate-sort'); if (sv && [...sortSel.options].some(o => o.value === sv)) state.sort = sv; } catch {}
