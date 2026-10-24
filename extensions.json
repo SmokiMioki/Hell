@@ -684,5 +684,16 @@
     ],
     "repo": "https://github.com/Nufahi/SillyTavern-CSSInspector",
     "added": "2026-10-24T10:24:28.920Z"
+  },
+  {
+    "name": "Char prompt toggles",
+    "by": "Nufahi",
+    "desc": "Сохраняет индивидуальные настройки переключателей промптов для каждого персонажа и автоматически восстанавливает их при переключении между карточками.",
+    "cat": "Управление промптами",
+    "tags": [
+      "переключатели промптов"
+    ],
+    "repo": "https://github.com/Nufahi/char-prompt-toggles",
+    "added": "2026-10-24T10:26:05.392Z"
   }
 ]
