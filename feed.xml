@@ -5,7 +5,8 @@
 <description>Новые расширения для SillyTavern</description>
 <language>ru</language>
 <atom:link href="https://smokimioki.github.io/Hell/feed.xml" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 24 Oct 2026 10:10:01 GMT</lastBuildDate>
+<lastBuildDate>Sat, 24 Oct 2026 10:10:51 GMT</lastBuildDate>
+<item><title>BB Enhance Gen</title><link>https://smokimioki.github.io/Hell/#bb-enhance-gen</link><guid isPermaLink="false">bb-enhance-gen-2026-10-24T10:10:48.503Z</guid><pubDate>Sat, 24 Oct 2026 10:10:48 GMT</pubDate><description>Улучшает черновики ответов, помогает писать действия, добавлять сюжетные события и управлять игровым временем.</description></item>
 <item><title>BB UI Regex Pack</title><link>https://smokimioki.github.io/Hell/#bb-ui-regex-pack</link><guid isPermaLink="false">bb-ui-regex-pack-2026-10-24T10:09:58.303Z</guid><pubDate>Sat, 24 Oct 2026 10:09:58 GMT</pubDate><description>Добавляет в SillyTavern интерактивные RP-модули: телефон, переписки, радио, лор-сферы и состояние сцены.</description></item>
 <item><title>Ace entry track</title><link>https://smokimioki.github.io/Hell/#ace-entry-track</link><guid isPermaLink="false">ace-entry-track-2026-10-24T10:08:14.591Z</guid><pubDate>Sat, 24 Oct 2026 10:08:14 GMT</pubDate><description>Отслеживает активные записи лорбука в SillyTavern, совпадения ключевых слов, расход токенов и историю срабатываний с помощью интерактивной панели.</description></item>
 <item><title>InSTead</title><link>https://smokimioki.github.io/Hell/#instead</link><guid isPermaLink="false">instead-2026-10-24T10:07:31.919Z</guid><pubDate>Sat, 24 Oct 2026 10:07:31 GMT</pubDate><description>Позволяет давать ИИ обратную связь по его ответам и генерировать исправленные версии, сохраняя оригинал в соседних свайпах для сравнения.</description></item>
