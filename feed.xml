@@ -5,7 +5,8 @@
 <description>Новые расширения для SillyTavern</description>
 <language>ru</language>
 <atom:link href="https://smokimioki.github.io/Hell/feed.xml" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 24 Oct 2026 10:29:03 GMT</lastBuildDate>
+<lastBuildDate>Sat, 24 Oct 2026 10:33:21 GMT</lastBuildDate>
+<item><title>ST Quotes</title><link>https://smokimioki.github.io/Hell/#st-quotes</link><guid isPermaLink="false">st-quotes-2026-10-24T10:33:19.017Z</guid><pubDate>Sat, 24 Oct 2026 10:33:19 GMT</pubDate><description>Позволяет сохранять любимые цитаты из ролевых чатов, выделять их цветом, добавлять заметки и просить персонажа реагировать на сохранённые фрагменты.</description></item>
 <item><title>ST Guard</title><link>https://smokimioki.github.io/Hell/#st-guard</link><guid isPermaLink="false">st-guard-2026-10-24T10:29:00.166Z</guid><pubDate>Sat, 24 Oct 2026 10:29:00 GMT</pubDate><description>Проверяет расширения SillyTavern на проблемы, помогает очищать остаточные настройки и автоматически сохраняет резервные копии чатов с возможностью восстановления истории.</description></item>
 <item><title>ST SmartNotify</title><link>https://smokimioki.github.io/Hell/#st-smartnotify</link><guid isPermaLink="false">st-smartnotify-2026-10-24T10:28:08.654Z</guid><pubDate>Sat, 24 Oct 2026 10:28:08 GMT</pubDate><description>Управляет уведомлениями SillyTavern: позволяет отключать ненужные всплывающие сообщения, менять их оформление, фильтровать по тексту и Regex и просматривать историю уведомлений</description></item>
 <item><title>ST ImageManager</title><link>https://smokimioki.github.io/Hell/#st-imagemanager</link><guid isPermaLink="false">st-imagemanager-2026-10-24T10:27:17.535Z</guid><pubDate>Sat, 24 Oct 2026 10:27:17 GMT</pubDate><description>Управляет изображениями в SillyTavern: помогает просматривать, скрывать и массово удалять старые картинки из чатов и генераций, освобождая место на диске.</description></item>
