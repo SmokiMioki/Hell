@@ -5,7 +5,8 @@
 <description>Новые расширения для SillyTavern</description>
 <language>ru</language>
 <atom:link href="https://smokimioki.github.io/Hell/feed.xml" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 24 Oct 2026 09:58:36 GMT</lastBuildDate>
+<lastBuildDate>Sat, 24 Oct 2026 10:01:48 GMT</lastBuildDate>
+<item><title>STCleaning</title><link>https://smokimioki.github.io/Hell/#stcleaning</link><guid isPermaLink="false">stcleaning-2026-10-24T10:01:45.410Z</guid><pubDate>Sat, 24 Oct 2026 10:01:45 GMT</pubDate><description>Расширение для SillyTavern, которое помогает находить и удалять ненужные файлы, резервные копии и осиротевшие миниатюры, освобождая место на диске.</description></item>
 <item><title>ST rp player</title><link>https://smokimioki.github.io/Hell/#st-rp-player</link><guid isPermaLink="false">st-rp-player-2026-10-24T09:58:34.800Z</guid><pubDate>Sat, 24 Oct 2026 09:58:34 GMT</pubDate><description>Музыкальный плеер для SillyTavern с поиском музыки, радио, плейлистами и подбором треков под текущую RP-сцену</description></item>
 <item><title>SillyTavern HiddenCounter</title><link>https://smokimioki.github.io/Hell/#sillytavern-hiddencounter</link><guid isPermaLink="false">sillytavern-hiddencounter-2026-10-24T09:46:27.622Z</guid><pubDate>Sat, 24 Oct 2026 09:46:27 GMT</pubDate><description>Показывает количество скрытых сообщений в текущем чате SillyTavern.</description></item>
 <item><title>Au manager</title><link>https://smokimioki.github.io/Hell/#au-manager</link><guid isPermaLink="false">au-manager-2026-10-24T09:43:22.823Z</guid><pubDate>Sat, 24 Oct 2026 09:43:22 GMT</pubDate><description>Позволяет подключать альтернативные вселенные и сеттинги к ролевой игре с помощью готовых и пользовательских промптов.</description></item>
