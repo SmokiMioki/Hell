@@ -89,7 +89,7 @@
       </header>
       <div class="filters" id="filters">
         <div class="toolbar">
-          <button class="more" id="catbtn" type="button" aria-expanded="false" aria-controls="catbox"><span id="cat-l">Категории</span><span class="more-n" id="cat-n" hidden></span><span class="caret" aria-hidden="true">▾</span></button>
+          <button class="more" id="catbtn" type="button" aria-haspopup="dialog" aria-controls="catmodal"><span id="cat-l">Категории</span><span class="more-n" id="cat-n" hidden></span><span class="caret" aria-hidden="true">▾</span></button>
           <button class="more" id="more" type="button" aria-expanded="false" aria-controls="extra" hidden>Прочее<span class="more-n" id="more-n" hidden></span><span class="caret" aria-hidden="true">▾</span></button>
           <button class="reset" id="reset" type="button" hidden>Сбросить</button>
           <label class="sort"><span class="sort-lbl">Порядок</span>
@@ -100,10 +100,6 @@
               <option value="author">По автору</option>
             </select>
           </label>
-        </div>
-        <div class="extra catbox" id="catbox" hidden>
-          <p class="extra-title">Категории</p>
-          <div class="chips" id="chips" role="group" aria-label="Категории"></div>
         </div>
         <div class="extra" id="extra" hidden>
           <p class="extra-title">Прочие теги</p>
@@ -175,6 +171,13 @@
   <dialog id="modal">
     <form method="dialog"><button class="x" aria-label="Закрыть">×</button></form>
     <div id="modal-body"></div>
+  </dialog>
+
+  <!-- ОКНО КАТЕГОРИЙ -->
+  <dialog id="catmodal" aria-labelledby="cat-title">
+    <form method="dialog"><button class="x" aria-label="Закрыть">×</button></form>
+    <h3 class="cat-title" id="cat-title">Категории</h3>
+    <div class="chips" id="chips" role="group" aria-label="Категории"></div>
   </dialog>
 
   <script src="logic-search.js"></script>

@@ -1,12 +1,12 @@
 /* ---------- фильтры: главный тег + «Прочее» + порядок ---------- */
 .filters{margin-bottom:40px}
 .filters [hidden]{display:none!important}
-.filters .chips{margin-bottom:0}
-.catbox{margin-top:0;margin-bottom:16px}
-.catbox .extra-title{margin-bottom:12px}
-.toolbar{margin-bottom:16px}
 .more.active{border-color:var(--crimson);color:#fff;background:var(--blood)}
-.more.active .caret{opacity:.9}
+
+/* окно выбора категории */
+#catmodal{max-width:min(820px,94vw);max-height:86vh;overflow:auto}
+#catmodal .cat-title{font-family:var(--serif);font-size:1.9rem;letter-spacing:.05em;line-height:1.2;margin-bottom:22px;padding-right:34px}
+#catmodal .chips{margin-bottom:0}
 .chip .n{margin-left:.6em;font-size:.9em;letter-spacing:.04em;opacity:.55}
 .chip.on .n{opacity:.9}
 .chip.zero:not(.on){opacity:.4}
