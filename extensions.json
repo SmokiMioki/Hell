@@ -823,5 +823,18 @@
     ],
     "repo": "https://github.com/Nufahi/ST-ImageBlur",
     "added": "2026-10-24T10:37:57.149Z"
+  },
+  {
+    "name": "St telegram",
+    "by": "Nufahi",
+    "desc": "Превращает интерфейс SillyTavern в подобие мобильного Telegram с пузырьками сообщений, шапкой чата, датами, поиском и цветовым оформлением.",
+    "cat": "Оформление интерфейса",
+    "tags": [
+      "тема оформления",
+      "Telegram",
+      "интерфейс мессенджера"
+    ],
+    "repo": "https://github.com/Nufahi/st-telegram",
+    "added": "2026-10-24T10:38:34.005Z"
   }
 ]
