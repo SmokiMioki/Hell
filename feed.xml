@@ -5,7 +5,8 @@
 <description>Новые расширения для SillyTavern</description>
 <language>ru</language>
 <atom:link href="https://smokimioki.github.io/Hell/feed.xml" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 24 Oct 2026 10:02:36 GMT</lastBuildDate>
+<lastBuildDate>Sat, 24 Oct 2026 10:03:57 GMT</lastBuildDate>
+<item><title>SLAYimages</title><link>https://smokimioki.github.io/Hell/#slayimages</link><guid isPermaLink="false">slayimages-2026-10-24T10:03:54.687Z</guid><pubDate>Sat, 24 Oct 2026 10:03:54 GMT</pubDate><description>Форк 0xl0cal/sillyimages для SillyTavern с генерацией изображений прямо в чате, гардеробом, референсами персонажей и библиотекой образов.</description></item>
 <item><title>SillyTavern MemoryBooks</title><link>https://smokimioki.github.io/Hell/#sillytavern-memorybooks</link><guid isPermaLink="false">sillytavern-memorybooks-2026-10-24T10:02:32.969Z</guid><pubDate>Sat, 24 Oct 2026 10:02:32 GMT</pubDate><description>Создаёт долговременную память для SillyTavern, сохраняя события, отношения и важные детали ролевой игры в лорбуке и автоматически обновляя воспоминания по мере развития сюжета.</description></item>
 <item><title>STCleaning</title><link>https://smokimioki.github.io/Hell/#stcleaning</link><guid isPermaLink="false">stcleaning-2026-10-24T10:01:45.410Z</guid><pubDate>Sat, 24 Oct 2026 10:01:45 GMT</pubDate><description>Расширение для SillyTavern, которое помогает находить и удалять ненужные файлы, резервные копии и осиротевшие миниатюры, освобождая место на диске.</description></item>
 <item><title>ST rp player</title><link>https://smokimioki.github.io/Hell/#st-rp-player</link><guid isPermaLink="false">st-rp-player-2026-10-24T09:58:34.800Z</guid><pubDate>Sat, 24 Oct 2026 09:58:34 GMT</pubDate><description>Музыкальный плеер для SillyTavern с поиском музыки, радио, плейлистами и подбором треков под текущую RP-сцену</description></item>
