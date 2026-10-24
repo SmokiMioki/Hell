@@ -5,7 +5,7 @@
 <description>Новые расширения для SillyTavern</description>
 <language>ru</language>
 <atom:link href="https://smokimioki.github.io/Hell/feed.xml" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 24 Oct 2026 15:43:37 GMT</lastBuildDate>
+<lastBuildDate>Sat, 24 Oct 2026 15:45:17 GMT</lastBuildDate>
 <item><title>Sillyimages</title><link>https://smokimioki.github.io/Hell/#sillyimages</link><guid isPermaLink="false">sillyimages-2026-10-24T15:43:34.484Z</guid><pubDate>Sat, 24 Oct 2026 15:43:34 GMT</pubDate><description>Оригинальное расширение по генерации картинок</description></item>
 <item><title>SillyTavern AlternateDescriptionsPlus</title><link>https://smokimioki.github.io/Hell/#sillytavern-alternatedescriptionsplus</link><guid isPermaLink="false">sillytavern-alternatedescriptionsplus-2026-10-24T15:28:45.315Z</guid><pubDate>Sat, 24 Oct 2026 15:28:45 GMT</pubDate><description>Функциональное расширение альтернативных описаний SillyTavern. Форк</description></item>
 <item><title>St telegram</title><link>https://smokimioki.github.io/Hell/#st-telegram</link><guid isPermaLink="false">st-telegram-2026-10-24T10:38:34.005Z</guid><pubDate>Sat, 24 Oct 2026 10:38:34 GMT</pubDate><description>Превращает интерфейс SillyTavern в подобие мобильного Telegram с пузырьками сообщений, шапкой чата, датами, поиском и цветовым оформлением.</description></item>
