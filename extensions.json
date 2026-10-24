@@ -927,5 +927,19 @@
     ],
     "repo": "https://github.com/stellvt/silly-memories-plus",
     "added": "2026-10-24T15:56:56.666Z"
+  },
+  {
+    "name": "ExtBlocks Custom",
+    "by": "sleepydraqon",
+    "desc": "Пофикшенные внешние блоки.Расширение генерирует блоки отдельным API и внедряет их в контекст на заданной глубине.",
+    "cat": "Внешние блоки",
+    "tags": [
+      "Дракоша",
+      "инфоблоки",
+      "генерация блоков",
+      "форк"
+    ],
+    "repo": "https://gitgud.io/sleepydraqon/ext-blocks-custom",
+    "added": "2026-10-24T16:14:19.837Z"
   }
 ]
