@@ -836,5 +836,20 @@
     ],
     "repo": "https://github.com/Nufahi/st-telegram",
     "added": "2026-10-24T10:38:34.005Z"
+  },
+  {
+    "name": "SillyTavern AlternateDescriptionsPlus",
+    "by": "stellvt",
+    "desc": "Функциональное расширение альтернативных описаний SillyTavern. Форк",
+    "cat": "Управление файлами",
+    "tags": [
+      "Астера",
+      "Шино",
+      "форк",
+      "альтернативные персоны",
+      "альтернативное описание персон"
+    ],
+    "repo": "https://github.com/stellvt/SillyTavern-AlternateDescriptionsPlus",
+    "added": "2026-10-24T15:28:45.315Z"
   }
 ]
