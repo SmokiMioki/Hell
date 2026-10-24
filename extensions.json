@@ -337,5 +337,22 @@
     ],
     "repo": "https://github.com/KiskaSora/SillyTavern-HiddenCounter",
     "added": "2026-10-24T09:46:27.622Z"
+  },
+  {
+    "name": "ST rp player",
+    "by": "scape-glitch",
+    "desc": "Музыкальный плеер для SillyTavern с поиском музыки, радио, плейлистами и подбором треков под текущую RP-сцену",
+    "cat": "Музыка и аудио",
+    "tags": [
+      "музыкальный плеер",
+      "радио",
+      "плейлисты",
+      "поиск музыки",
+      "RP",
+      "фоновая музыка",
+      "рекомендации треков"
+    ],
+    "repo": "https://github.com/scape-glitch/ST-rp-player",
+    "added": "2026-10-24T09:58:34.800Z"
   }
 ]
