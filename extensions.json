@@ -608,5 +608,20 @@
     ],
     "repo": "https://github.com/maxkara14/BB-Floating-Avatar-Viewer",
     "added": "2026-10-24T10:14:29.258Z"
+  },
+  {
+    "name": "BB Extension Sorter",
+    "by": "maxkara14",
+    "desc": "Позволяет сортировать расширения SillyTavern по цветным папкам и колонкам с сохранением пользовательского порядка.",
+    "cat": "Управление расширениями",
+    "tags": [
+      "менеджер расширений",
+      "сортировка",
+      "папки",
+      "цветовые метки",
+      "перетаскивание"
+    ],
+    "repo": "https://github.com/maxkara14/BB-Extension-Sorter",
+    "added": "2026-10-24T10:15:17.679Z"
   }
 ]
