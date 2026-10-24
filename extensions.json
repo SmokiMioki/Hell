@@ -670,5 +670,19 @@
     ],
     "repo": "https://github.com/Nufahi/My-lorebook-manager",
     "added": "2026-10-24T10:22:56.062Z"
+  },
+  {
+    "name": "SillyTavern CSSInspector",
+    "by": "Nufahi",
+    "desc": "Позволяет исследовать элементы интерфейса SillyTavern, просматривать CSS-классы, размеры и стили, а также копировать готовые CSS-селекторы и правила",
+    "cat": "CSS",
+    "tags": [
+      "инспектор элементов",
+      "селекторы",
+      "разработка тем",
+      "отладка интерфейса"
+    ],
+    "repo": "https://github.com/Nufahi/SillyTavern-CSSInspector",
+    "added": "2026-10-24T10:24:28.920Z"
   }
 ]
