@@ -5,7 +5,8 @@
 <description>Новые расширения для SillyTavern</description>
 <language>ru</language>
 <atom:link href="https://smokimioki.github.io/Hell/feed.xml" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 24 Oct 2026 10:28:11 GMT</lastBuildDate>
+<lastBuildDate>Sat, 24 Oct 2026 10:29:03 GMT</lastBuildDate>
+<item><title>ST Guard</title><link>https://smokimioki.github.io/Hell/#st-guard</link><guid isPermaLink="false">st-guard-2026-10-24T10:29:00.166Z</guid><pubDate>Sat, 24 Oct 2026 10:29:00 GMT</pubDate><description>Проверяет расширения SillyTavern на проблемы, помогает очищать остаточные настройки и автоматически сохраняет резервные копии чатов с возможностью восстановления истории.</description></item>
 <item><title>ST SmartNotify</title><link>https://smokimioki.github.io/Hell/#st-smartnotify</link><guid isPermaLink="false">st-smartnotify-2026-10-24T10:28:08.654Z</guid><pubDate>Sat, 24 Oct 2026 10:28:08 GMT</pubDate><description>Управляет уведомлениями SillyTavern: позволяет отключать ненужные всплывающие сообщения, менять их оформление, фильтровать по тексту и Regex и просматривать историю уведомлений</description></item>
 <item><title>ST ImageManager</title><link>https://smokimioki.github.io/Hell/#st-imagemanager</link><guid isPermaLink="false">st-imagemanager-2026-10-24T10:27:17.535Z</guid><pubDate>Sat, 24 Oct 2026 10:27:17 GMT</pubDate><description>Управляет изображениями в SillyTavern: помогает просматривать, скрывать и массово удалять старые картинки из чатов и генераций, освобождая место на диске.</description></item>
 <item><title>Char prompt toggles</title><link>https://smokimioki.github.io/Hell/#char-prompt-toggles</link><guid isPermaLink="false">char-prompt-toggles-2026-10-24T10:26:05.392Z</guid><pubDate>Sat, 24 Oct 2026 10:26:05 GMT</pubDate><description>Сохраняет индивидуальные настройки переключателей промптов для каждого персонажа и автоматически восстанавливает их при переключении между карточками.</description></item>
