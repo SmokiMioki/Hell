@@ -479,5 +479,23 @@
     ],
     "repo": "https://github.com/aceeenvw/ace-entry-track",
     "added": "2026-10-24T10:08:14.591Z"
+  },
+  {
+    "name": "BB UI Regex Pack",
+    "by": "maxkara14",
+    "desc": "Добавляет в SillyTavern интерактивные RP-модули: телефон, переписки, радио, лор-сферы и состояние сцены.",
+    "cat": "Оформление интерфейса",
+    "tags": [
+      "Regex",
+      "виртуальный телефон",
+      "переписки",
+      "радио",
+      "лор-сферы",
+      "состояние сцены",
+      "переходы",
+      "sillyimages"
+    ],
+    "repo": "https://github.com/maxkara14/BB-UI-Regex-Pack",
+    "added": "2026-10-24T10:09:58.303Z"
   }
 ]
