@@ -76,14 +76,39 @@
   const reg = s => { const k = key(s); if (!labels.has(k)) labels.set(k, String(s).trim()); return k; };
   const more = $('#more'), moreN = $('#more-n'), extraBox = $('#extra'), extraChips = $('#extra-chips');
   const showAll = $('#showall'), resetBtn = $('#reset'), sortSel = $('#sort');
+  const tagFind = $('#tagfind'), tagEmpty = $('#tagempty');
   const catBtn = $('#catbtn'), catLbl = $('#cat-l'), catN = $('#cat-n'), catModal = $('#catmodal');
   let panelOpen = false;
 
+  // Синонимы тегов: «что встретили» (нижний регистр) → «как показывать».
+  // Дописывай сюда новые пары — данные в extensions.json трогать не нужно.
+  const TAG_ALIASES = {
+    'rp': 'ролевая игра', 'rpg': 'ролевая игра', 'ролевые игры': 'ролевая игра',
+    'world info': 'лорбук',
+    'темы оформления': 'тема оформления',
+    'аватарки': 'аватары',
+    'автоматическое сохранение': 'автосохранение',
+    'резервная копия': 'резервные копии',
+    'custom css': 'кастомизация CSS',
+    'js-скрипты': 'JavaScript',
+    'альтернативные сеттинги': 'альтернативные вселенные',
+    'vn': 'визуальный роман',
+    'ачивки': 'достижения',
+    'коллекция изображений': 'галерея изображений',
+    'трекер токенов': 'счётчик токенов',
+    'суммаризация чата': 'суммаризация',
+    'интерфейс мессенджера': 'мессенджер',
+    'закладки сообщений': 'закладки',
+    'ии-арт': 'генерация изображений'
+  };
+  const canon = s => TAG_ALIASES[String(s).trim().toLowerCase()] || s;
+
   // у каждого расширения: главный тег (cat) + остальные (tags)
   function prep(e) {
-    const tags = (e.tags || []).map(t => String(t).trim()).filter(Boolean);
+    const tags = (e.tags || []).map(t => canon(String(t).trim())).filter(Boolean);
     let cat = String(e.cat || '').trim(), rest = tags;
     if (!cat) { cat = tags[0] || NOCAT; rest = tags.slice(1); }   // старые записи без cat
+    e._raw = (e.tags || []).join(' ');             // исходные теги — чтобы поиск «RP» находил и после слияния
     e._cat = reg(cat);
     e._extra = [...new Set(rest.map(reg))].filter(k => k !== e._cat);
   }
@@ -94,10 +119,10 @@
     const q = state.q.trim().toLowerCase();
     if (!q) return true;
     if (window.gateLogic) {                         // логический поиск (logic-search.js)
-      const L = window.gateLogic.test(q, { name: e.name, by: e.by, desc: e.desc, cat: labels.get(e._cat), tag: e._extra.map(k => labels.get(k)).join(' ') });
+      const L = window.gateLogic.test(q, { name: e.name, by: e.by, desc: e.desc, cat: labels.get(e._cat), tag: e._extra.map(k => labels.get(k)).join(' ') + ' ' + e._raw });
       if (L !== undefined) return L;
     }
-    return [e.name, e.by, e.desc, labels.get(e._cat), ...e._extra.map(k => labels.get(k))].join(' ').toLowerCase().includes(q);
+    return [e.name, e.by, e.desc, labels.get(e._cat), ...e._extra.map(k => labels.get(k)), e._raw].join(' ').toLowerCase().includes(q);
   }
 
   function renderFilters() {
@@ -121,17 +146,22 @@
     const c = {};
     data.filter(e => ok(e)).forEach(e => e._extra.forEach(t => c[t] = (c[t] || 0) + 1));
     state.extra.forEach(t => { if (!(t in c)) c[t] = 0; });
-    const list = Object.keys(c).sort((a, b) => c[b] - c[a] || labels.get(a).localeCompare(labels.get(b), 'ru'));
-    const shown = state.all ? list : list.filter((t, i) => i < TAG_LIMIT || state.extra.has(t));
+    const tq = tagFind.value.trim().toLowerCase();   // поиск по тегам внутри «Прочее»
+    const full = Object.keys(c).sort((a, b) => c[b] - c[a] || labels.get(a).localeCompare(labels.get(b), 'ru'));
+    const viaAlias = t => Object.keys(TAG_ALIASES).some(a => a.includes(tq) && key(TAG_ALIASES[a]) === t);   // «rp» находит «ролевая игра»
+    const list = tq ? full.filter(t => labels.get(t).toLowerCase().includes(tq) || viaAlias(t) || state.extra.has(t)) : full;
+    const shown = (state.all || tq) ? list : list.filter((t, i) => i < TAG_LIMIT || state.extra.has(t));
     extraChips.innerHTML = shown.map(t =>
       `<button class="tagchip${state.extra.has(t) ? ' on' : ''}" type="button" data-k="${esc(t)}" aria-pressed="${state.extra.has(t)}">${esc(labels.get(t))}<span class="n">${c[t]}</span></button>`
     ).join('');
-    showAll.hidden = list.length <= TAG_LIMIT;
+    showAll.hidden = !!tq || list.length <= TAG_LIMIT;
     showAll.textContent = state.all ? 'Свернуть' : `Показать все (${list.length})`;
-    more.hidden = !list.length;
+    tagFind.hidden = full.length <= TAG_LIMIT;
+    tagEmpty.hidden = !tq || !!list.length;
+    more.hidden = !full.length;
     moreN.hidden = !state.extra.size; moreN.textContent = state.extra.size;
-    more.setAttribute('aria-expanded', String(panelOpen && !!list.length));
-    extraBox.hidden = !panelOpen || !list.length;
+    more.setAttribute('aria-expanded', String(panelOpen && !!full.length));
+    extraBox.hidden = !panelOpen || !full.length;
     resetBtn.hidden = state.cat === 'all' && !state.extra.size;
   }
   const refresh = () => { renderFilters(); renderCards(); };
@@ -150,7 +180,8 @@
   });
   more.addEventListener('click', () => { panelOpen = !panelOpen; renderFilters(); });
   showAll.addEventListener('click', () => { state.all = !state.all; renderFilters(); });
-  resetBtn.addEventListener('click', () => { state.cat = 'all'; state.extra.clear(); state.all = false; refresh(); });
+  tagFind.addEventListener('input', renderFilters);
+  resetBtn.addEventListener('click', () => { state.cat = 'all'; state.extra.clear(); state.all = false; tagFind.value = ''; refresh(); });
   try { const sv = localStorage.getItem('gate-sort'); if (sv && [...sortSel.options].some(o => o.value === sv)) state.sort = sv; } catch {}
   sortSel.value = state.sort;
   sortSel.addEventListener('change', () => {
