@@ -412,5 +412,22 @@
     ],
     "repo": "https://github.com/N0VI028/JS-Slash-Runner",
     "added": "2026-10-24T10:04:41.730Z"
+  },
+  {
+    "name": "SillyTavern MoonlitEchoesTheme",
+    "by": "RivelleDays",
+    "desc": "Минималистичная тема для SillyTavern с дополнительными стилями сообщений, гибкой настройкой оформления и адаптацией под мобильные устройства.",
+    "cat": "Оформление интерфейса",
+    "tags": [
+      "тема оформления",
+      "кастомизация CSS",
+      "стили сообщений",
+      "цветовые схемы",
+      "пресеты тем",
+      "мобильный интерфейс",
+      "минимализм"
+    ],
+    "repo": "https://github.com/RivelleDays/SillyTavern-MoonlitEchoesTheme",
+    "added": "2026-10-24T10:05:33.456Z"
   }
 ]
