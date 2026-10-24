@@ -5,7 +5,8 @@
 <description>Новые расширения для SillyTavern</description>
 <language>ru</language>
 <atom:link href="https://smokimioki.github.io/Hell/feed.xml" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 24 Oct 2026 10:13:24 GMT</lastBuildDate>
+<lastBuildDate>Sat, 24 Oct 2026 10:13:59 GMT</lastBuildDate>
+<item><title>BB Collection Vault</title><link>https://smokimioki.github.io/Hell/#bb-collection-vault</link><guid isPermaLink="false">bb-collection-vault-2026-10-24T10:13:57.584Z</guid><pubDate>Sat, 24 Oct 2026 10:13:57 GMT</pubDate><description>Собирает лор-сферы и достижения текущего чата в коллекцию с поиском, редкостью наград и настраиваемыми уведомлениями.</description></item>
 <item><title>BB Scene Director</title><link>https://smokimioki.github.io/Hell/#bb-scene-director</link><guid isPermaLink="false">bb-scene-director-2026-10-24T10:13:21.632Z</guid><pubDate>Sat, 24 Oct 2026 10:13:21 GMT</pubDate><description>Позволяет управлять атмосферой, темпом и сюжетными акцентами сцены с помощью настраиваемых указаний для ИИ.</description></item>
 <item><title>BB Visual Novel Engine</title><link>https://smokimioki.github.io/Hell/#bb-visual-novel-engine</link><guid isPermaLink="false">bb-visual-novel-engine-2026-10-24T10:12:48.417Z</guid><pubDate>Sat, 24 Oct 2026 10:12:48 GMT</pubDate><description>Добавляет в ролевую игру механики визуальной новеллы: выбор действий, отношения, воспоминания, дневник и галерею портретов.</description></item>
 <item><title>BB Interactive Map</title><link>https://smokimioki.github.io/Hell/#bb-interactive-map</link><guid isPermaLink="false">bb-interactive-map-2026-10-24T10:12:09.599Z</guid><pubDate>Sat, 24 Oct 2026 10:12:09 GMT</pubDate><description>Создаёт интерактивную карту локаций и проходов, позволяя размещать персонажей и предметы и передавать окружение ИИ.</description></item>
