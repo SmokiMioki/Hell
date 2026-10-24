@@ -397,5 +397,20 @@
     ],
     "repo": "https://github.com/wewwaistyping/SLAYimages",
     "added": "2026-10-24T10:03:54.687Z"
+  },
+  {
+    "name": "JS Slash Runner",
+    "by": "N0VI028",
+    "desc": "Позволяет запускать пользовательские JavaScript-скрипты в SillyTavern через изолированный iframe, расширяя возможности чата и автоматизируя действия.",
+    "cat": "Скрипты",
+    "tags": [
+      "JavaScript",
+      "JS-скрипты",
+      "автоматизация",
+      "iframe",
+      "расширение функциональности"
+    ],
+    "repo": "https://github.com/N0VI028/JS-Slash-Runner",
+    "added": "2026-10-24T10:04:41.730Z"
   }
 ]
