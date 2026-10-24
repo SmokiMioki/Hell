@@ -383,5 +383,19 @@
     ],
     "repo": "https://github.com/aikohanasaki/SillyTavern-MemoryBooks",
     "added": "2026-10-24T10:02:32.969Z"
+  },
+  {
+    "name": "SLAYimages",
+    "by": "wewwaistyping",
+    "desc": "Форк 0xl0cal/sillyimages для SillyTavern с генерацией изображений прямо в чате, гардеробом, референсами персонажей и библиотекой образов.",
+    "cat": "Генерация изображений",
+    "tags": [
+      "ИИ-арт",
+      "гардероб",
+      "референсы персонажей",
+      "NPC"
+    ],
+    "repo": "https://github.com/wewwaistyping/SLAYimages",
+    "added": "2026-10-24T10:03:54.687Z"
   }
 ]
