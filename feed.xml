@@ -5,7 +5,7 @@
 <description>Новые расширения для SillyTavern</description>
 <language>ru</language>
 <atom:link href="https://smokimioki.github.io/Hell/feed.xml" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 24 Oct 2026 15:50:55 GMT</lastBuildDate>
+<lastBuildDate>Sat, 24 Oct 2026 15:51:22 GMT</lastBuildDate>
 <item><title>Another shinoverse</title><link>https://smokimioki.github.io/Hell/#another-shinoverse</link><guid isPermaLink="false">another-shinoverse-2026-10-24T15:50:52.422Z</guid><pubDate>Sat, 24 Oct 2026 15:50:52 GMT</pubDate><description>&quot;Если бы мы снова встретились в другой вселенной, изменилось бы всё?&quot;
 
 Оно переносит выбранного персонажа в альтернативную вселенную и генерирует новую карточку: описание, характер, сценарий, примеры диалогов и новое первое сообщение. Темы вселенной, сценарии встречи и настроение комбинируются. Результат можно править и экспортировать как PNG или JSON (Character Card V2), а прошлые сборки хранятся в галерее.</description></item>
