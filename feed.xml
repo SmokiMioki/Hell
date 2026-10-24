@@ -5,7 +5,8 @@
 <description>Новые расширения для SillyTavern</description>
 <language>ru</language>
 <atom:link href="https://smokimioki.github.io/Hell/feed.xml" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 24 Oct 2026 10:05:36 GMT</lastBuildDate>
+<lastBuildDate>Sat, 24 Oct 2026 10:06:36 GMT</lastBuildDate>
+<item><title>Choice tree ui</title><link>https://smokimioki.github.io/Hell/#choice-tree-ui</link><guid isPermaLink="false">choice-tree-ui-2026-10-24T10:06:33.824Z</guid><pubDate>Sat, 24 Oct 2026 10:06:33 GMT</pubDate><description>Генерирует 2–4 варианта реплик и действий для твоего персонажа, предлагая разные стили поведения и позволяя вставлять выбранный вариант прямо в поле ввода.</description></item>
 <item><title>SillyTavern MoonlitEchoesTheme</title><link>https://smokimioki.github.io/Hell/#sillytavern-moonlitechoestheme</link><guid isPermaLink="false">sillytavern-moonlitechoestheme-2026-10-24T10:05:33.456Z</guid><pubDate>Sat, 24 Oct 2026 10:05:33 GMT</pubDate><description>Минималистичная тема для SillyTavern с дополнительными стилями сообщений, гибкой настройкой оформления и адаптацией под мобильные устройства.</description></item>
 <item><title>JS Slash Runner</title><link>https://smokimioki.github.io/Hell/#js-slash-runner</link><guid isPermaLink="false">js-slash-runner-2026-10-24T10:04:41.730Z</guid><pubDate>Sat, 24 Oct 2026 10:04:41 GMT</pubDate><description>Позволяет запускать пользовательские JavaScript-скрипты в SillyTavern через изолированный iframe, расширяя возможности чата и автоматизируя действия.</description></item>
 <item><title>SLAYimages</title><link>https://smokimioki.github.io/Hell/#slayimages</link><guid isPermaLink="false">slayimages-2026-10-24T10:03:54.687Z</guid><pubDate>Sat, 24 Oct 2026 10:03:54 GMT</pubDate><description>Форк 0xl0cal/sillyimages для SillyTavern с генерацией изображений прямо в чате, гардеробом, референсами персонажей и библиотекой образов.</description></item>
