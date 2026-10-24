@@ -55,3 +55,32 @@ button:disabled{opacity:.5;cursor:wait}
 .catpick .chip{padding:4px 12px;font-size:.72rem}
 .tagnote{margin:-8px 0 18px}
 .list .t em{color:var(--crimson);font-style:normal;letter-spacing:.08em;text-transform:uppercase;font-size:.75rem;margin-right:6px}
+
+/* ---------- читаемость админки ----------
+   Тонкий Cormorant/EB Garamond на тёмном фоне слепит и расплывается на мелком тексте,
+   поэтому здесь — обычный гротеск Inter (есть кириллица), без капса и широкой разрядки. */
+:root{
+  --ui:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --serif:var(--ui);
+  --body:var(--ui);
+  --ash:#cfc5cc;
+}
+body{font-family:var(--ui);font-size:16px;line-height:1.6;font-weight:400}
+.top,.logo,.btn,.chip,.small,summary,details,.status,.check,.section-head h2,.section-head p{font-family:var(--ui)}
+.panel h3{font-size:1.3rem;font-weight:600;letter-spacing:.01em}
+.field{font-size:.9rem;font-weight:500;letter-spacing:.01em;text-transform:none;color:var(--bone)}
+.field input,.field textarea,.fetchrow input{font-size:1rem;letter-spacing:0;background:rgba(0,0,0,.55)}
+.field input::placeholder,.field textarea::placeholder,.fetchrow input::placeholder{color:#9a8f98}
+.imgs .lbl{font-size:.9rem;font-weight:500;letter-spacing:.01em;text-transform:none;color:var(--bone)}
+.check{font-size:.95rem;color:var(--bone)}
+.small{font-size:.9rem;line-height:1.55;color:var(--ash)}
+.status{font-size:1rem}
+summary{letter-spacing:0;font-weight:500}
+details{color:var(--bone)}
+.list .t b{font-size:1.05rem;font-weight:600}
+.list .t span{font-size:.9rem;color:var(--ash)}
+.list .t em{font-size:.8rem;font-weight:500;letter-spacing:.02em;text-transform:none}
+.list button{font-size:.85rem;font-weight:500;letter-spacing:.02em;text-transform:none;padding:7px 14px}
+.catpick .chip{font-size:.85rem;letter-spacing:.01em;text-transform:none;padding:5px 13px}
+.btn{font-weight:500;letter-spacing:.04em}
+.th.first::after{font-size:.7rem;letter-spacing:.04em;text-transform:none}
