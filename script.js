@@ -122,7 +122,8 @@
       const L = window.gateLogic.test(q, { name: e.name, by: e.by, desc: e.desc, cat: labels.get(e._cat), tag: e._extra.map(k => labels.get(k)).join(' ') + ' ' + e._raw });
       if (L !== undefined) return L;
     }
-    return [e.name, e.by, e.desc, labels.get(e._cat), ...e._extra.map(k => labels.get(k)), e._raw].join(' ').toLowerCase().includes(q);
+    const all = [e.name, e.by, e.desc, labels.get(e._cat), ...e._extra.map(k => labels.get(k)), e._raw].join(' ');
+    return window.gateSmart ? window.gateSmart.matchAll(all, q) : all.toLowerCase().includes(q);   // smart-search.js
   }
 
   function renderFilters() {
@@ -149,7 +150,8 @@
     const tq = tagFind.value.trim().toLowerCase();   // поиск по тегам внутри «Прочее»
     const full = Object.keys(c).sort((a, b) => c[b] - c[a] || labels.get(a).localeCompare(labels.get(b), 'ru'));
     const viaAlias = t => Object.keys(TAG_ALIASES).some(a => a.includes(tq) && key(TAG_ALIASES[a]) === t);   // «rp» находит «ролевая игра»
-    const list = tq ? full.filter(t => labels.get(t).toLowerCase().includes(tq) || viaAlias(t) || state.extra.has(t)) : full;
+    const tagHit = t => window.gateSmart ? window.gateSmart.match(labels.get(t), tq) : labels.get(t).toLowerCase().includes(tq);
+    const list = tq ? full.filter(t => tagHit(t) || viaAlias(t) || state.extra.has(t)) : full;
     const shown = (state.all || tq) ? list : list.filter((t, i) => i < TAG_LIMIT || state.extra.has(t));
     extraChips.innerHTML = shown.map(t =>
       `<button class="tagchip${state.extra.has(t) ? ' on' : ''}" type="button" data-k="${esc(t)}" aria-pressed="${state.extra.has(t)}">${esc(labels.get(t))}<span class="n">${c[t]}</span></button>`

@@ -9,7 +9,7 @@
   <script>try{if(!sessionStorage.getItem('gate-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro-on')}catch(e){}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=EB+Garamond:wght@400;500&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script>try{var t=localStorage.getItem('gate-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
   <link rel="stylesheet" href="intro.css">
@@ -153,6 +153,7 @@
   <footer class="foot">
     <span class="jp">狐火</span>
     <p>© <span id="year"></span> · сделано с любовью к мрачным вещам · <a class="rss" href="feed.xml">RSS</a></p>
+    <p class="disclaimer">Врата — всего лишь каталог ссылок. Создатели сайта не пишут эти расширения и не несут никакой ответственности за них и за их авторов: что ставить в свой SillyTavern, решаешь только ты. Прежде чем устанавливать, загляни в репозиторий и проверь, что внутри.</p>
   </footer>
 
   <!-- СВЕЧА: ТЕМА -->
@@ -182,6 +183,7 @@
     <div class="chips" id="chips" role="group" aria-label="Категории"></div>
   </dialog>
 
+  <script src="smart-search.js"></script>
   <script src="logic-search.js"></script>
   <script src="script.js"></script>
   <script src="intro.js"></script>

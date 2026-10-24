@@ -60,7 +60,7 @@
         if (OR_W.has(w)) { op('or'); continue; }
         if (NOT_W.has(w)) { op('not'); continue; }
       }
-      t.push({ k: 'term', field, text: text.toLowerCase() });
+      t.push({ k: 'term', field, text: text.toLowerCase(), quoted });
     }
     while (depth-- > 0) t.push({ k: ')' });      // незакрытые скобки закрываем сами
     return { t, logic };
@@ -114,7 +114,10 @@
       case 'or': return run(n.a, f) || run(n.b, f);
       case 'and': return run(n.a, f) && run(n.b, f);
       case 'not': return !run(n.a, f);
-      case 'term': return hay(f, n.field).includes(n.text);
+      case 'term': {                                // умный поиск (smart-search.js): синонимы, падежи, опечатки
+        const h = hay(f, n.field);
+        return window.gateSmart ? window.gateSmart.match(h, n.text, { exact: n.quoted }) : h.includes(n.text);
+      }
       default: return true;
     }
   }
