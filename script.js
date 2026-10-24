@@ -92,6 +92,10 @@
     for (const t of state.extra) if (!e._extra.includes(t)) return false;
     const q = state.q.trim().toLowerCase();
     if (!q) return true;
+    if (window.gateLogic) {                         // логический поиск (logic-search.js)
+      const L = window.gateLogic.test(q, { name: e.name, by: e.by, desc: e.desc, cat: labels.get(e._cat), tag: e._extra.map(k => labels.get(k)).join(' ') });
+      if (L !== undefined) return L;
+    }
     return [e.name, e.by, e.desc, labels.get(e._cat), ...e._extra.map(k => labels.get(k))].join(' ').toLowerCase().includes(q);
   }
 
