@@ -655,5 +655,20 @@
     ],
     "repo": "https://github.com/Nufahi/ST-ThemeAssist",
     "added": "2026-10-24T10:20:38.365Z"
+  },
+  {
+    "name": "My lorebook manager",
+    "by": "Nufahi",
+    "desc": "Расширенный менеджер лорбуков для SillyTavern с папками, вложенными каталогами, тегами, статистикой токенов, массовым управлением и экспортом в JSON или ZIP",
+    "cat": "Лорбук и миростроение",
+    "tags": [
+      "лорбук",
+      "World Info",
+      "организация лорбуков",
+      "папки",
+      "теги"
+    ],
+    "repo": "https://github.com/Nufahi/My-lorebook-manager",
+    "added": "2026-10-24T10:22:56.062Z"
   }
 ]
