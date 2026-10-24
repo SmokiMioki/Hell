@@ -891,7 +891,8 @@
       "Шино",
       "генерация карточек",
       "экспорт карточек",
-      "AU"
+      "AU",
+      "форк"
     ],
     "repo": "https://github.com/Shino4ka/another-shinoverse",
     "added": "2026-10-24T15:50:52.422Z"
