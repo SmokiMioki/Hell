@@ -1669,5 +1669,22 @@
     ],
     "repo": "https://github.com/lvslivnaya-dev/SillyTavern-Relationship-Engine",
     "added": "2026-11-13T11:00:01.492Z"
+  },
+  {
+    "name": "Rpg companion sillytavern",
+    "by": "SpicyMarinara",
+    "desc": "Ролевой RPG-трекер с характеристиками персонажей, инвентарём, навыками, мыслями, отношениями, информацией о сцене и автоматическим обновлением игровых показателей. (Русский язык поддерживается. Проект помечен устаревшим, развитие перенесено в Marinara Engine.)",
+    "cat": "Ролевые игры и симуляция",
+    "tags": [
+      "RPG",
+      "характеристики",
+      "инвентарь",
+      "навыки",
+      "персонажи",
+      "мысли",
+      "инфоблок"
+    ],
+    "repo": "https://github.com/SpicyMarinara/rpg-companion-sillytavern",
+    "added": "2026-11-13T11:00:41.316Z"
   }
 ]
