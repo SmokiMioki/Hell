@@ -1737,5 +1737,21 @@
     ],
     "repo": "https://github.com/ActualBroeckchen/inSTead",
     "added": "2026-11-13T11:03:00.040Z"
+  },
+  {
+    "name": "SillyTavern WorldInfo Recommender",
+    "by": "bmen25124",
+    "desc": "ИИ-помощник для создания и обновления записей лорбука на основе текущего сюжета, персонажей и контекста переписки с использованием профилей подключений.",
+    "cat": "Лорбук и миростроение",
+    "tags": [
+      "лорбук",
+      "World Info",
+      "генерация записей",
+      "ключевые слова",
+      "миростроение",
+      "контекст"
+    ],
+    "repo": "https://github.com/bmen25124/SillyTavern-WorldInfo-Recommender",
+    "added": "2026-11-13T11:03:34.800Z"
   }
 ]
