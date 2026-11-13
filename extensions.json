@@ -1803,5 +1803,22 @@
     ],
     "repo": "https://github.com/SillyTavern/Extension-TopInfoBar",
     "added": "2026-11-13T11:05:21.752Z"
+  },
+  {
+    "name": "Extension QuickPersona",
+    "by": "SillyTavern",
+    "desc": "Добавляет рядом с полем ввода компактную кнопку со списком персон для быстрого переключения между пользовательскими аватарами.",
+    "cat": "Управление аватарками",
+    "tags": [
+      "персоны",
+      "аватары",
+      "переключение",
+      "быстрый доступ",
+      "выбор персоны",
+      "интерфейс",
+      "персонажи"
+    ],
+    "repo": "https://github.com/SillyTavern/Extension-QuickPersona",
+    "added": "2026-11-13T11:06:01.697Z"
   }
 ]
