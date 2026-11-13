@@ -1483,5 +1483,21 @@
     ],
     "repo": "https://github.com/mooxsy72-oss/hearthtide",
     "added": "2026-11-13T09:55:48.802Z"
+  },
+  {
+    "name": "Floating CSS Editor",
+    "by": "KiskaSora",
+    "desc": "Плавающий CSS-редактор для изменения оформления SillyTavern в реальном времени с автозагрузкой стилей при смене темы, сворачиванием и перемещением окна.",
+    "cat": "CSS",
+    "tags": [
+      "редактор стилей",
+      "оформление",
+      "кастомизация",
+      "темы",
+      "интерфейс",
+      "живое редактирование"
+    ],
+    "repo": "https://github.com/KiskaSora/Floating-CSS-Editor",
+    "added": "2026-11-13T10:40:21.249Z"
   }
 ]
