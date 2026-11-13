@@ -1449,5 +1449,22 @@
     ],
     "repo": "https://github.com/mooxsy72-oss/AvatarAdjuster",
     "added": "2026-11-13T09:54:35.197Z"
+  },
+  {
+    "name": "Animated avatars",
+    "by": "mooxsy72-oss",
+    "desc": "Заменяет статичные аватарки персонажей и персон в чате на анимированные изображения или видео с поддержкой GIF, WebP, APNG, MP4 и WebM.",
+    "cat": "Управление аватарками",
+    "tags": [
+      "анимированные аватары",
+      "видео",
+      "GIF",
+      "WebP",
+      "MP4",
+      "анимация",
+      "персонализация"
+    ],
+    "repo": "https://github.com/mooxsy72-oss/animated-avatars",
+    "added": "2026-11-13T09:54:56.525Z"
   }
 ]
