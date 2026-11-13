@@ -5,7 +5,7 @@
 <description>Новые расширения для SillyTavern</description>
 <language>ru</language>
 <atom:link href="https://smokimioki.github.io/Hell/feed.xml" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Fri, 13 Nov 2026 11:18:57 GMT</lastBuildDate>
+<lastBuildDate>Fri, 13 Nov 2026 11:19:42 GMT</lastBuildDate>
 <item><title>STWII World Info Info</title><link>https://smokimioki.github.io/Hell/#stwii-world-info-info</link><guid isPermaLink="false">stwii-world-info-info-2026-11-13T11:13:51.373Z</guid><pubDate>Fri, 13 Nov 2026 11:13:51 GMT</pubDate><description>Показывает активные записи лорбуков, причины их срабатывания, использованные ключевые слова, расход токенов и историю активаций с возможностью быстрого управления записями. Русскоязычная версия проекта WorldInfoInfo от LenAnderson;</description></item>
 <item><title>Ya kalendar perevernu</title><link>https://smokimioki.github.io/Hell/#ya-kalendar-perevernu</link><guid isPermaLink="false">ya-kalendar-perevernu-2026-11-13T11:13:04.045Z</guid><pubDate>Fri, 13 Nov 2026 11:13:04 GMT</pubDate><description>Отслеживает дату, время, сезон, погоду и предстоящие события в ролевом сюжете, автоматически обновляя календарь по сообщениям персонажей. Более простая версия без календаря магазина, алмазов и мини-игр. Русскоязычная.</description></item>
 <item><title>Calendar</title><link>https://smokimioki.github.io/Hell/#calendar</link><guid isPermaLink="false">calendar-2026-11-13T11:12:13.959Z</guid><pubDate>Fri, 13 Nov 2026 11:12:13 GMT</pubDate><description>Интерактивный календарь ролевой игры с отслеживанием времени, погоды и запланированных событий, дополненный мини-играми, наградами в алмазах и магазином сюжетных сцен.</description></item>
