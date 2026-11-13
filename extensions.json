@@ -1703,5 +1703,22 @@
     ],
     "repo": "https://github.com/RivelleDays/SillyTavern-MoonlitEchoesTheme",
     "added": "2026-11-13T11:01:53.320Z"
+  },
+  {
+    "name": "St custom fonts",
+    "by": "FrostBD",
+    "desc": "Позволяет устанавливать собственные шрифты и Google Fonts в SillyTavern, создавать список шрифтов и автоматически переключать их вместе с темами оформления.",
+    "cat": "Оформление интерфейса",
+    "tags": [
+      "шрифты",
+      "Google Fonts",
+      "типографика",
+      "оформление",
+      "темы",
+      "кастомизация",
+      "дизайн"
+    ],
+    "repo": "https://github.com/FrostBD/st-custom-fonts",
+    "added": "2026-11-13T11:02:22.713Z"
   }
 ]
