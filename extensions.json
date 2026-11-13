@@ -1214,5 +1214,22 @@
     ],
     "repo": "https://github.com/aceeenvw/quickpersonapro",
     "added": "2026-11-13T09:37:52.147Z"
+  },
+  {
+    "name": "Codemirrorpro",
+    "by": "aceeenvw",
+    "desc": "Расширенный текстовый редактор SillyTavern с подсветкой синтаксиса, поиском и заменой, автодополнением макросов, форматированием Markdown и подсчётом токенов.",
+    "cat": "Управление промптами",
+    "tags": [
+      "редактор",
+      "код",
+      "подсветка синтаксиса",
+      "Markdown",
+      "макросы",
+      "поиск",
+      "токены"
+    ],
+    "repo": "https://github.com/aceeenvw/codemirrorpro",
+    "added": "2026-11-13T09:38:58.334Z"
   }
 ]
