@@ -1635,5 +1635,22 @@
     ],
     "repo": "https://github.com/aika636/STFolder",
     "added": "2026-11-13T10:44:37.409Z"
+  },
+  {
+    "name": "STDoom",
+    "by": "aika636",
+    "desc": "Абсолютный рофл. Всерьез не воспринимать. Расширение SillyTavern: оригинальный DOS-DOOM 1993 года в окне поверх чата. DOSBox в WebAssembly, полностью офлайн.",
+    "cat": "Мини-игры",
+    "tags": [
+      "DOOM",
+      "ретро-игры",
+      "шутер",
+      "DOSBox",
+      "WebAssembly",
+      "офлайн",
+      "развлечения"
+    ],
+    "repo": "https://github.com/aika636/STDoom",
+    "added": "2026-11-13T10:45:17.953Z"
   }
 ]
