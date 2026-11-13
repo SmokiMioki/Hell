@@ -1686,5 +1686,22 @@
     ],
     "repo": "https://github.com/SpicyMarinara/rpg-companion-sillytavern",
     "added": "2026-11-13T11:00:41.316Z"
+  },
+  {
+    "name": "SillyTavern MoonlitEchoesTheme",
+    "by": "RivelleDays",
+    "desc": "Элегантная тема для SillyTavern с уникальными стилями сообщений, цветовыми пресетами, переработанным интерфейсом и адаптацией для компьютеров и телефонов.",
+    "cat": "Оформление интерфейса",
+    "tags": [
+      "темы",
+      "оформление",
+      "интерфейс",
+      "стили сообщений",
+      "минимализм",
+      "пресеты",
+      "мобильная версия"
+    ],
+    "repo": "https://github.com/RivelleDays/SillyTavern-MoonlitEchoesTheme",
+    "added": "2026-11-13T11:01:53.320Z"
   }
 ]
