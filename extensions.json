@@ -1820,5 +1820,22 @@
     ],
     "repo": "https://github.com/SillyTavern/Extension-QuickPersona",
     "added": "2026-11-13T11:06:01.697Z"
+  },
+  {
+    "name": "Extension VideoBackgroundLoader",
+    "by": "SillyTavern",
+    "desc": "Добавляет возможность загружать видео в качестве фонов SillyTavern с преобразованием роликов в анимированный WebP для использования в интерфейсе.",
+    "cat": "Оформление интерфейса",
+    "tags": [
+      "видеофоны",
+      "анимация",
+      "WebP",
+      "фон чата",
+      "видео",
+      "оформление",
+      "кастомизация"
+    ],
+    "repo": "https://github.com/SillyTavern/Extension-VideoBackgroundLoader",
+    "added": "2026-11-13T11:06:30.776Z"
   }
 ]
