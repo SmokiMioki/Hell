@@ -1871,5 +1871,22 @@
     ],
     "repo": "https://github.com/ForgottenGlory/ST-SuperObjective",
     "added": "2026-11-13T11:07:33.945Z"
+  },
+  {
+    "name": "Toggle copy",
+    "by": "97kryvpxfm-png",
+    "desc": "Добавляет кнопку копирования промптов между разными пресетами Chat Completion, позволяя переносить выбранные инструкции без ручного копирования текста.",
+    "cat": "Управление промптами",
+    "tags": [
+      "промпты",
+      "пресеты",
+      "копирование",
+      "Chat Completion",
+      "инструкции",
+      "перенос настроек",
+      "редактор промптов"
+    ],
+    "repo": "https://github.com/97kryvpxfm-png/toggle-copy",
+    "added": "2026-11-13T11:08:23.705Z"
   }
 ]
