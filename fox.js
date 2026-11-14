@@ -204,7 +204,7 @@
   }
   function moveDrag(x, y) {                        // курсор держит лису за загривок (кадр выше обычного, см. ниже)
     const cx = clamp(x, fw() * .25, vw() - fw() * .25), cy = Math.max(20, y);
-    pos = { x: cx, y: Math.min(innerHeight - 8, cy + fw() * (860 - 100) / 720) };   // кадр drag: холст 720×860, загривок в 100 от верха
+    pos = { x: cx, y: Math.min(innerHeight - 8, cy + fw() * (800 - 100) / 720) };   // кадр drag: холст 720×800, загривок в 100 от верха
     place();
   }
   function release() {
