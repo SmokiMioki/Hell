@@ -174,7 +174,7 @@
   });
 
   /* ---------- клик и «взять за шкирку» ---------- */
-  const SURPRISE = 650, HAPPY_FOR = 2300, HAPPY_SEQ = ['happy_1', 'happy_2', 'happy_1', 'happy_3'];
+  const SURPRISE = 700, HAPPY_STEP = 900, HAPPY_SEQ = ['happy_1', 'happy_2', 'happy_3'], HAPPY_FOR = HAPPY_STEP * HAPPY_SEQ.length;
   const GRAVITY = () => 2600 * (fw() / 260);
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   let scene = null, sc = null, drag = null;
@@ -198,13 +198,13 @@
     body.classList.remove('walking', 'hop');
     body.classList.add('dragging');
     fox.classList.add('lift');
-    scene = 'drag'; sc = { kickUntil: 0, nextKick: performance.now() + rand(1800, 3200) };
+    scene = 'drag'; sc = { pic: 'drag_1', until: 0, nextKick: performance.now() + rand(1500, 2500) };
     drag.started = true;
     say(pick(GRAB), { hold: 600000 });
   }
-  function moveDrag(x, y) {                        // курсор держит лису за загривок (70/520 высоты кадра)
+  function moveDrag(x, y) {                        // курсор держит лису за загривок (кадр выше обычного, см. ниже)
     const cx = clamp(x, fw() * .25, vw() - fw() * .25), cy = Math.max(20, y);
-    pos = { x: cx, y: Math.min(innerHeight - 8, cy + fh() * (1 - 70 / 520)) };
+    pos = { x: cx, y: Math.min(innerHeight - 8, cy + fw() * (860 - 100) / 720) };   // кадр drag: холст 720×860, загривок в 100 от верха
     place();
   }
   function release() {
@@ -227,7 +227,7 @@
       if (e < SURPRISE) setPic('surprised_1');
       else {
         if (!sc.said) { sc.said = true; body.classList.remove('hop'); say(sc.line, { hold: 2200 }); }
-        setPic(reduce ? 'happy_1' : HAPPY_SEQ[Math.floor((e - SURPRISE) / 260) % HAPPY_SEQ.length]);
+        setPic(reduce ? 'happy_1' : HAPPY_SEQ[Math.min(HAPPY_SEQ.length - 1, Math.floor((e - SURPRISE) / HAPPY_STEP))]);
         if (e > SURPRISE + HAPPY_FOR) endScene();
       }
     } else if (scene === 'drag') {
@@ -236,9 +236,13 @@
       const target = clamp(drag.vx * .025, -28, 28) + Math.sin(t / 420) * 2.2;   // маятник на загривке
       swing.v += ((target - swing.a) * 60 - swing.v * 7) * dt; swing.a += swing.v * dt;
       body.style.transform = `rotate(${(swing.a * dir).toFixed(2)}deg)`;
-      if (t > sc.nextKick) { sc.kickUntil = t + 800; sc.nextKick = t + rand(2500, 4500); }
-      const kick = t < sc.kickUntil || Math.abs(drag.vx) > 700;
-      setPic(kick && ((t / 130) | 0) % 2 ? 'drag_2' : 'drag_1');
+      // кадры держатся подольше, чтобы их можно было разглядеть: смена не чаще, чем раз в ~0,9 с
+      if (t > sc.until) {
+        const fast = Math.abs(drag.vx) > 700;
+        if (sc.pic === 'drag_1' && (fast || t > sc.nextKick)) { sc.pic = 'drag_2'; sc.until = t + 1100; }
+        else if (sc.pic === 'drag_2') { sc.pic = 'drag_1'; sc.until = t + 900; sc.nextKick = t + rand(1500, 2800); }
+      }
+      setPic(sc.pic);
     } else if (scene === 'fall') {
       sc.vy += GRAVITY() * dt; sc.vx *= Math.exp(-dt * 1.2);
       pos.x = clamp(pos.x + sc.vx * dt, fw() * .3, vw() - fw() * .3); pos.y += sc.vy * dt;

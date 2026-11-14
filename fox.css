@@ -5,10 +5,10 @@
   pointer-events:none;will-change:transform;opacity:0;transition:opacity .6s;
 }
 #fox.show{opacity:1}
-.fox-flip{width:100%;transform-origin:50% 100%}
+.fox-flip{position:relative;width:100%;aspect-ratio:720/520;transform-origin:50% 100%}
 .fox-flip.left{transform:scaleX(-1)}
 .fox-body{
-  display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none;
+  position:absolute;left:0;bottom:0;display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none;
   transform-origin:50% 100%;filter:drop-shadow(0 8px 14px rgba(0,0,0,.45));
 }
 .fox-body.breathe{animation:fox-breathe 3.8s ease-in-out infinite}
@@ -18,14 +18,15 @@
 
 /* клик и подъём */
 .fox-body.hop{animation:fox-hop .6s cubic-bezier(.2,.7,.3,1)}
-.fox-body.dragging{animation:none;transform-origin:50% 13.5%;filter:drop-shadow(0 22px 16px rgba(0,0,0,.3))}
+.fox-body.dragging{animation:none;transform-origin:50% 11.6%;filter:drop-shadow(0 22px 16px rgba(0,0,0,.3))}
 .fox-body.falling{animation:none;transform-origin:50% 50%}
 .fox-body.thud{animation:fox-thud .55s ease-out}
 .fox-body.shake{animation:fox-shake .5s ease-in-out}
 @keyframes fox-hop{0%{transform:translateY(0) scale(1.03,.94)}30%{transform:translateY(-26px) scale(.97,1.05)}60%{transform:translateY(0) scale(1.03,.96)}100%{transform:translateY(0) scale(1,1)}}
 @keyframes fox-thud{0%{transform:scale(1.12,.78)}35%{transform:scale(.97,1.05)}65%{transform:scale(1.02,.98)}100%{transform:scale(1,1)}}
 @keyframes fox-shake{0%,100%{transform:rotate(0)}20%{transform:rotate(-3deg)}45%{transform:rotate(3deg)}70%{transform:rotate(-1.5deg)}}
-#fox.low .fox-bubble{bottom:calc(71% - 6px)}
+#fox.low .fox-bubble{bottom:calc(66% - 6px)}
+#fox.lift .fox-bubble{bottom:calc(162% + 4px)}
 
 /* кликабельна только сама лиса, а не весь прозрачный холст */
 .fox-hit{position:absolute;left:34%;top:30%;width:34%;height:62%;border-radius:40%;pointer-events:auto;cursor:grab;touch-action:none;-webkit-touch-callout:none}
