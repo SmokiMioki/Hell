@@ -9,7 +9,8 @@
   const pick = a => a[Math.floor(Math.random() * a.length)];
 
   /* ---------- кадры ---------- */
-  const NAMES = ['idle_1', 'idle_2', 'idle_3', 'point_1', 'sad_1', 'talk_1', 'talk_2', 'walk_1', 'walk_2', 'walk_3', 'walk_4'];
+  const NAMES = ['idle_1', 'idle_2', 'idle_3', 'point_1', 'sad_1', 'talk_1', 'talk_2', 'walk_1', 'walk_2', 'walk_3', 'walk_4',
+    'surprised_1', 'happy_1', 'happy_2', 'happy_3', 'drag_1', 'drag_2', 'fall_1', 'land_1'];
   const WALK = ['walk_1', 'walk_2', 'walk_3', 'walk_4'];
   const pics = {};
   NAMES.forEach(n => { const i = new Image(); i.src = `img/fox/${n}.webp`; pics[n] = i; });
@@ -20,7 +21,9 @@
   const MANY = n => `Нашла несколько (${n}). Вот первое.`;
   const NONE = ['Не нашла… Попробуй написать иначе.', 'Тут пусто. Может, другое имя?'];
   const EMPTY = ['Сначала впиши имя…'];
-  const POKE = ['Ищешь расширение? Впиши имя наверху.', 'Я здесь, пока горит огонёк.', 'Тише… слышишь? Это шуршат расширения.', 'Нажми на карточку — внутри ссылка для установки.'];
+  const POKE = ['Ищешь расширение? Впиши имя наверху.', 'Я здесь, пока горит огонёк.', 'Тише… слышишь? Это шуршат расширения.', 'Нажми на карточку — внутри ссылка для установки.', 'Хвосты щекотно!', 'Ой! …Ладно, можно.'];
+  const GRAB = ['Эй! Поставь на место!', 'Отпусти… я не котёнок.', 'Лисы так не носят!'];
+  const LAND = ['Ох… всё кружится.', 'Так и было задумано. Почти.', 'Хвосты целы. Достоинство — не очень.'];
 
   /* ---------- DOM ---------- */
   const fox = document.createElement('div');
@@ -87,12 +90,13 @@
   }
   let pend = false;
   addEventListener('scroll', () => { if (pend) return; pend = true; requestAnimationFrame(() => { pend = false; follow(); }); }, { passive: true });
-  addEventListener('resize', () => { if (!path) { perch ? follow() : (pos = homePoint(), place()); } });
+  addEventListener('resize', () => { if (!path && !scene) { perch ? follow() : (pos = homePoint(), place()); } });
   setInterval(() => { if (!path) follow(); }, 500);
 
   function tick(t) {
     const dt = Math.min(.05, (t - last) / 1000); last = t;
-    if (path) {
+    if (scene) sceneTick(t, dt);
+    else if (path) {
       const dx = path.x - pos.x, dy = path.y - pos.y, d = Math.hypot(dx, dy), step = 340 * (fw() / 260) * dt;
       if (d <= step) {
         pos = { x: path.x, y: path.y }; const cb = path.cb; path = null; body.classList.remove('walking'); place(); cb && cb();
@@ -149,6 +153,8 @@
 
   document.addEventListener('gate:search', e => {
     if (ls.get(OFF) === '1') return;
+    if (scene && scene !== 'poke') return;          // пока лису носят или она падает, поиск подождёт
+    endScene();
     const { q, found } = e.detail;
     unsay(false); path = null; perch = null; body.classList.remove('walking'); busy = true;
     const my = ++job;
@@ -167,7 +173,118 @@
     }, reduce ? 0 : 800);
   });
 
-  hit.addEventListener('click', () => { if (!path) say(pick(POKE), { hold: 3200 }); });
+  /* ---------- клик и «взять за шкирку» ---------- */
+  const SURPRISE = 650, HAPPY_FOR = 2300, HAPPY_SEQ = ['happy_1', 'happy_2', 'happy_1', 'happy_3'];
+  const GRAVITY = () => 2600 * (fw() / 260);
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  let scene = null, sc = null, drag = null;
+  const swing = { a: 0, v: 0 };
+
+  function endScene() {                            // сбросить всё, что навешивали сцены
+    scene = null; sc = null; drag = null;
+    swing.a = swing.v = 0; body.style.transform = '';
+    body.classList.remove('dragging', 'falling', 'hop', 'thud', 'shake');
+    fox.classList.remove('lift', 'low');
+  }
+
+  function poke() {                                // короткий клик: удивилась, потом радуется
+    endScene(); unsay(false);
+    scene = 'poke'; sc = { t0: performance.now() - (reduce ? SURPRISE : 0), said: false, line: pick(POKE) };
+    if (!reduce) body.classList.add('hop');
+  }
+
+  function startDrag() {
+    unsay(false); path = null; perch = null; job++; busy = false;
+    body.classList.remove('walking', 'hop');
+    body.classList.add('dragging');
+    fox.classList.add('lift');
+    scene = 'drag'; sc = { kickUntil: 0, nextKick: performance.now() + rand(1800, 3200) };
+    drag.started = true;
+    say(pick(GRAB), { hold: 600000 });
+  }
+  function moveDrag(x, y) {                        // курсор держит лису за загривок (70/520 высоты кадра)
+    const cx = clamp(x, fw() * .25, vw() - fw() * .25), cy = Math.max(20, y);
+    pos = { x: cx, y: Math.min(innerHeight - 8, cy + fh() * (1 - 70 / 520)) };
+    place();
+  }
+  function release() {
+    const d = drag; drag = null;
+    unsay(false); fox.classList.remove('lift');
+    body.classList.remove('dragging'); body.classList.add('falling');
+    scene = 'fall'; sc = { vx: clamp(d.vx * .5, -700, 700), vy: clamp(d.vy * .4, -600, 600) };
+  }
+  function land() {
+    pos = { x: clamp(pos.x, fw() * .45, vw() - fw() * .45), y: innerHeight - 8 }; place();
+    body.classList.remove('falling'); body.style.transform = '';
+    body.classList.add('thud'); fox.classList.add('low');
+    swing.a = swing.v = 0;
+    scene = 'land'; sc = { t0: performance.now(), said: false };
+  }
+
+  function sceneTick(t, dt) {
+    if (scene === 'poke') {
+      const e = t - sc.t0;
+      if (e < SURPRISE) setPic('surprised_1');
+      else {
+        if (!sc.said) { sc.said = true; body.classList.remove('hop'); say(sc.line, { hold: 2200 }); }
+        setPic(reduce ? 'happy_1' : HAPPY_SEQ[Math.floor((e - SURPRISE) / 260) % HAPPY_SEQ.length]);
+        if (e > SURPRISE + HAPPY_FOR) endScene();
+      }
+    } else if (scene === 'drag') {
+      if (!drag) return;
+      drag.vx *= Math.exp(-dt * 5); drag.vy *= Math.exp(-dt * 5);
+      const target = clamp(drag.vx * .025, -28, 28) + Math.sin(t / 420) * 2.2;   // маятник на загривке
+      swing.v += ((target - swing.a) * 60 - swing.v * 7) * dt; swing.a += swing.v * dt;
+      body.style.transform = `rotate(${(swing.a * dir).toFixed(2)}deg)`;
+      if (t > sc.nextKick) { sc.kickUntil = t + 800; sc.nextKick = t + rand(2500, 4500); }
+      const kick = t < sc.kickUntil || Math.abs(drag.vx) > 700;
+      setPic(kick && ((t / 130) | 0) % 2 ? 'drag_2' : 'drag_1');
+    } else if (scene === 'fall') {
+      sc.vy += GRAVITY() * dt; sc.vx *= Math.exp(-dt * 1.2);
+      pos.x = clamp(pos.x + sc.vx * dt, fw() * .3, vw() - fw() * .3); pos.y += sc.vy * dt;
+      swing.v += ((0 - swing.a) * 40 - swing.v * 6) * dt; swing.a += swing.v * dt;
+      body.style.transform = `rotate(${(clamp(swing.a, -30, 30) * dir).toFixed(2)}deg)`;
+      setPic('fall_1'); place();
+      if (pos.y >= innerHeight - 8) land();
+    } else if (scene === 'land') {
+      const e = t - sc.t0; setPic('land_1');
+      if (e > 350 && !sc.said) { sc.said = true; say(pick(LAND), { hold: 1800 }); }
+      if (e > 2600) {                              // пришла в себя: встряхнулась и пошла к полю
+        endScene(); unsay(false);
+        body.classList.add('shake'); setTimeout(() => body.classList.remove('shake'), 600);
+        goSpot(spots.gate);
+      }
+    }
+  }
+
+  hit.addEventListener('pointerdown', e => {
+    if (e.button > 0 || (scene && scene !== 'poke')) return;
+    e.preventDefault();
+    drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, lx: e.clientX, ly: e.clientY, lt: performance.now(), vx: 0, vy: 0, started: false };
+    try { hit.setPointerCapture(e.pointerId); } catch {}
+  });
+  hit.addEventListener('pointermove', e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    if (!drag.started) {
+      if (reduce || Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) < 8) return;
+      const keep = drag; endScene(); drag = keep; startDrag();
+    }
+    const now = performance.now(), dt = Math.max(8, now - drag.lt) / 1000;
+    drag.vx += ((e.clientX - drag.lx) / dt - drag.vx) * .35;
+    drag.vy += ((e.clientY - drag.ly) / dt - drag.vy) * .35;
+    drag.lx = e.clientX; drag.ly = e.clientY; drag.lt = now;
+    moveDrag(e.clientX, e.clientY);
+  });
+  const endPointer = e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    try { hit.releasePointerCapture(e.pointerId); } catch {}
+    if (drag.started) { release(); return; }
+    const clicked = e.type === 'pointerup'; drag = null;
+    if (clicked && !path) poke();
+  };
+  hit.addEventListener('pointerup', endPointer);
+  hit.addEventListener('pointercancel', endPointer);
+  hit.addEventListener('contextmenu', e => e.preventDefault());
 
   /* ---------- выключатель ---------- */
   const foot = $('.foot p');
@@ -176,7 +293,7 @@
   const sync = () => { tg.textContent = ls.get(OFF) === '1' ? 'позвать лису' : 'спрятать лису'; };
   tg.addEventListener('click', () => {
     if (ls.get(OFF) === '1') { ls.del(OFF); sync(); enter(); }
-    else { ls.set(OFF, '1'); sync(); unsay(false); path = null; fox.classList.remove('show'); }
+    else { ls.set(OFF, '1'); sync(); endScene(); unsay(false); path = null; fox.classList.remove('show'); }
   });
   sync(); if (foot) foot.appendChild(tg);
 
