@@ -29,18 +29,20 @@ body{
 ::selection{background:var(--blood);color:#fff}
 
 :root{
-  --ember:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='20'%20height='28'%20viewBox='0%200%2020%2028'%3E%3Cpath%20d='M10%201C11%206%2017%209%2017%2017C17%2023%2014%2027%2010%2027C6%2027%203%2023%203%2017C3%2012%206%2011%207%206C8%208%209%208%2010%201Z'%20fill='%23ff4d1f'/%3E%3Cpath%20d='M10%209C11%2012%2014%2014%2014%2019C14%2023%2012%2026%2010%2026C8%2026%206%2023%206%2019C6%2015%209%2014%2010%209Z'%20fill='%23ff9a2e'/%3E%3Cpath%20d='M10%2016C11%2018%2012%2020%2012%2022C12%2024%2011%2025%2010%2025C9%2025%208%2024%208%2022C8%2020%209%2018%2010%2016Z'%20fill='%23fff1b0'/%3E%3C/svg%3E");
-  --ember-hot:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='20'%20height='28'%20viewBox='0%200%2020%2028'%3E%3Cpath%20d='M10%201C11%206%2017%209%2017%2017C17%2023%2014%2027%2010%2027C6%2027%203%2023%203%2017C3%2012%206%2011%207%206C8%208%209%208%2010%201Z'%20fill='%23ff4d1f'/%3E%3Cpath%20d='M10%209C11%2012%2014%2014%2014%2019C14%2023%2012%2026%2010%2026C8%2026%206%2023%206%2019C6%2015%209%2014%2010%209Z'%20fill='%23ff9a2e'/%3E%3Cpath%20d='M10%2016C11%2018%2012%2020%2012%2022C12%2024%2011%2025%2010%2025C9%2025%208%2024%208%2022C8%2020%209%2018%2010%2016Z'%20fill='%23ffffff'/%3E%3C/svg%3E");
-  --ember-h:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='28'%20height='20'%20viewBox='0%200%2028%2020'%3E%3Cg%20transform='translate%280%2020%29%20rotate%28-90%29'%3E%3Cpath%20d='M10%201C11%206%2017%209%2017%2017C17%2023%2014%2027%2010%2027C6%2027%203%2023%203%2017C3%2012%206%2011%207%206C8%208%209%208%2010%201Z'%20fill='%23ff4d1f'/%3E%3Cpath%20d='M10%209C11%2012%2014%2014%2014%2019C14%2023%2012%2026%2010%2026C8%2026%206%2023%206%2019C6%2015%209%2014%2010%209Z'%20fill='%23ff9a2e'/%3E%3Cpath%20d='M10%2016C11%2018%2012%2020%2012%2022C12%2024%2011%2025%2010%2025C9%2025%208%2024%208%2022C8%2020%209%2018%2010%2016Z'%20fill='%23fff1b0'/%3E%3C/g%3E%3C/svg%3E");
-  --ember-h-hot:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='28'%20height='20'%20viewBox='0%200%2028%2020'%3E%3Cg%20transform='translate%280%2020%29%20rotate%28-90%29'%3E%3Cpath%20d='M10%201C11%206%2017%209%2017%2017C17%2023%2014%2027%2010%2027C6%2027%203%2023%203%2017C3%2012%206%2011%207%206C8%208%209%208%2010%201Z'%20fill='%23ff4d1f'/%3E%3Cpath%20d='M10%209C11%2012%2014%2014%2014%2019C14%2023%2012%2026%2010%2026C8%2026%206%2023%206%2019C6%2015%209%2014%2010%209Z'%20fill='%23ff9a2e'/%3E%3Cpath%20d='M10%2016C11%2018%2012%2020%2012%2022C12%2024%2011%2025%2010%2025C9%2025%208%2024%208%2022C8%2020%209%2018%2010%2016Z'%20fill='%23ffffff'/%3E%3C/g%3E%3C/svg%3E");
-  --rope:repeating-linear-gradient(60deg,#e0243a 0 2px,#8a1120 2px 4px);
-  --rope-h:repeating-linear-gradient(150deg,#e0243a 0 2px,#8a1120 2px 4px);
-  --char:repeating-linear-gradient(60deg,#3d2f35 0 2px,#1a1318 2px 4px);
-  --char-h:repeating-linear-gradient(150deg,#3d2f35 0 2px,#1a1318 2px 4px);
-  --hot:repeating-linear-gradient(60deg,#ff7a2a 0 2px,#c4161f 2px 4px);
-  --hot-h:repeating-linear-gradient(150deg,#ff7a2a 0 2px,#c4161f 2px 4px);
+  --ember:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='20'%20height='28'%20viewBox='0%200%2020%2028'%3E%3Cpath%20d='M10%201C11%206%2017%209%2017%2017C17%2023%2014%2027%2010%2027C6%2027%203%2023%203%2017C3%2012%206%2011%207%206C8%208%209%208%2010%201Z'%20fill='%23c4472b'/%3E%3Cpath%20d='M10%209C11%2012%2014%2014%2014%2019C14%2023%2012%2026%2010%2026C8%2026%206%2023%206%2019C6%2015%209%2014%2010%209Z'%20fill='%23d98a3a'/%3E%3Cpath%20d='M10%2016C11%2018%2012%2020%2012%2022C12%2024%2011%2025%2010%2025C9%2025%208%2024%208%2022C8%2020%209%2018%2010%2016Z'%20fill='%23f0d9a8'/%3E%3C/svg%3E");
+  --ember-hot:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='20'%20height='28'%20viewBox='0%200%2020%2028'%3E%3Cpath%20d='M10%201C11%206%2017%209%2017%2017C17%2023%2014%2027%2010%2027C6%2027%203%2023%203%2017C3%2012%206%2011%207%206C8%208%209%208%2010%201Z'%20fill='%23c4472b'/%3E%3Cpath%20d='M10%209C11%2012%2014%2014%2014%2019C14%2023%2012%2026%2010%2026C8%2026%206%2023%206%2019C6%2015%209%2014%2010%209Z'%20fill='%23d98a3a'/%3E%3Cpath%20d='M10%2016C11%2018%2012%2020%2012%2022C12%2024%2011%2025%2010%2025C9%2025%208%2024%208%2022C8%2020%209%2018%2010%2016Z'%20fill='%23fbe9c8'/%3E%3C/svg%3E");
+  --ember-h:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='28'%20height='20'%20viewBox='0%200%2028%2020'%3E%3Cg%20transform='translate%280%2020%29%20rotate%28-90%29'%3E%3Cpath%20d='M10%201C11%206%2017%209%2017%2017C17%2023%2014%2027%2010%2027C6%2027%203%2023%203%2017C3%2012%206%2011%207%206C8%208%209%208%2010%201Z'%20fill='%23c4472b'/%3E%3Cpath%20d='M10%209C11%2012%2014%2014%2014%2019C14%2023%2012%2026%2010%2026C8%2026%206%2023%206%2019C6%2015%209%2014%2010%209Z'%20fill='%23d98a3a'/%3E%3Cpath%20d='M10%2016C11%2018%2012%2020%2012%2022C12%2024%2011%2025%2010%2025C9%2025%208%2024%208%2022C8%2020%209%2018%2010%2016Z'%20fill='%23f0d9a8'/%3E%3C/g%3E%3C/svg%3E");
+  --ember-h-hot:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='28'%20height='20'%20viewBox='0%200%2028%2020'%3E%3Cg%20transform='translate%280%2020%29%20rotate%28-90%29'%3E%3Cpath%20d='M10%201C11%206%2017%209%2017%2017C17%2023%2014%2027%2010%2027C6%2027%203%2023%203%2017C3%2012%206%2011%207%206C8%208%209%208%2010%201Z'%20fill='%23c4472b'/%3E%3Cpath%20d='M10%209C11%2012%2014%2014%2014%2019C14%2023%2012%2026%2010%2026C8%2026%206%2023%206%2019C6%2015%209%2014%2010%209Z'%20fill='%23d98a3a'/%3E%3Cpath%20d='M10%2016C11%2018%2012%2020%2012%2022C12%2024%2011%2025%2010%2025C9%2025%208%2024%208%2022C8%2020%209%2018%2010%2016Z'%20fill='%23fbe9c8'/%3E%3C/g%3E%3C/svg%3E");
+  --rope:repeating-linear-gradient(60deg,#a8202f 0 2px,#661120 2px 4px);
+  --rope-h:repeating-linear-gradient(150deg,#a8202f 0 2px,#661120 2px 4px);
+  --char:repeating-linear-gradient(60deg,#34282d 0 2px,#18121a 2px 4px);
+  --char-h:repeating-linear-gradient(150deg,#34282d 0 2px,#18121a 2px 4px);
+  --hot:repeating-linear-gradient(60deg,#cf6a30 0 2px,#9a1c24 2px 4px);
+  --hot-h:repeating-linear-gradient(150deg,#cf6a30 0 2px,#9a1c24 2px 4px);
 }
-/* scrollbar: горящая красная верёвка. Пройденная часть обуглена, на границе огонёк, ниже верёвка ещё цела */
+/* scrollbar: горящая красная верёвка. Пройденная часть обуглена, на границе огонёк, ниже верёвка ещё цела.
+   Страница скроллится через scrollbar.js (CSS-анимации на нативном скроллбаре невозможны),
+   внутренние списки и модалки получают статичную версию на нативных псевдоэлементах. */
 *::-webkit-scrollbar{width:20px;height:20px}
 *::-webkit-scrollbar-track,*::-webkit-scrollbar-track-piece,*::-webkit-scrollbar-corner{background:var(--ink-2)}
 *::-webkit-scrollbar-track-piece:vertical:start{background:var(--char) center/4px 100% no-repeat,var(--ink-2)}
@@ -61,32 +63,74 @@ body{
   background:var(--ember-h-hot) left center/28px 20px no-repeat,var(--hot-h) right center/calc(100% - 22px) 6px no-repeat;
 }
 
-/* телефоны и планшеты: нативный скроллбар не стилизуется, рисуем свой (scrollbar.js) */
+/* живой скроллбар страницы */
+html.rope-on{scrollbar-width:none}
+html.rope-on::-webkit-scrollbar{display:none}
 #rope-scroll{display:none}
+.rope-on #rope-scroll{
+  display:block;position:fixed;z-index:120;pointer-events:none;cursor:pointer;
+  top:calc(env(safe-area-inset-top,0px) + 8px);
+  bottom:calc(env(safe-area-inset-bottom,0px) + 8px);
+  right:max(0px,env(safe-area-inset-right,0px));
+  width:24px;opacity:0;transition:opacity .4s ease;--burn:0px;
+}
+.rope-on #rope-scroll.on{opacity:.92;pointer-events:auto}
+.rope-thread::before,.rope-thread::after{content:"";position:absolute;left:50%;transform:translateX(-50%)}
+.rope-thread::before{top:0;height:var(--burn);width:4px;background:var(--char)}
+.rope-thread::after{top:var(--burn);bottom:0;width:5px;background:var(--rope)}
+.rope-thumb{
+  position:absolute;left:0;top:0;width:24px;height:80px;
+  touch-action:none;will-change:transform;cursor:grab;
+  background:var(--hot) center top/5px 100% no-repeat;
+}
+.rope-thumb::before{ /* тлеющий край обугленной части */
+  content:"";position:absolute;left:50%;top:-44px;width:7px;height:44px;transform:translateX(-50%);
+  background:linear-gradient(transparent,rgba(205,105,46,.45));
+  animation:rope-glow 1.7s ease-in-out infinite alternate;pointer-events:none;
+}
+.rope-fw{
+  position:absolute;left:50%;top:-27px;width:22px;height:31px;margin-left:-11px;
+  transform-origin:50% 100%;transition:transform .3s ease;pointer-events:none;
+}
+.rope-fl{
+  display:block;width:100%;height:100%;background:var(--ember) center/contain no-repeat;
+  transform-origin:50% 100%;animation:rope-flicker .9s ease-in-out infinite;
+  filter:drop-shadow(0 0 4px rgba(205,105,46,.3));
+}
+.rope-sp{
+  position:absolute;left:50%;top:-8px;width:2px;height:2px;border-radius:50%;
+  background:#e8a863;opacity:0;pointer-events:none;animation:rope-spark 1.7s ease-out infinite;
+}
+.rope-sp.s1{--dx:-6px}
+.rope-sp.s2{--dx:5px;animation-delay:.55s;animation-duration:2s}
+.rope-sp.s3{--dx:-1px;animation-delay:1.1s;animation-duration:1.4s}
+/* пока скроллишь, огонь разгорается */
+#rope-scroll.scrolling .rope-fw,#rope-scroll.drag .rope-fw{transform:scale(1.22,1.32)}
+#rope-scroll.scrolling .rope-fl,#rope-scroll.drag .rope-fl{animation-duration:.4s}
+#rope-scroll.scrolling .rope-sp,#rope-scroll.drag .rope-sp{animation-duration:.9s}
+#rope-scroll.drag .rope-thumb{cursor:grabbing}
+@keyframes rope-flicker{
+  0%,100%{transform:scale(1,1) skewX(0)}
+  25%{transform:scale(.94,1.08) skewX(-3deg)}
+  50%{transform:scale(1.05,.93) skewX(2deg)}
+  75%{transform:scale(.97,1.06) skewX(-2deg)}
+}
+@keyframes rope-glow{from{opacity:.4}to{opacity:1}}
+@keyframes rope-spark{
+  0%{transform:translate(0,0);opacity:0}
+  15%{opacity:.8}
+  100%{transform:translate(var(--dx,0),-36px);opacity:0}
+}
 @media (hover:none) and (pointer:coarse){
   *{scrollbar-width:none}
   *::-webkit-scrollbar{display:none}
-  #rope-scroll{
-    display:block;position:fixed;z-index:120;pointer-events:none;
-    top:calc(env(safe-area-inset-top,0px) + 12px);
-    bottom:calc(env(safe-area-inset-bottom,0px) + 12px);
-    right:max(2px,env(safe-area-inset-right,0px));
-    width:28px;opacity:0;transition:opacity .4s ease;--burn:0px;
-  }
-  #rope-scroll.on{opacity:1}
-  .rope-thread::before,.rope-thread::after{content:"";position:absolute;left:50%;transform:translateX(-50%)}
-  .rope-thread::before{top:0;height:var(--burn);width:4px;background:var(--char)}
-  .rope-thread::after{top:var(--burn);bottom:0;width:5px;background:var(--rope)}
-  .rope-thumb{
-    position:absolute;left:0;top:0;width:28px;height:80px;
-    pointer-events:auto;touch-action:none;will-change:transform;
-    background:var(--ember) center top/22px 31px no-repeat,var(--hot) center bottom/5px calc(100% - 24px) no-repeat;
-    filter:drop-shadow(0 0 6px rgba(255,110,40,.6));
-  }
-  #rope-scroll.drag .rope-thumb{background-image:var(--ember-hot),var(--hot)}
-  .intro-on #rope-scroll{display:none}
 }
-@media (prefers-reduced-motion:reduce){#rope-scroll{transition:none}}
+.intro-on #rope-scroll{display:none!important}
+@media (prefers-reduced-motion:reduce){
+  #rope-scroll,.rope-fw{transition:none}
+  .rope-fl,.rope-sp,.rope-thumb::before{animation:none}
+  .rope-sp{display:none}
+}
 /* Firefox и новый Chrome без webkit-псевдоэлементов */
 @supports not selector(::-webkit-scrollbar){
   *{scrollbar-width:thin;scrollbar-color:var(--blood) var(--ink-2)}

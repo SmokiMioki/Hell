@@ -1,22 +1,28 @@
-/* Scroll indicator for touch devices: a burning red rope.
-   Native scrollbars cannot be styled on phones, so this draws its own for the page scroll.
-   Desktop uses the CSS-only scrollbar in style.css, this script does nothing there. */
+/* Page scrollbar drawn as a burning red rope: charred above the flame, intact below it.
+   Native scrollbars cannot be animated (and cannot be styled on phones at all), so the page scroll
+   gets this custom element on every device. Lists and modals keep the static native version from style.css.
+   If this script fails, the native scrollbar stays, because the hiding class is only added on success. */
 (() => {
-  const mq = matchMedia('(hover: none) and (pointer: coarse)');
   const root = document.documentElement;
-  let box = null, thumb = null, hideTimer = 0, dragging = false, dragOffset = 0;
+  const touch = matchMedia('(hover: none) and (pointer: coarse)');
+  let box = null, thumb = null, hideTimer = 0, scrollTimer = 0, dragging = false, dragOffset = 0;
 
   function build() {
     box = document.createElement('div');
     box.id = 'rope-scroll';
     box.setAttribute('aria-hidden', 'true');
-    box.innerHTML = '<div class="rope-thread"></div><div class="rope-thumb"></div>';
+    box.innerHTML =
+      '<div class="rope-thread"></div>' +
+      '<div class="rope-thumb">' +
+        '<div class="rope-fw"><i class="rope-fl"></i></div>' +
+        '<i class="rope-sp s1"></i><i class="rope-sp s2"></i><i class="rope-sp s3"></i>' +
+      '</div>';
     document.body.appendChild(box);
     thumb = box.querySelector('.rope-thumb');
-    thumb.addEventListener('pointerdown', onDown);
-    thumb.addEventListener('pointermove', onMove);
-    thumb.addEventListener('pointerup', onUp);
-    thumb.addEventListener('pointercancel', onUp);
+    box.addEventListener('pointerdown', onDown);
+    box.addEventListener('pointermove', onMove);
+    box.addEventListener('pointerup', onUp);
+    box.addEventListener('pointercancel', onUp);
   }
 
   function metrics() {
@@ -27,65 +33,73 @@
   }
 
   function update() {
-    if (!box) return;
     const m = metrics();
     if (m.max <= 2) { box.classList.remove('on'); return; }
     const ratio = Math.min(1, Math.max(0, scrollY / m.max));
-    thumb.style.height = m.h + 'px';
     const y = (ratio * m.range).toFixed(1);
+    thumb.style.height = m.h + 'px';
     thumb.style.transform = 'translateY(' + y + 'px)';
     box.style.setProperty('--burn', y + 'px'); // everything above the flame is burnt
+    if (!touch.matches) box.classList.add('on'); // always visible with a mouse
   }
 
   function show() {
-    if (!box) return;
-    const m = metrics();
-    if (m.max <= 2) return;
+    if (metrics().max <= 2) return;
     box.classList.add('on');
     clearTimeout(hideTimer);
-    if (!dragging) hideTimer = setTimeout(() => box.classList.remove('on'), 1400);
+    if (touch.matches && !dragging) hideTimer = setTimeout(() => box.classList.remove('on'), 1400);
   }
 
-  function onScroll() { update(); show(); }
+  function onScroll() {
+    update();
+    show();
+    box.classList.add('scrolling');
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => box.classList.remove('scrolling'), 220);
+  }
+
+  function scrollToThumbTop(clientY) {
+    const m = metrics();
+    if (!m.range) return;
+    const top = clientY - dragOffset - box.getBoundingClientRect().top;
+    const ratio = Math.min(1, Math.max(0, top / m.range));
+    scrollTo({ top: ratio * m.max, behavior: 'instant' }); // html has smooth scrolling, which would lag the drag
+  }
 
   function onDown(e) {
+    if (e.button > 0) return;
+    const m = metrics();
+    const rect = thumb.getBoundingClientRect();
+    // grabbing the flame keeps the grab point, clicking the rope elsewhere centers the flame on the click
+    dragOffset = e.target.closest('.rope-thumb') ? e.clientY - rect.top : m.h / 2;
     dragging = true;
     box.classList.add('drag', 'on');
     clearTimeout(hideTimer);
-    dragOffset = e.clientY - thumb.getBoundingClientRect().top;
-    thumb.setPointerCapture(e.pointerId);
+    box.setPointerCapture(e.pointerId);
+    scrollToThumbTop(e.clientY);
     e.preventDefault();
   }
 
   function onMove(e) {
-    if (!dragging) return;
-    const m = metrics();
-    if (!m.range) return;
-    const top = e.clientY - dragOffset - box.getBoundingClientRect().top;
-    const ratio = Math.min(1, Math.max(0, top / m.range));
-    scrollTo({ top: ratio * m.max, behavior: 'instant' }); // html has smooth scrolling, which would lag the drag
+    if (dragging) scrollToThumbTop(e.clientY);
   }
 
   function onUp(e) {
     if (!dragging) return;
     dragging = false;
     box.classList.remove('drag');
-    try { thumb.releasePointerCapture(e.pointerId); } catch {}
+    try { box.releasePointerCapture(e.pointerId); } catch {}
     show();
   }
 
-  function enable() {
-    if (box) return;
+  function init() {
     build();
     addEventListener('scroll', onScroll, { passive: true });
     addEventListener('resize', update);
     if ('ResizeObserver' in window) new ResizeObserver(update).observe(root);
+    touch.addEventListener('change', () => { box.classList.remove('on'); update(); });
+    root.classList.add('rope-on');
     update();
-  }
-
-  function init() {
-    if (mq.matches) enable();
-    else mq.addEventListener('change', e => { if (e.matches) enable(); });
   }
 
   if (document.body) init();
