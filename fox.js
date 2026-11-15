@@ -14,6 +14,8 @@
     'sit_1', 'yawn_1', 'sleep_1', 'look_1', 'squint_1', 'tilt_1', 'proud_1',
     'run_1', 'run_2', 'run_3', 'run_4', 'tail_1', 'tail_2', 'tail_3', 'wave_1', 'wave_2', 'jump_1', 'jump_2', 'jump_3'];
   const RUN = ['run_1', 'run_2', 'run_3', 'run_4'];
+  const TAIL_ON = false;                         // покачивание хвостов выключено: кадры tail_* лежат без дела
+  const RUN_ON = false;                          // бег выключен: везде ходьба (кадры run_* лежат без дела)
   const TAIL_SEQ = ['tail_2', 'tail_1', 'tail_2', 'tail_3', 'tail_2', 'tail_1', 'tail_2', 'tail_3'], TAIL_STEP = 420;
   const WALK = ['walk_1', 'walk_2', 'walk_3', 'walk_4'];
   const pics = {};
@@ -106,7 +108,7 @@
 
   function walkTo(p, cb) {
     if (reduce) { pos = { x: p.x, y: p.y }; place(); path = null; cb && cb(); return; }
-    const run = Math.hypot(p.x - pos.x, p.y - pos.y) > fw() * 1.4;      // далеко — бежим: присела, побежала, затормозила
+    const run = RUN_ON && Math.hypot(p.x - pos.x, p.y - pos.y) > fw() * 1.4;      // далеко — бежим: присела, побежала, затормозила
     path = { x: p.x, y: p.y, cb, run, pre: run ? 200 : 0, t0: performance.now() };
   }
   function goSpot(get, cb) {
@@ -159,7 +161,7 @@
     else if (t < blinkUntil) setPic('idle_3');
     else {
       setPic('idle_2');
-      if (t > tailAt && !reduce) { tailStart = t; tailUntil = t + TAIL_SEQ.length * TAIL_STEP; tailAt = tailUntil + rand(8000, 15000); }
+      if (TAIL_ON && t > tailAt && !reduce) { tailStart = t; tailUntil = t + TAIL_SEQ.length * TAIL_STEP; tailAt = tailUntil + rand(8000, 15000); }
       else if (t > blinkAt) { blinkUntil = t + 160; blinkAt = t + rand(3500, 7500); }
     }
     requestAnimationFrame(tick);
@@ -273,7 +275,10 @@
     fox.classList.remove('lift', 'low');
   }
 
-  function poke() {                                // короткий клик: удивилась, потом радуется
+  function poke() {                                // клик: удивилась, потом радуется; повторные клики — гладим дальше
+    if (scene === 'poke' && performance.now() - sc.t0 >= SURPRISE) {
+      sc.t0 = performance.now() - SURPRISE; sc.said = false; sc.line = pick(POKE); return;
+    }
     endScene(); unsay(false);
     scene = 'poke'; sc = { t0: performance.now() - (reduce ? SURPRISE : 0), said: false, line: pick(POKE) };
   }
@@ -330,17 +335,11 @@
   function sceneTick(t, dt) {
     if (scene === 'poke') {
       const e = t - sc.t0;
-      const J1 = SURPRISE + 170, J2 = J1 + 420, J3 = J2 + 260, base = reduce ? SURPRISE : J3;   // удивилась, присела, прыжок, приземление
       if (e < SURPRISE) setPic('surprised_1');
-      else if (!reduce && e < J3) {
-        if (e < J1) setPic('jump_1');
-        else if (e < J2) { setPic('jump_2'); body.style.transform = `translateY(${(-Math.sin(Math.PI * (e - J1) / (J2 - J1)) * fh() * .2).toFixed(1)}px)`; }
-        else { setPic('jump_3'); body.style.transform = ''; }
-      } else {
-        body.style.transform = '';
+      else {
         if (!sc.said) { sc.said = true; say(sc.line, { hold: 2200 }); }
-        setPic(reduce ? 'happy_1' : HAPPY_SEQ[Math.min(HAPPY_SEQ.length - 1, Math.floor((e - base) / HAPPY_STEP))]);
-        if (e > base + HAPPY_FOR) endScene();
+        setPic(reduce ? 'happy_1' : HAPPY_SEQ[Math.min(HAPPY_SEQ.length - 1, Math.floor((e - SURPRISE) / HAPPY_STEP))]);
+        if (e > SURPRISE + HAPPY_FOR) endScene();
       }
     } else if (scene === 'look') {
       setPic(sc.pic);
