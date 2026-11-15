@@ -35,7 +35,7 @@
   /* ---------- DOM ---------- */
   const fox = document.createElement('div');
   fox.id = 'fox'; fox.setAttribute('aria-hidden', 'true');
-  fox.innerHTML = '<div class="fox-bubble"></div><div class="fox-flip"><img class="fox-body breathe" alt="" draggable="false"><span class="fox-hit"></span><span class="fox-z"><i>z</i><i>z</i><i>Z</i></span></div>';
+  fox.innerHTML = '<div class="fox-bubble"></div><div class="fox-flip"><img class="fox-body breathe" alt="" draggable="false"><span class="fox-hit"></span></div><span class="fox-z"><i>z</i><i>z</i><i>Z</i></span>';
   document.body.appendChild(fox);
   const bubble = fox.querySelector('.fox-bubble'), flip = fox.querySelector('.fox-flip'), body = fox.querySelector('.fox-body');
   const hit = fox.querySelector('.fox-hit');
@@ -47,7 +47,7 @@
   let pos = { x: -300, y: innerHeight - 8 };
   const place = () => { fox.style.transform = `translate3d(${pos.x - fw() / 2}px,${pos.y - fh()}px,0)`; };
   let dir = 1;
-  const setDir = d => { if (d !== dir) { dir = d; flip.classList.toggle('left', d < 0); } };
+  const setDir = d => { if (d !== dir) { dir = d; flip.classList.toggle('left', d < 0); fox.classList.toggle('faceL', d < 0); } };
   let cur = '';
   const setPic = n => { if (cur !== n) { cur = n; body.src = pics[n].src; } };
 
@@ -96,8 +96,8 @@
     if (rest === 0 && idle > SIT_AFTER) setRest(1);
     if (rest === 1 && idle > SLEEP_AFTER) { setRest(2); restT = t; }
     if (rest === 2 && t - restT > 2400) setRest(3);
-    if (rest === 4 && t - restT > 1100) setRest(0);
-    const p = [null, 'sit_1', 'yawn_1', 'sleep_1', 'yawn_1'][rest];
+    if (rest === 4 && t - restT > 1700) { setRest(0); body.classList.add('shake'); setTimeout(() => body.classList.remove('shake'), 600); }
+    const p = [null, 'sit_1', 'yawn_1', 'sleep_1', t - restT < 650 ? 'sit_1' : 'yawn_1'][rest];
     if (!p) return false;
     setPic(p); return true;
   }
@@ -132,17 +132,17 @@
     const dt = Math.min(.05, (t - last) / 1000); last = t;
     if (scene) sceneTick(t, dt);
     else if (path) {
-      const dx = path.x - pos.x, dy = path.y - pos.y, d = Math.hypot(dx, dy), step = (path.run ? 620 : 340) * (fw() / 260) * dt;
+      const dx = path.x - pos.x, dy = path.y - pos.y, d = Math.hypot(dx, dy), step = (path.run ? 520 : 340) * (fw() / 260) * dt * (path.run ? Math.min(1, .35 + (t - path.t0 - path.pre) / 350, Math.max(.3, Math.hypot(dx, dy) / (fw() * .7))) : 1);
       if (path.run && t - path.t0 < path.pre) {            // перед рывком приседает
         if (Math.abs(dx) > 1) setDir(dx > 0 ? 1 : -1);
         setPic('jump_1');
       } else if (d <= step) {
-        pos = { x: path.x, y: path.y }; const cb = path.cb; if (path.run) brakeUntil = t + 300;
+        pos = { x: path.x, y: path.y }; const cb = path.cb; if (path.run) brakeUntil = t + 380;
         path = null; body.classList.remove('walking'); place(); cb && cb();
       } else {
         pos.x += dx / d * step; pos.y += dy / d * step;
         if (Math.abs(dx) > 1) setDir(dx > 0 ? 1 : -1);
-        walkT += dt; setPic(path.run ? RUN[Math.floor(walkT * 11) % 4] : WALK[Math.floor(walkT * 9) % 4]); body.classList.add('walking'); place();
+        walkT += dt; setPic(path.run ? RUN[Math.floor(walkT * 12) % 4] : WALK[Math.floor(walkT * 9) % 4]); body.classList.add('walking'); place();
         if (bubble.classList.contains('on')) fitBubble();
       }
     } else if (t < brakeUntil) {                             // затормозила: приземление с брызгами
