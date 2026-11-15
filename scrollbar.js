@@ -1,4 +1,4 @@
-/* Scroll indicator for touch devices: a spider lily sliding along a red thread.
+/* Scroll indicator for touch devices: a burning red rope.
    Native scrollbars cannot be styled on phones, so this draws its own for the page scroll.
    Desktop uses the CSS-only scrollbar in style.css, this script does nothing there. */
 (() => {
@@ -8,11 +8,11 @@
 
   function build() {
     box = document.createElement('div');
-    box.id = 'lily-scroll';
+    box.id = 'rope-scroll';
     box.setAttribute('aria-hidden', 'true');
-    box.innerHTML = '<div class="lily-thread"></div><div class="lily-thumb"></div>';
+    box.innerHTML = '<div class="rope-thread"></div><div class="rope-thumb"></div>';
     document.body.appendChild(box);
-    thumb = box.querySelector('.lily-thumb');
+    thumb = box.querySelector('.rope-thumb');
     thumb.addEventListener('pointerdown', onDown);
     thumb.addEventListener('pointermove', onMove);
     thumb.addEventListener('pointerup', onUp);
@@ -32,7 +32,9 @@
     if (m.max <= 2) { box.classList.remove('on'); return; }
     const ratio = Math.min(1, Math.max(0, scrollY / m.max));
     thumb.style.height = m.h + 'px';
-    thumb.style.transform = 'translateY(' + (ratio * m.range).toFixed(1) + 'px)';
+    const y = (ratio * m.range).toFixed(1);
+    thumb.style.transform = 'translateY(' + y + 'px)';
+    box.style.setProperty('--burn', y + 'px'); // everything above the flame is burnt
   }
 
   function show() {
