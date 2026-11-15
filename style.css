@@ -28,64 +28,78 @@ body{
 }
 ::selection{background:var(--blood);color:#fff}
 
-/* scrollbar: рукоять катаны. Ползунок обмотан шнуром цуки-ито (ромбы), на концах костяные накладки,
-   в канавке красная нить с насечками */
-*::-webkit-scrollbar{width:16px;height:16px}
-*::-webkit-scrollbar-track{background:var(--ink-2)}
+:root{
+  --lily:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%3E%3Cg%20fill='none'%20stroke-linecap='round'%3E%3Cg%20stroke='%23e0243a'%20stroke-width='1.5'%3E%3Cpath%20d='M10%2012C7%2010%204%209%201.5%204.5'/%3E%3Cpath%20d='M10%2012C13%2010%2016%209%2018.5%204.5'/%3E%3Cpath%20d='M10%2012C6.5%2012.5%203.5%2014.5%201%2013.5'/%3E%3Cpath%20d='M10%2012C13.5%2012.5%2016.5%2014.5%2019%2013.5'/%3E%3Cpath%20d='M10%2012C8.5%209%207.5%205.5%208.5%201.5'/%3E%3Cpath%20d='M10%2012C11.5%209%2012.5%205.5%2011.5%201.5'/%3E%3C/g%3E%3Cg%20stroke='%23ff8a9a'%20stroke-width='.8'%3E%3Cpath%20d='M10%2012C8.5%208.5%206%205.5%204.5%202'/%3E%3Cpath%20d='M10%2012C11.5%208.5%2014%205.5%2015.5%202'/%3E%3Cpath%20d='M10%2012C5.5%2011%203%209.5%20.8%207'/%3E%3Cpath%20d='M10%2012C14.5%2011%2017%209.5%2019.2%207'/%3E%3C/g%3E%3C/g%3E%3Ccircle%20cx='4.5'%20cy='2'%20r='.9'%20fill='%23ffc2ca'/%3E%3Ccircle%20cx='15.5'%20cy='2'%20r='.9'%20fill='%23ffc2ca'/%3E%3Ccircle%20cx='0.8'%20cy='7'%20r='.9'%20fill='%23ffc2ca'/%3E%3Ccircle%20cx='19.2'%20cy='7'%20r='.9'%20fill='%23ffc2ca'/%3E%3Ccircle%20cx='10'%20cy='12'%20r='1.5'%20fill='%23e0243a'/%3E%3C/svg%3E");
+  --lily-hot:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%3E%3Cg%20fill='none'%20stroke-linecap='round'%3E%3Cg%20stroke='%23ff4a63'%20stroke-width='1.5'%3E%3Cpath%20d='M10%2012C7%2010%204%209%201.5%204.5'/%3E%3Cpath%20d='M10%2012C13%2010%2016%209%2018.5%204.5'/%3E%3Cpath%20d='M10%2012C6.5%2012.5%203.5%2014.5%201%2013.5'/%3E%3Cpath%20d='M10%2012C13.5%2012.5%2016.5%2014.5%2019%2013.5'/%3E%3Cpath%20d='M10%2012C8.5%209%207.5%205.5%208.5%201.5'/%3E%3Cpath%20d='M10%2012C11.5%209%2012.5%205.5%2011.5%201.5'/%3E%3C/g%3E%3Cg%20stroke='%23ffd0d6'%20stroke-width='.8'%3E%3Cpath%20d='M10%2012C8.5%208.5%206%205.5%204.5%202'/%3E%3Cpath%20d='M10%2012C11.5%208.5%2014%205.5%2015.5%202'/%3E%3Cpath%20d='M10%2012C5.5%2011%203%209.5%20.8%207'/%3E%3Cpath%20d='M10%2012C14.5%2011%2017%209.5%2019.2%207'/%3E%3C/g%3E%3C/g%3E%3Ccircle%20cx='4.5'%20cy='2'%20r='.9'%20fill='%23ffffff'/%3E%3Ccircle%20cx='15.5'%20cy='2'%20r='.9'%20fill='%23ffffff'/%3E%3Ccircle%20cx='0.8'%20cy='7'%20r='.9'%20fill='%23ffffff'/%3E%3Ccircle%20cx='19.2'%20cy='7'%20r='.9'%20fill='%23ffffff'/%3E%3Ccircle%20cx='10'%20cy='12'%20r='1.5'%20fill='%23ff4a63'/%3E%3C/svg%3E");
+  --lily-h:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%3E%3Cg%20transform='rotate%28-90%2010%2010%29'%3E%3Cg%20fill='none'%20stroke-linecap='round'%3E%3Cg%20stroke='%23e0243a'%20stroke-width='1.5'%3E%3Cpath%20d='M10%2012C7%2010%204%209%201.5%204.5'/%3E%3Cpath%20d='M10%2012C13%2010%2016%209%2018.5%204.5'/%3E%3Cpath%20d='M10%2012C6.5%2012.5%203.5%2014.5%201%2013.5'/%3E%3Cpath%20d='M10%2012C13.5%2012.5%2016.5%2014.5%2019%2013.5'/%3E%3Cpath%20d='M10%2012C8.5%209%207.5%205.5%208.5%201.5'/%3E%3Cpath%20d='M10%2012C11.5%209%2012.5%205.5%2011.5%201.5'/%3E%3C/g%3E%3Cg%20stroke='%23ff8a9a'%20stroke-width='.8'%3E%3Cpath%20d='M10%2012C8.5%208.5%206%205.5%204.5%202'/%3E%3Cpath%20d='M10%2012C11.5%208.5%2014%205.5%2015.5%202'/%3E%3Cpath%20d='M10%2012C5.5%2011%203%209.5%20.8%207'/%3E%3Cpath%20d='M10%2012C14.5%2011%2017%209.5%2019.2%207'/%3E%3C/g%3E%3C/g%3E%3Ccircle%20cx='4.5'%20cy='2'%20r='.9'%20fill='%23ffc2ca'/%3E%3Ccircle%20cx='15.5'%20cy='2'%20r='.9'%20fill='%23ffc2ca'/%3E%3Ccircle%20cx='0.8'%20cy='7'%20r='.9'%20fill='%23ffc2ca'/%3E%3Ccircle%20cx='19.2'%20cy='7'%20r='.9'%20fill='%23ffc2ca'/%3E%3Ccircle%20cx='10'%20cy='12'%20r='1.5'%20fill='%23e0243a'/%3E%3C/g%3E%3C/svg%3E");
+  --lily-h-hot:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%3E%3Cg%20transform='rotate%28-90%2010%2010%29'%3E%3Cg%20fill='none'%20stroke-linecap='round'%3E%3Cg%20stroke='%23ff4a63'%20stroke-width='1.5'%3E%3Cpath%20d='M10%2012C7%2010%204%209%201.5%204.5'/%3E%3Cpath%20d='M10%2012C13%2010%2016%209%2018.5%204.5'/%3E%3Cpath%20d='M10%2012C6.5%2012.5%203.5%2014.5%201%2013.5'/%3E%3Cpath%20d='M10%2012C13.5%2012.5%2016.5%2014.5%2019%2013.5'/%3E%3Cpath%20d='M10%2012C8.5%209%207.5%205.5%208.5%201.5'/%3E%3Cpath%20d='M10%2012C11.5%209%2012.5%205.5%2011.5%201.5'/%3E%3C/g%3E%3Cg%20stroke='%23ffd0d6'%20stroke-width='.8'%3E%3Cpath%20d='M10%2012C8.5%208.5%206%205.5%204.5%202'/%3E%3Cpath%20d='M10%2012C11.5%208.5%2014%205.5%2015.5%202'/%3E%3Cpath%20d='M10%2012C5.5%2011%203%209.5%20.8%207'/%3E%3Cpath%20d='M10%2012C14.5%2011%2017%209.5%2019.2%207'/%3E%3C/g%3E%3C/g%3E%3Ccircle%20cx='4.5'%20cy='2'%20r='.9'%20fill='%23ffffff'/%3E%3Ccircle%20cx='15.5'%20cy='2'%20r='.9'%20fill='%23ffffff'/%3E%3Ccircle%20cx='0.8'%20cy='7'%20r='.9'%20fill='%23ffffff'/%3E%3Ccircle%20cx='19.2'%20cy='7'%20r='.9'%20fill='%23ffffff'/%3E%3Ccircle%20cx='10'%20cy='12'%20r='1.5'%20fill='%23ff4a63'/%3E%3C/g%3E%3C/svg%3E");
+}
+/* scrollbar: красная нить и паучья лилия (хиганбана). Ползунок это цветок на стебле, скользящий по нити */
+*::-webkit-scrollbar{width:20px;height:20px}
+*::-webkit-scrollbar-track,*::-webkit-scrollbar-corner{background:var(--ink-2)}
 *::-webkit-scrollbar-track:vertical{
   background:
-    repeating-linear-gradient(180deg,rgba(242,58,82,.4) 0 1px,transparent 1px 12px) center/8px 100% no-repeat,
-    linear-gradient(90deg,transparent calc(50% - .5px),var(--line) calc(50% - .5px) calc(50% + .5px),transparent calc(50% + .5px)),
+    radial-gradient(circle,rgba(242,58,82,.75) 0 1.6px,transparent 2.2px) center top/8px 150px repeat-y,
+    linear-gradient(90deg,transparent calc(50% - .75px),rgba(242,58,82,.55) calc(50% - .75px) calc(50% + .75px),transparent calc(50% + .75px)),
     var(--ink-2);
 }
 *::-webkit-scrollbar-track:horizontal{
   background:
-    repeating-linear-gradient(90deg,rgba(242,58,82,.4) 0 1px,transparent 1px 12px) center/100% 8px no-repeat,
-    linear-gradient(180deg,transparent calc(50% - .5px),var(--line) calc(50% - .5px) calc(50% + .5px),transparent calc(50% + .5px)),
+    radial-gradient(circle,rgba(242,58,82,.75) 0 1.6px,transparent 2.2px) left center/150px 8px repeat-x,
+    linear-gradient(180deg,transparent calc(50% - .75px),rgba(242,58,82,.55) calc(50% - .75px) calc(50% + .75px),transparent calc(50% + .75px)),
     var(--ink-2);
 }
-*::-webkit-scrollbar-thumb{
-  border:3px solid transparent;
-  background-clip:padding-box;
-  border-radius:7px;
-  min-height:60px;
-  min-width:60px;
-  box-shadow:0 0 10px rgba(242,58,82,.5);
-}
+*::-webkit-scrollbar-thumb{background-color:transparent;border:0;min-height:72px;min-width:72px}
 *::-webkit-scrollbar-thumb:vertical{
   background:
-    linear-gradient(#ecd6b4,#ecd6b4) top/100% 3px no-repeat,
-    linear-gradient(#ecd6b4,#ecd6b4) bottom/100% 3px no-repeat,
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 0L8 8M8 0L0 8' stroke='%23ffb3bd' stroke-opacity='.45' stroke-width='1.1' fill='none'/%3E%3C/svg%3E") center/8px 8px repeat-y,
-    linear-gradient(90deg,#55091a,var(--blood) 50%,#55091a);
-  background-clip:padding-box;
+    var(--lily) center top/20px 20px no-repeat,
+    linear-gradient(180deg,var(--crimson),#55091a) center bottom/3px calc(100% - 12px) no-repeat;
 }
 *::-webkit-scrollbar-thumb:horizontal{
   background:
-    linear-gradient(#ecd6b4,#ecd6b4) left/3px 100% no-repeat,
-    linear-gradient(#ecd6b4,#ecd6b4) right/3px 100% no-repeat,
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 0L8 8M8 0L0 8' stroke='%23ffb3bd' stroke-opacity='.45' stroke-width='1.1' fill='none'/%3E%3C/svg%3E") center/8px 8px repeat-x,
-    linear-gradient(180deg,#55091a,var(--blood) 50%,#55091a);
-  background-clip:padding-box;
+    var(--lily-h) left center/20px 20px no-repeat,
+    linear-gradient(90deg,var(--crimson),#55091a) right center/calc(100% - 12px) 3px no-repeat;
 }
-*::-webkit-scrollbar-thumb:hover{box-shadow:0 0 14px rgba(242,58,82,.85)}
 *::-webkit-scrollbar-thumb:vertical:hover{
   background:
-    linear-gradient(#fff3dc,#fff3dc) top/100% 3px no-repeat,
-    linear-gradient(#fff3dc,#fff3dc) bottom/100% 3px no-repeat,
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 0L8 8M8 0L0 8' stroke='%23ffffff' stroke-opacity='.8' stroke-width='1.1' fill='none'/%3E%3C/svg%3E") center/8px 8px repeat-y,
-    linear-gradient(90deg,#7a0f22,var(--crimson) 50%,#7a0f22);
-  background-clip:padding-box;
+    var(--lily-hot) center top/20px 20px no-repeat,
+    linear-gradient(180deg,#ff5d72,var(--blood)) center bottom/4px calc(100% - 12px) no-repeat;
 }
 *::-webkit-scrollbar-thumb:horizontal:hover{
   background:
-    linear-gradient(#fff3dc,#fff3dc) left/3px 100% no-repeat,
-    linear-gradient(#fff3dc,#fff3dc) right/3px 100% no-repeat,
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 0L8 8M8 0L0 8' stroke='%23ffffff' stroke-opacity='.8' stroke-width='1.1' fill='none'/%3E%3C/svg%3E") center/8px 8px repeat-x,
-    linear-gradient(180deg,#7a0f22,var(--crimson) 50%,#7a0f22);
-  background-clip:padding-box;
+    var(--lily-h-hot) left center/20px 20px no-repeat,
+    linear-gradient(90deg,#ff5d72,var(--blood)) right center/calc(100% - 12px) 4px no-repeat;
 }
-*::-webkit-scrollbar-corner{background:var(--ink-2)}
+
+/* телефоны и планшеты: нативный скроллбар не стилизуется, рисуем свой (scrollbar.js) */
+#lily-scroll{display:none}
+@media (hover:none) and (pointer:coarse){
+  *{scrollbar-width:none}
+  *::-webkit-scrollbar{display:none}
+  #lily-scroll{
+    display:block;position:fixed;z-index:120;pointer-events:none;
+    top:calc(env(safe-area-inset-top,0px) + 12px);
+    bottom:calc(env(safe-area-inset-bottom,0px) + 12px);
+    right:max(2px,env(safe-area-inset-right,0px));
+    width:28px;opacity:0;transition:opacity .4s ease;
+  }
+  #lily-scroll.on{opacity:1}
+  .lily-thread{
+    position:absolute;left:50%;top:0;bottom:0;width:1.5px;transform:translateX(-50%);
+    background:linear-gradient(transparent,rgba(242,58,82,.65) 10%,rgba(242,58,82,.65) 90%,transparent);
+  }
+  .lily-thumb{
+    position:absolute;left:0;top:0;width:28px;height:80px;
+    pointer-events:auto;touch-action:none;will-change:transform;
+    background:
+      var(--lily) center top/24px 24px no-repeat,
+      linear-gradient(180deg,var(--crimson),#55091a) center bottom/3px calc(100% - 14px) no-repeat;
+    filter:drop-shadow(0 0 5px rgba(242,58,82,.55));
+  }
+  #lily-scroll.drag .lily-thumb{background-image:var(--lily-hot),linear-gradient(180deg,#ff5d72,var(--blood))}
+  .intro-on #lily-scroll{display:none}
+}
+@media (prefers-reduced-motion:reduce){#lily-scroll{transition:none}}
 /* Firefox и новый Chrome без webkit-псевдоэлементов */
 @supports not selector(::-webkit-scrollbar){
   *{scrollbar-width:thin;scrollbar-color:var(--blood) var(--ink-2)}
