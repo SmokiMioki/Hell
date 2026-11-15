@@ -51,57 +51,59 @@ body{
 *::-webkit-scrollbar-track-piece:horizontal:end{background:var(--rope-h) center/100% 5px no-repeat,var(--ink-2)}
 *::-webkit-scrollbar-thumb{background-color:transparent;border:0;min-height:72px;min-width:72px}
 *::-webkit-scrollbar-thumb:vertical{
-  background:var(--ember) center top/20px 32px no-repeat,var(--hot) center bottom/5px calc(100% - 26px) no-repeat;
+  background:var(--ember) center top/14px 22px no-repeat,var(--hot) center bottom/5px calc(100% - 18px) no-repeat;
 }
 *::-webkit-scrollbar-thumb:horizontal{
-  background:var(--ember-h) left center/32px 20px no-repeat,var(--hot-h) right center/calc(100% - 26px) 5px no-repeat;
+  background:var(--ember-h) left center/22px 14px no-repeat,var(--hot-h) right center/calc(100% - 18px) 5px no-repeat;
 }
 *::-webkit-scrollbar-thumb:vertical:hover{
-  background:var(--ember-hot) center top/20px 32px no-repeat,var(--hot) center bottom/6px calc(100% - 26px) no-repeat;
+  background:var(--ember-hot) center top/14px 22px no-repeat,var(--hot) center bottom/6px calc(100% - 18px) no-repeat;
 }
 *::-webkit-scrollbar-thumb:horizontal:hover{
-  background:var(--ember-h-hot) left center/32px 20px no-repeat,var(--hot-h) right center/calc(100% - 26px) 6px no-repeat;
+  background:var(--ember-h-hot) left center/22px 14px no-repeat,var(--hot-h) right center/calc(100% - 18px) 6px no-repeat;
 }
 
-/* живой скроллбар страницы */
+/* живой скроллбар страницы. Огонь стоит ровно на линии прогресса: выше обуглено, ниже верёвка цела */
 html.rope-on{scrollbar-width:none}
 html.rope-on::-webkit-scrollbar{display:none}
 #rope-scroll{display:none}
 .rope-on #rope-scroll{
   display:block;position:fixed;z-index:120;pointer-events:none;cursor:pointer;
-  top:calc(env(safe-area-inset-top,0px) + 8px);
+  top:calc(env(safe-area-inset-top,0px) + 4px);
   bottom:calc(env(safe-area-inset-bottom,0px) + 8px);
   right:max(0px,env(safe-area-inset-right,0px));
-  width:28px;opacity:0;transition:opacity .4s ease;--burn:0px;--heat:0;
+  width:28px;opacity:0;transition:opacity .4s ease;--burn:0px;--left:0px;--heat:0;
 }
 .rope-on #rope-scroll.on{opacity:1;pointer-events:auto}
+.rope-track{position:absolute;left:0;right:0;top:28px;bottom:0} /* сверху запас под пламя */
 .rope-thread::before,.rope-thread::after{content:"";position:absolute;left:50%;transform:translateX(-50%)}
 .rope-thread::before{top:0;height:var(--burn);width:4px;background:var(--char)}
 .rope-thread::after{top:var(--burn);bottom:0;width:5px;background:var(--rope)}
-.rope-thumb{position:absolute;left:0;top:0;width:28px;height:80px;touch-action:none;will-change:transform;cursor:grab}
-.rope-hot{ /* раскалённый отрезок, остывает вниз и переходит в обычную верёвку */
-  position:absolute;left:50%;top:0;bottom:0;width:5px;margin-left:-2.5px;background:var(--hot);
-  -webkit-mask-image:linear-gradient(#000,rgba(0,0,0,.1));mask-image:linear-gradient(#000,rgba(0,0,0,.1));
-  animation:rope-heat 1.3s ease-in-out infinite alternate;
+.rope-thumb{position:absolute;left:0;top:0;width:28px;height:0;will-change:transform}
+.rope-grab{position:absolute;left:-8px;top:-30px;width:44px;height:48px;touch-action:none;cursor:grab}
+.rope-hot{ /* раскалённый отрезок сразу под пламенем, остывает вниз */
+  position:absolute;left:50%;top:0;height:min(90px,var(--left));width:5px;margin-left:-2.5px;background:var(--hot);
+  -webkit-mask-image:linear-gradient(#000,transparent);mask-image:linear-gradient(#000,transparent);
+  animation:rope-heat 1.3s ease-in-out infinite alternate;pointer-events:none;
 }
 .rope-thumb::before{ /* тлеющий край обугленной части */
-  content:"";position:absolute;left:50%;top:-46px;width:7px;height:46px;transform:translateX(-50%);
-  background:linear-gradient(transparent,rgba(230,110,50,.5));pointer-events:none;
+  content:"";position:absolute;left:50%;top:-38px;width:7px;height:38px;transform:translateX(-50%);
+  background:linear-gradient(transparent,rgba(230,110,50,.4));pointer-events:none;
   animation:rope-glow 1.7s ease-in-out infinite alternate;
 }
 .rope-thumb::after{ /* мерцающие угольки в золе над огнём */
-  content:"";position:absolute;left:50%;top:-40px;width:5px;height:40px;transform:translateX(-50%);pointer-events:none;
-  background:radial-gradient(circle at 50% 50%,rgba(255,150,70,.9) 0 .9px,transparent 1.6px) 0 0/5px 9px repeat-y;
+  content:"";position:absolute;left:50%;top:-32px;width:5px;height:32px;transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(circle at 50% 50%,rgba(255,150,70,.85) 0 .9px,transparent 1.6px) 0 0/5px 9px repeat-y;
   -webkit-mask-image:linear-gradient(transparent,#000);mask-image:linear-gradient(transparent,#000);
   animation:rope-coals .6s steps(2) infinite alternate;
 }
-/* то же пламя, что на заставке: три слоя, те же lick и искры */
+/* то же пламя, что на заставке: три слоя, те же lick и искры, только меньше и тише */
 .rope-fw{
-  position:absolute;left:50%;top:-35px;width:24px;height:38px;margin-left:-12px;pointer-events:none;
+  position:absolute;left:50%;top:-24px;width:16px;height:26px;margin-left:-8px;pointer-events:none;
   transform-origin:50% 100%;
-  transform:scale(calc(1 + var(--heat) * .4),calc(1 + var(--heat) * .6));
+  transform:scale(calc(1 + var(--heat) * .3),calc(1 + var(--heat) * .45));
   animation:rope-ignite 1.5s cubic-bezier(.2,.8,.2,1) backwards;
-  filter:drop-shadow(0 0 8px rgba(255,90,60,.6));
+  filter:saturate(.78) brightness(.88) drop-shadow(0 0 4px rgba(255,90,60,.32));
 }
 .rope-fl{display:block;width:100%;height:100%;overflow:visible}
 .rope-fl path{transform-box:fill-box;transform-origin:50% 100%}
@@ -109,21 +111,21 @@ html.rope-on::-webkit-scrollbar{display:none}
 .rope-fl .f-m{animation:rope-lick .8s .1s ease-in-out infinite alternate}
 .rope-fl .f-i{animation:rope-lick .6s .2s ease-in-out infinite alternate}
 .rope-sp{
-  position:absolute;left:50%;top:-18px;width:3px;height:3px;border-radius:50%;
-  background:#ffb347;box-shadow:0 0 6px #ff7a3c;opacity:0;pointer-events:none;
+  position:absolute;left:50%;top:-14px;width:2px;height:2px;border-radius:50%;
+  background:#e8a863;box-shadow:0 0 4px rgba(255,122,60,.7);opacity:0;pointer-events:none;
   animation:rope-spark 2.6s ease-out infinite;
 }
-.rope-sp.s1{margin-left:-9px;--dx:-14px}
-.rope-sp.s2{margin-left:7px;--dx:10px;animation-delay:.5s;animation-duration:3s}
-.rope-sp.s3{margin-left:-3px;--dx:-6px;animation-delay:.9s}
-.rope-sp.s4{margin-left:13px;--dx:14px;animation-delay:1.4s;animation-duration:2.2s}
-.rope-sp.s5{margin-left:-14px;--dx:-10px;animation-delay:1.9s;animation-duration:3.2s}
+.rope-sp.s1{margin-left:-6px;--dx:-10px}
+.rope-sp.s2{margin-left:5px;--dx:8px;animation-delay:.5s;animation-duration:3s}
+.rope-sp.s3{margin-left:-2px;--dx:-4px;animation-delay:.9s}
+.rope-sp.s4{margin-left:9px;--dx:10px;animation-delay:1.4s;animation-duration:2.2s}
+.rope-sp.s5{margin-left:-10px;--dx:-8px;animation-delay:1.9s;animation-duration:3.2s}
 /* пока скроллишь, огонь ест быстрее: мерцание и искры ускоряются, пламя растёт (--heat задаёт scrollbar.js) */
 #rope-scroll.scrolling .f-o{animation-duration:.55s}
 #rope-scroll.scrolling .f-m{animation-duration:.4s}
 #rope-scroll.scrolling .f-i{animation-duration:.3s}
 #rope-scroll.scrolling .rope-sp,#rope-scroll.drag .rope-sp{animation-duration:1.4s}
-#rope-scroll.drag .rope-thumb{cursor:grabbing}
+#rope-scroll.drag .rope-grab{cursor:grabbing}
 @keyframes rope-lick{
   0%{transform:scale(1,1) skewX(0)}
   50%{transform:scale(.94,1.08) skewX(-2.5deg)}
@@ -136,11 +138,11 @@ html.rope-on::-webkit-scrollbar{display:none}
 }
 @keyframes rope-spark{
   0%{opacity:0;transform:translate(0,0) scale(1)}
-  15%{opacity:1}
-  100%{opacity:0;transform:translate(var(--dx,10px),-78px) scale(.2)}
+  15%{opacity:.9}
+  100%{opacity:0;transform:translate(var(--dx,8px),-52px) scale(.2)}
 }
 @keyframes rope-glow{from{opacity:.4}to{opacity:1}}
-@keyframes rope-heat{from{filter:brightness(.88)}to{filter:brightness(1.2)}}
+@keyframes rope-heat{from{filter:brightness(.85)}to{filter:brightness(1.12)}}
 @keyframes rope-coals{from{opacity:.35}to{opacity:1}}
 @media (hover:none) and (pointer:coarse){
   *{scrollbar-width:none}
