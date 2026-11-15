@@ -27,6 +27,31 @@ body{
   background-attachment:fixed;
 }
 ::selection{background:var(--blood);color:#fff}
+
+/* scrollbar: кровавый ползунок в тёмной канавке */
+*::-webkit-scrollbar{width:12px;height:12px}
+*::-webkit-scrollbar-track{
+  background:linear-gradient(90deg,transparent,var(--ink-2) 40%,var(--ink-2) 60%,transparent);
+  border-left:1px solid var(--line);
+}
+*::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,var(--crimson),var(--blood));
+  border:3px solid var(--ink);
+  border-radius:10px;
+  min-height:48px;
+  box-shadow:0 0 8px rgba(242,58,82,.45);
+}
+*::-webkit-scrollbar-thumb:hover{
+  background:linear-gradient(180deg,#ff5d72,var(--crimson) 55%,var(--blood));
+  box-shadow:0 0 12px rgba(242,58,82,.75);
+}
+*::-webkit-scrollbar-thumb:active{background:var(--crimson)}
+*::-webkit-scrollbar-corner{background:var(--ink)}
+/* Firefox и новый Chrome без webkit-псевдоэлементов */
+@supports not selector(::-webkit-scrollbar){
+  *{scrollbar-width:thin;scrollbar-color:var(--blood) var(--ink-2)}
+}
+
 a{color:inherit;text-decoration:none}
 .jp{font-family:var(--jp);font-weight:400}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
