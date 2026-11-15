@@ -10,7 +10,8 @@
 
   /* ---------- кадры ---------- */
   const NAMES = ['idle_1', 'idle_2', 'idle_3', 'point_1', 'sad_1', 'talk_1', 'talk_2', 'walk_1', 'walk_2', 'walk_3', 'walk_4',
-    'surprised_1', 'happy_1', 'happy_2', 'happy_3', 'drag_1', 'drag_2', 'fall_1', 'land_1'];
+    'surprised_1', 'happy_1', 'happy_2', 'happy_3', 'drag_1', 'drag_2', 'fall_1', 'land_1',
+    'sit_1', 'yawn_1', 'sleep_1', 'look_1', 'squint_1'];
   const WALK = ['walk_1', 'walk_2', 'walk_3', 'walk_4'];
   const pics = {};
   NAMES.forEach(n => { const i = new Image(); i.src = `img/fox/${n}.webp`; pics[n] = i; });
@@ -25,10 +26,13 @@
   const GRAB = ['Эй! Поставь на место!', 'Отпусти… я не котёнок.', 'Лисы так не носят!'];
   const LAND = ['Ох… всё кружится.', 'Так и было задумано. Почти.', 'Хвосты целы. Достоинство — не очень.'];
 
+  const LIGHT = ['Ай! Светло…', 'Кто погасил огонёк? Глаза режет.', 'Слишком ярко. Лисы любят полумрак.'];
+  const DARK = ['Огонёк снова горит.', 'Так лучше. Это моё время суток.', 'Вот теперь уютно.'];
+
   /* ---------- DOM ---------- */
   const fox = document.createElement('div');
   fox.id = 'fox'; fox.setAttribute('aria-hidden', 'true');
-  fox.innerHTML = '<div class="fox-bubble"></div><div class="fox-flip"><img class="fox-body breathe" alt="" draggable="false"><span class="fox-hit"></span></div>';
+  fox.innerHTML = '<div class="fox-bubble"></div><div class="fox-flip"><img class="fox-body breathe" alt="" draggable="false"><span class="fox-hit"></span><span class="fox-z"><i>z</i><i>z</i><i>Z</i></span></div>';
   document.body.appendChild(fox);
   const bubble = fox.querySelector('.fox-bubble'), flip = fox.querySelector('.fox-flip'), body = fox.querySelector('.fox-body');
   const hit = fox.querySelector('.fox-hit');
@@ -68,6 +72,28 @@
 
   /* ---------- движение ---------- */
   let path = null, perch = null, walkT = 0, last = performance.now();
+  /* отдых: 0 стоит, 1 сидит, 2 зевает, 3 спит, 4 просыпается */
+  const SIT_AFTER = 25000, SLEEP_AFTER = 50000;
+  let rest = 0, restT = 0, lastAct = performance.now();
+  function setRest(v) { rest = v; fox.classList.toggle('asleep', v === 3); body.classList.toggle('sleeping', v === 3); }
+  function wake() {
+    lastAct = performance.now();
+    if (!rest || rest === 4) return;
+    if (!scene && (rest === 2 || rest === 3)) { setRest(4); restT = lastAct; } else setRest(0);
+  }
+  ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart', 'scroll'].forEach(ev => addEventListener(ev, wake, { passive: true }));
+  document.addEventListener('visibilitychange', wake);
+  function restTick(t) {
+    if (!fox.classList.contains('show')) return false;
+    const idle = t - lastAct;
+    if (rest === 0 && idle > SIT_AFTER) setRest(1);
+    if (rest === 1 && idle > SLEEP_AFTER) { setRest(2); restT = t; }
+    if (rest === 2 && t - restT > 2400) setRest(3);
+    if (rest === 4 && t - restT > 1100) setRest(0);
+    const p = [null, 'sit_1', 'yawn_1', 'sleep_1', 'yawn_1'][rest];
+    if (!p) return false;
+    setPic(p); return true;
+  }
   let pose = 'idle', talkUntil = 0, blinkAt = last + rand(3000, 7000), blinkUntil = 0;
 
   function walkTo(p, cb) {
@@ -110,6 +136,7 @@
       setPic(((t / 150) | 0) % 2 ? 'talk_2' : 'talk_1');
     } else if (pose === 'point') setPic('point_1');
     else if (pose === 'sad') setPic('sad_1');
+    else if (restTick(t)) { /* сидит или спит */ }
     else if (t < blinkUntil) setPic('idle_3');
     else { setPic('idle_2'); if (t > blinkAt) { blinkUntil = t + 160; blinkAt = t + rand(3500, 7500); } }
     requestAnimationFrame(tick);
@@ -153,7 +180,7 @@
 
   document.addEventListener('gate:search', e => {
     if (ls.get(OFF) === '1') return;
-    if (scene && scene !== 'poke') return;          // пока лису носят или она падает, поиск подождёт
+    if (scene && !SOFT(scene)) return;          // пока лису носят или она падает, поиск подождёт
     endScene();
     const { q, found } = e.detail;
     unsay(false); path = null; perch = null; body.classList.remove('walking'); busy = true;
@@ -179,10 +206,12 @@
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   let scene = null, sc = null, drag = null;
   const swing = { a: 0, v: 0 };
+  const SOFT = x => x === 'poke' || x === 'look';   // эти сцены можно перебить кликом или поиском
 
   function endScene() {                            // сбросить всё, что навешивали сцены
     scene = null; sc = null; drag = null;
     swing.a = swing.v = 0; body.style.transform = '';
+    setRest(0); lastAct = performance.now();
     body.classList.remove('dragging', 'falling', 'hop', 'thud', 'shake');
     fox.classList.remove('lift', 'low');
   }
@@ -191,6 +220,27 @@
     endScene(); unsay(false);
     scene = 'poke'; sc = { t0: performance.now() - (reduce ? SURPRISE : 0), said: false, line: pick(POKE) };
     if (!reduce) body.classList.add('hop');
+  }
+
+  /* свеча: лиса смотрит на огонёк, а при светлой теме щурится */
+  function lookAt(pic, line, ms, hover) {
+    if (!fox.classList.contains('show') || ls.get(OFF) === '1' || path || drag || (scene && !SOFT(scene))) return;
+    endScene(); unsay(false);
+    const c = $('#candle');
+    if (c) { const r = c.getBoundingClientRect(); setDir(r.left + r.width / 2 > pos.x ? 1 : -1); }
+    scene = 'look'; sc = { pic, t0: performance.now(), ms, hover: !!hover };
+    if (line) say(line, { hold: 1800 });
+  }
+  new MutationObserver(() => {
+    const light = document.documentElement.dataset.theme === 'light';
+    lookAt(light ? 'squint_1' : 'look_1', pick(light ? LIGHT : DARK), light ? 2600 : 2300);
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  const candle = $('#candle');
+  if (candle) {
+    candle.addEventListener('pointerenter', e => {
+      if (e.pointerType === 'mouse' && !scene && !path && !bubble.classList.contains('on')) lookAt('look_1', null, 0, true);
+    });
+    candle.addEventListener('pointerleave', () => { if (scene === 'look' && sc.hover) endScene(); });
   }
 
   function startDrag() {
@@ -230,6 +280,9 @@
         setPic(reduce ? 'happy_1' : HAPPY_SEQ[Math.min(HAPPY_SEQ.length - 1, Math.floor((e - SURPRISE) / HAPPY_STEP))]);
         if (e > SURPRISE + HAPPY_FOR) endScene();
       }
+    } else if (scene === 'look') {
+      setPic(sc.pic);
+      if (!sc.hover && t - sc.t0 > sc.ms) endScene();
     } else if (scene === 'drag') {
       if (!drag) return;
       drag.vx *= Math.exp(-dt * 5); drag.vy *= Math.exp(-dt * 5);
@@ -262,7 +315,7 @@
   }
 
   hit.addEventListener('pointerdown', e => {
-    if (e.button > 0 || (scene && scene !== 'poke')) return;
+    if (e.button > 0 || (scene && !SOFT(scene))) return;
     e.preventDefault();
     drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, lx: e.clientX, ly: e.clientY, lt: performance.now(), vx: 0, vy: 0, started: false };
     try { hit.setPointerCapture(e.pointerId); } catch {}
