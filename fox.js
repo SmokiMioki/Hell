@@ -11,7 +11,10 @@
   /* ---------- кадры ---------- */
   const NAMES = ['idle_1', 'idle_2', 'idle_3', 'point_1', 'sad_1', 'talk_1', 'talk_2', 'walk_1', 'walk_2', 'walk_3', 'walk_4',
     'surprised_1', 'happy_1', 'happy_2', 'happy_3', 'drag_1', 'drag_2', 'fall_1', 'land_1',
-    'sit_1', 'yawn_1', 'sleep_1', 'look_1', 'squint_1'];
+    'sit_1', 'yawn_1', 'sleep_1', 'look_1', 'squint_1', 'tilt_1', 'proud_1',
+    'run_1', 'run_2', 'run_3', 'run_4', 'tail_1', 'tail_2', 'tail_3', 'wave_1', 'wave_2', 'jump_1', 'jump_2', 'jump_3'];
+  const RUN = ['run_1', 'run_2', 'run_3', 'run_4'];
+  const TAIL_SEQ = ['tail_2', 'tail_1', 'tail_2', 'tail_3', 'tail_2', 'tail_1', 'tail_2', 'tail_3'], TAIL_STEP = 420;
   const WALK = ['walk_1', 'walk_2', 'walk_3', 'walk_4'];
   const pics = {};
   NAMES.forEach(n => { const i = new Image(); i.src = `img/fox/${n}.webp`; pics[n] = i; });
@@ -61,6 +64,10 @@
       if (x + fw() * .45 > vw() || !onScreen(r)) return null;
       return { x, y: Math.min(innerHeight - 8, r.bottom + 6) };
     },
+    shelf: (el, frac, face) => () => {              // на верхней кромке блока, лицом к нему
+      const r = el.getBoundingClientRect(); if (!onScreen(r)) return null;
+      return { x: clampX(r.left + r.width * (vw() < 700 ? Math.max(frac, .8) : frac)), y: Math.min(innerHeight - 8, Math.max(fh() + 64, r.top + 4)), face };
+    },
     card: el => () => {                            // рядом с карточкой, лицом к ней; на узком экране — на её верхней части
       const r = el.getBoundingClientRect(); if (!onScreen(r)) return null;
       const side = r.right + fw() * .45;
@@ -94,11 +101,13 @@
     if (!p) return false;
     setPic(p); return true;
   }
+  let brakeUntil = 0, tailUntil = 0, tailStart = 0, tailAt = performance.now() + rand(6000, 12000);
   let pose = 'idle', talkUntil = 0, blinkAt = last + rand(3000, 7000), blinkUntil = 0;
 
   function walkTo(p, cb) {
     if (reduce) { pos = { x: p.x, y: p.y }; place(); path = null; cb && cb(); return; }
-    path = { x: p.x, y: p.y, cb };
+    const run = Math.hypot(p.x - pos.x, p.y - pos.y) > fw() * 1.4;      // далеко — бежим: присела, побежала, затормозила
+    path = { x: p.x, y: p.y, cb, run, pre: run ? 200 : 0, t0: performance.now() };
   }
   function goSpot(get, cb) {
     const p = get && get();
@@ -123,22 +132,36 @@
     const dt = Math.min(.05, (t - last) / 1000); last = t;
     if (scene) sceneTick(t, dt);
     else if (path) {
-      const dx = path.x - pos.x, dy = path.y - pos.y, d = Math.hypot(dx, dy), step = 340 * (fw() / 260) * dt;
-      if (d <= step) {
-        pos = { x: path.x, y: path.y }; const cb = path.cb; path = null; body.classList.remove('walking'); place(); cb && cb();
+      const dx = path.x - pos.x, dy = path.y - pos.y, d = Math.hypot(dx, dy), step = (path.run ? 620 : 340) * (fw() / 260) * dt;
+      if (path.run && t - path.t0 < path.pre) {            // перед рывком приседает
+        if (Math.abs(dx) > 1) setDir(dx > 0 ? 1 : -1);
+        setPic('jump_1');
+      } else if (d <= step) {
+        pos = { x: path.x, y: path.y }; const cb = path.cb; if (path.run) brakeUntil = t + 300;
+        path = null; body.classList.remove('walking'); place(); cb && cb();
       } else {
         pos.x += dx / d * step; pos.y += dy / d * step;
         if (Math.abs(dx) > 1) setDir(dx > 0 ? 1 : -1);
-        walkT += dt; setPic(WALK[Math.floor(walkT * 9) % 4]); body.classList.add('walking'); place();
+        walkT += dt; setPic(path.run ? RUN[Math.floor(walkT * 11) % 4] : WALK[Math.floor(walkT * 9) % 4]); body.classList.add('walking'); place();
         if (bubble.classList.contains('on')) fitBubble();
       }
+    } else if (t < brakeUntil) {                             // затормозила: приземление с брызгами
+      setPic('jump_3');
     } else if (t < talkUntil) {
       setPic(((t / 150) | 0) % 2 ? 'talk_2' : 'talk_1');
     } else if (pose === 'point') setPic('point_1');
+    else if (pose === 'tilt') setPic('tilt_1');
+    else if (pose === 'wave') setPic(((t / 420) | 0) % 2 ? 'wave_2' : 'wave_1');
+    else if (pose === 'proud') setPic('proud_1');
     else if (pose === 'sad') setPic('sad_1');
     else if (restTick(t)) { /* сидит или спит */ }
+    else if (t < tailUntil) setPic(TAIL_SEQ[Math.min(TAIL_SEQ.length - 1, Math.floor((t - tailStart) / TAIL_STEP))]);   // хвосты покачиваются
     else if (t < blinkUntil) setPic('idle_3');
-    else { setPic('idle_2'); if (t > blinkAt) { blinkUntil = t + 160; blinkAt = t + rand(3500, 7500); } }
+    else {
+      setPic('idle_2');
+      if (t > tailAt && !reduce) { tailStart = t; tailUntil = t + TAIL_SEQ.length * TAIL_STEP; tailAt = tailUntil + rand(8000, 15000); }
+      else if (t > blinkAt) { blinkUntil = t + 160; blinkAt = t + rand(3500, 7500); }
+    }
     requestAnimationFrame(tick);
   }
 
@@ -165,7 +188,7 @@
     render(); bubble.classList.add('on'); fitBubble();
     const finish = () => { talkUntil = 0; pose = p; hideT = setTimeout(() => unsay(true), hold); };
     if (!step) { finish(); return; }
-    talkUntil = performance.now() + text.length * step + 60;
+    talkUntil = Infinity;                       // говорит, пока печатается текст (finish/unsay обнулят)
     typing = setInterval(() => { k++; render(); if (k >= text.length) { clearInterval(typing); finish(); } }, step);
   }
 
@@ -175,7 +198,7 @@
     if (ls.get(OFF) === '1') return;
     pos = { x: -fw(), y: innerHeight - 8 }; place(); fox.classList.add('show');
     const hello = !sessionStorage.getItem(HELLO);
-    goSpot(spots.gate, () => { if (hello) { try { sessionStorage.setItem(HELLO, '1'); } catch {} say(pick(HELLO_LINES)); } });
+    goSpot(spots.gate, () => { if (hello) { try { sessionStorage.setItem(HELLO, '1'); } catch {} say(pick(HELLO_LINES), { pose: 'wave', hold: 3800 }); } });
   }
 
   document.addEventListener('gate:search', e => {
@@ -189,16 +212,50 @@
     setTimeout(() => {
       busy = false;
       if (my !== job) return;
-      if (!q.trim()) { goSpot(spots.gate, () => say(pick(EMPTY))); return; }
+      if (!q.trim()) { goSpot(spots.gate, () => say(pick(EMPTY), { pose: 'tilt' })); return; }
       if (found) {
         const card = $('.card');
         if (!card) return;
-        goSpot(spots.card(card), () => say(found > 1 ? MANY(found) : pick(FOUND), { pose: 'point', hold: 4200, after: leave }));
+        goSpot(spots.card(card), () => say(found > 1 ? MANY(found) : pick(FOUND), { pose: 'point', hold: 3200, after: () => {
+          if (my !== job) return;
+          pose = 'proud'; setTimeout(() => { if (my === job && pose === 'proud') pose = 'idle'; leave(); }, 1800);   // довольна собой, потом уходит
+        } }));
       } else {
         goSpot(spots.card($('#empty')), () => say(pick(NONE), { pose: 'sad', hold: 4200, after: leave }));
       }
     }, reduce ? 0 : 800);
   });
+
+  /* ---------- подсказки: один раз за визит, когда блок долго на виду ---------- */
+  const HINT_FILTERS = ['Не хочешь листать всё подряд? Загляни в «Категории» и «Авторы» — список сузится.', 'А «Прочее» прячет остальные теги.'];
+  const HINT_GUIDE = ['Установка — три коротких шага.', 'Ссылка на репозиторий лежит внутри карточки — открой её и скопируй.'];
+  const hinted = k => { try { return sessionStorage.getItem('gate-fox-hint-' + k) === '1'; } catch { return true; } };
+  const markHint = k => { try { sessionStorage.setItem('gate-fox-hint-' + k, '1'); } catch {} };
+
+  function hintWhenSeen(key, el, getSpot, lines) {
+    if (!el || hinted(key) || !('IntersectionObserver' in window)) return;
+    const free = () => fox.classList.contains('show') && ls.get(OFF) !== '1' && !document.documentElement.classList.contains('intro-on') &&
+      !scene && !path && !drag && !busy && !bubble.classList.contains('on');
+    let timer = 0, tries = 0;
+    const go = () => {
+      if (hinted(key)) return;
+      if (!free() || !getSpot()) { if (++tries < 24) timer = setTimeout(go, 1500); return; }   // ждём, пока лиса освободится, пока блок на виду
+      markHint(key); setRest(0); unsay(false);
+      const my = ++job;
+      const leave = () => setTimeout(() => { if (my === job && !path && !scene && !bubble.classList.contains('on')) goHome(); }, 900);
+      goSpot(getSpot, () => {
+        if (my !== job) return;
+        say(lines[0], { pose: 'point', hold: 3200, after: () => { if (my === job) say(lines[1], { pose: 'tilt', hold: 3400, after: leave }); } });
+      });
+    };
+    new IntersectionObserver(es => {
+      clearTimeout(timer); tries = 0;
+      if (es[0].isIntersecting) timer = setTimeout(go, 1100);
+    }, { threshold: .6 }).observe(el);
+    document.addEventListener('click', e => { if (e.target.closest && e.target.closest('#' + (el.id || 'x'))) markHint(key); });
+  }
+  hintWhenSeen('filters', $('#filters'), spots.shelf($('#filters'), .56, -1), HINT_FILTERS);
+  hintWhenSeen('guide', $('.steps'), spots.shelf($('.steps'), .72, -1), HINT_GUIDE);
 
   /* ---------- клик и «взять за шкирку» ---------- */
   const SURPRISE = 700, HAPPY_STEP = 900, HAPPY_SEQ = ['happy_1', 'happy_2', 'happy_3'], HAPPY_FOR = HAPPY_STEP * HAPPY_SEQ.length;
@@ -219,7 +276,6 @@
   function poke() {                                // короткий клик: удивилась, потом радуется
     endScene(); unsay(false);
     scene = 'poke'; sc = { t0: performance.now() - (reduce ? SURPRISE : 0), said: false, line: pick(POKE) };
-    if (!reduce) body.classList.add('hop');
   }
 
   /* свеча: лиса смотрит на огонёк, а при светлой теме щурится */
@@ -274,11 +330,17 @@
   function sceneTick(t, dt) {
     if (scene === 'poke') {
       const e = t - sc.t0;
+      const J1 = SURPRISE + 170, J2 = J1 + 420, J3 = J2 + 260, base = reduce ? SURPRISE : J3;   // удивилась, присела, прыжок, приземление
       if (e < SURPRISE) setPic('surprised_1');
-      else {
-        if (!sc.said) { sc.said = true; body.classList.remove('hop'); say(sc.line, { hold: 2200 }); }
-        setPic(reduce ? 'happy_1' : HAPPY_SEQ[Math.min(HAPPY_SEQ.length - 1, Math.floor((e - SURPRISE) / HAPPY_STEP))]);
-        if (e > SURPRISE + HAPPY_FOR) endScene();
+      else if (!reduce && e < J3) {
+        if (e < J1) setPic('jump_1');
+        else if (e < J2) { setPic('jump_2'); body.style.transform = `translateY(${(-Math.sin(Math.PI * (e - J1) / (J2 - J1)) * fh() * .2).toFixed(1)}px)`; }
+        else { setPic('jump_3'); body.style.transform = ''; }
+      } else {
+        body.style.transform = '';
+        if (!sc.said) { sc.said = true; say(sc.line, { hold: 2200 }); }
+        setPic(reduce ? 'happy_1' : HAPPY_SEQ[Math.min(HAPPY_SEQ.length - 1, Math.floor((e - base) / HAPPY_STEP))]);
+        if (e > base + HAPPY_FOR) endScene();
       }
     } else if (scene === 'look') {
       setPic(sc.pic);
