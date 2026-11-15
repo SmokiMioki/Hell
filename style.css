@@ -28,25 +28,64 @@ body{
 }
 ::selection{background:var(--blood);color:#fff}
 
-/* scrollbar: кровавый ползунок в тёмной канавке */
-*::-webkit-scrollbar{width:12px;height:12px}
-*::-webkit-scrollbar-track{
-  background:linear-gradient(90deg,transparent,var(--ink-2) 40%,var(--ink-2) 60%,transparent);
-  border-left:1px solid var(--line);
+/* scrollbar: рукоять катаны. Ползунок обмотан шнуром цуки-ито (ромбы), на концах костяные накладки,
+   в канавке красная нить с насечками */
+*::-webkit-scrollbar{width:16px;height:16px}
+*::-webkit-scrollbar-track{background:var(--ink-2)}
+*::-webkit-scrollbar-track:vertical{
+  background:
+    repeating-linear-gradient(180deg,rgba(242,58,82,.4) 0 1px,transparent 1px 12px) center/8px 100% no-repeat,
+    linear-gradient(90deg,transparent calc(50% - .5px),var(--line) calc(50% - .5px) calc(50% + .5px),transparent calc(50% + .5px)),
+    var(--ink-2);
+}
+*::-webkit-scrollbar-track:horizontal{
+  background:
+    repeating-linear-gradient(90deg,rgba(242,58,82,.4) 0 1px,transparent 1px 12px) center/100% 8px no-repeat,
+    linear-gradient(180deg,transparent calc(50% - .5px),var(--line) calc(50% - .5px) calc(50% + .5px),transparent calc(50% + .5px)),
+    var(--ink-2);
 }
 *::-webkit-scrollbar-thumb{
-  background:linear-gradient(180deg,var(--crimson),var(--blood));
-  border:3px solid var(--ink);
-  border-radius:10px;
-  min-height:48px;
-  box-shadow:0 0 8px rgba(242,58,82,.45);
+  border:3px solid transparent;
+  background-clip:padding-box;
+  border-radius:7px;
+  min-height:60px;
+  min-width:60px;
+  box-shadow:0 0 10px rgba(242,58,82,.5);
 }
-*::-webkit-scrollbar-thumb:hover{
-  background:linear-gradient(180deg,#ff5d72,var(--crimson) 55%,var(--blood));
-  box-shadow:0 0 12px rgba(242,58,82,.75);
+*::-webkit-scrollbar-thumb:vertical{
+  background:
+    linear-gradient(#ecd6b4,#ecd6b4) top/100% 3px no-repeat,
+    linear-gradient(#ecd6b4,#ecd6b4) bottom/100% 3px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 0L8 8M8 0L0 8' stroke='%23ffb3bd' stroke-opacity='.45' stroke-width='1.1' fill='none'/%3E%3C/svg%3E") center/8px 8px repeat-y,
+    linear-gradient(90deg,#55091a,var(--blood) 50%,#55091a);
+  background-clip:padding-box;
 }
-*::-webkit-scrollbar-thumb:active{background:var(--crimson)}
-*::-webkit-scrollbar-corner{background:var(--ink)}
+*::-webkit-scrollbar-thumb:horizontal{
+  background:
+    linear-gradient(#ecd6b4,#ecd6b4) left/3px 100% no-repeat,
+    linear-gradient(#ecd6b4,#ecd6b4) right/3px 100% no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 0L8 8M8 0L0 8' stroke='%23ffb3bd' stroke-opacity='.45' stroke-width='1.1' fill='none'/%3E%3C/svg%3E") center/8px 8px repeat-x,
+    linear-gradient(180deg,#55091a,var(--blood) 50%,#55091a);
+  background-clip:padding-box;
+}
+*::-webkit-scrollbar-thumb:hover{box-shadow:0 0 14px rgba(242,58,82,.85)}
+*::-webkit-scrollbar-thumb:vertical:hover{
+  background:
+    linear-gradient(#fff3dc,#fff3dc) top/100% 3px no-repeat,
+    linear-gradient(#fff3dc,#fff3dc) bottom/100% 3px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 0L8 8M8 0L0 8' stroke='%23ffffff' stroke-opacity='.8' stroke-width='1.1' fill='none'/%3E%3C/svg%3E") center/8px 8px repeat-y,
+    linear-gradient(90deg,#7a0f22,var(--crimson) 50%,#7a0f22);
+  background-clip:padding-box;
+}
+*::-webkit-scrollbar-thumb:horizontal:hover{
+  background:
+    linear-gradient(#fff3dc,#fff3dc) left/3px 100% no-repeat,
+    linear-gradient(#fff3dc,#fff3dc) right/3px 100% no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 0L8 8M8 0L0 8' stroke='%23ffffff' stroke-opacity='.8' stroke-width='1.1' fill='none'/%3E%3C/svg%3E") center/8px 8px repeat-x,
+    linear-gradient(180deg,#7a0f22,var(--crimson) 50%,#7a0f22);
+  background-clip:padding-box;
+}
+*::-webkit-scrollbar-corner{background:var(--ink-2)}
 /* Firefox и новый Chrome без webkit-псевдоэлементов */
 @supports not selector(::-webkit-scrollbar){
   *{scrollbar-width:thin;scrollbar-color:var(--blood) var(--ink-2)}
