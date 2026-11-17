@@ -299,7 +299,7 @@
   {
     "name": "SillyTavern TypingIndicatorThemes",
     "by": "KiskaSora",
-    "desc": "Позволяет менять оформление, текст и анимацию индикатора набора ответа ИИ.",
+    "desc": "Позволяет менять оформление, текст и анимацию индикатора набора ответа ИИ. Перевод оригинального расширения от Sanjs333.",
     "cat": "Оформление интерфейса",
     "tags": [
       "индикатор набора текста",
@@ -307,7 +307,10 @@
       "кастомизация интерфейса"
     ],
     "repo": "https://github.com/KiskaSora/SillyTavern-TypingIndicatorThemes",
-    "added": "2026-10-24T09:38:53.024Z"
+    "added": "2026-10-24T09:38:53.024Z",
+    "images": [
+      "img/sillytavern-typingindicatorthemes-mwkq7cv01.webp"
+    ]
   },
   {
     "name": "SillyTavern Horae",
