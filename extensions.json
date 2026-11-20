@@ -426,7 +426,10 @@
       "резервные копии"
     ],
     "repo": "https://github.com/fillarr/STCleaning",
-    "added": "2026-10-24T10:01:45.410Z"
+    "added": "2026-10-24T10:01:45.410Z",
+    "images": [
+      "img/stcleaning-mwovyzfr1.webp"
+    ]
   },
   {
     "name": "SillyTavern MemoryBooks",
