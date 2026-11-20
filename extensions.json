@@ -1879,7 +1879,10 @@
       "персонажи"
     ],
     "repo": "https://github.com/SillyTavern/Extension-QuickPersona",
-    "added": "2026-11-13T11:06:01.697Z"
+    "added": "2026-11-13T11:06:01.697Z",
+    "images": [
+      "img/extension-quickpersona-mwoyeqeq1.webp"
+    ]
   },
   {
     "name": "Extension VideoBackgroundLoader",
