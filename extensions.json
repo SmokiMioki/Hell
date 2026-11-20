@@ -767,7 +767,10 @@
       "отладка интерфейса"
     ],
     "repo": "https://github.com/Nufahi/SillyTavern-CSSInspector",
-    "added": "2026-10-24T10:24:28.920Z"
+    "added": "2026-10-24T10:24:28.920Z",
+    "images": [
+      "img/sillytavern-cssinspector-mwoxg2uc1.webp"
+    ]
   },
   {
     "name": "Char prompt toggles",
