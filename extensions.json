@@ -333,14 +333,17 @@
   {
     "name": "GameCollection",
     "by": "KiskaSora",
-    "desc": "Добавляет в SillyTavern коллекцию мини-игр, включая «Сапёра», 2048 и аркады.",
+    "desc": "Добавляет в SillyTavern коллекцию мини-игр, включая «Сапёра», 2048 и аркады. Совместный проект с  Delidgi-meow и smoksshit-cmd",
     "cat": "Мини-игры",
     "tags": [
       "игры",
       "головоломки"
     ],
     "repo": "https://github.com/KiskaSora/GameCollection",
-    "added": "2026-10-24T09:40:40.582Z"
+    "added": "2026-10-24T09:40:40.582Z",
+    "images": [
+      "img/gamecollection-mwovf4rz1.webp"
+    ]
   },
   {
     "name": "KitsuneDex",
