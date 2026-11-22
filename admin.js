@@ -9,7 +9,13 @@
   const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const toB64 = s => { const b = new TextEncoder().encode(s); let t = ''; b.forEach(x => t += String.fromCharCode(x)); return btoa(t); };
   const fromB64 = s => { const t = atob(s); return new TextDecoder().decode(Uint8Array.from(t, c => c.charCodeAt(0))); };
-  const status = (msg, kind = 'wait') => { const el = $('#status'); el.textContent = msg; el.className = 'status ' + kind; el.hidden = !msg; };
+  let statusTimer = 0;
+  const status = (msg, kind = 'wait') => {
+    const el = $('#status');
+    el.textContent = msg; el.className = 'status ' + kind; el.hidden = !msg;
+    clearTimeout(statusTimer);
+    if (msg && kind === 'ok') statusTimer = setTimeout(() => { el.hidden = true; }, 5000); // ошибки остаются, пока не заменятся
+  };
   const busy = on => document.querySelectorAll('button').forEach(b => b.disabled = on);
 
   async function api(path, opt = {}, auth = true) {
@@ -182,10 +188,17 @@ ${items.map(e => `<item><title>${xesc(e.name)}</title><link>${xesc(b + '#' + enc
     try {
       await load();
       if ($('#remember').checked) localStorage.setItem(LS, JSON.stringify(cfg)); else localStorage.removeItem(LS);
-      $('#p-add').hidden = false; $('#p-list').hidden = false;
+      $('#work').hidden = false;
+      $('#conn-label').textContent = `${cfg.owner}/${cfg.repo} · ${cfg.branch}`;
+      $('#p-connect').classList.add('done'); $('#connbar').hidden = false;
       render(); status('Подключено ✓', 'ok');
     } catch (e) { status(e.message, 'err'); }
     busy(false);
+  });
+
+  $('#conn-edit').addEventListener('click', () => {
+    const open = $('#p-connect').classList.toggle('done');
+    $('#conn-edit').textContent = open ? 'Настройки' : 'Свернуть';
   });
 
   /* ---------- подтянуть данные с GitHub ---------- */
@@ -259,7 +272,7 @@ ${items.map(e => `<item><title>${xesc(e.name)}</title><link>${xesc(b + '#' + enc
       await save((wasEditing >= 0 ? 'Update: ' : 'Add: ') + item.name);
       const feedOk = await feedSave();
       for (const p of oldImgs) if (!(item.images || []).includes(p)) await rmFile(p);
-      resetForm(); render();
+      resetForm(); closeEditor(); render();
       status('Сохранено ✓ Сайт обновится через минуту.' + (feedOk ? '' : ' (RSS-ленту обновить не удалось.)'), 'ok');
     } catch (err) {
       list = prev; render(); status(err.message, 'err');
@@ -269,38 +282,93 @@ ${items.map(e => `<item><title>${xesc(e.name)}</title><link>${xesc(b + '#' + enc
     busy(false);
   });
 
-  /* ---------- список ---------- */
-  function render() {
-    renderCats();
-    $('#n').textContent = list.length ? `(${list.length})` : '';
-    $('#list').innerHTML = list.length ? list.map((e, i) => `
-      <li><div class="t"><b>${esc(e.name)}</b><span><em>${esc(catOf(e))}</em>${esc(e.by || '')}${(e.cat ? e.tags || [] : (e.tags || []).slice(1)).length ? ' · ' + esc((e.cat ? e.tags : e.tags.slice(1)).join(', ')) : ''}</span></div>
-      <button data-a="edit" data-i="${i}">Править</button>
-      <button class="del" data-a="del" data-i="${i}">Удалить</button></li>`).join('')
-      : '<li class="none">Пока пусто — добавь первое расширение выше.</li>';
+  /* ---------- список: поиск, фильтр, сортировка ---------- */
+  const NOIMG = '__noimg';
+  const tagsOf = e => (e.cat ? e.tags || [] : (e.tags || []).slice(1));
+  const fmtDate = iso => { const d = new Date(iso); return isNaN(d) ? '' : d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' }); };
+
+  function renderFilter() {
+    const sel = $('#cf'), keep = sel.value;
+    const n = {};
+    list.forEach(e => { const c = catOf(e); if (c) n[c] = (n[c] || 0) + 1; });
+    const cats = Object.keys(n).sort((a, b) => n[b] - n[a] || a.localeCompare(b, 'ru'));
+    const noimg = list.filter(e => !(e.images || []).length).length;
+    sel.innerHTML = `<option value="">Все категории (${list.length})</option>`
+      + `<option value="${NOIMG}">Без картинки (${noimg})</option>`
+      + cats.map(c => `<option value="${esc(c)}">${esc(c)} (${n[c]})</option>`).join('');
+    sel.value = [...sel.options].some(o => o.value === keep) ? keep : '';
   }
 
+  function visible() {
+    const q = $('#q').value.trim().toLowerCase(), cf = $('#cf').value;
+    let rows = list.map((e, i) => ({ e, i })).filter(({ e }) => {
+      if (cf === NOIMG) { if ((e.images || []).length) return false; }
+      else if (cf && catOf(e) !== cf) return false;
+      if (!q) return true;
+      return [e.name, e.by, e.desc, catOf(e), ...tagsOf(e), e.repo].some(v => String(v || '').toLowerCase().includes(q));
+    });
+    if ($('#sort').value === 'name') rows.sort((x, y) => String(x.e.name).localeCompare(String(y.e.name), 'ru'));
+    else rows.sort((x, y) => String(y.e.added || '').localeCompare(String(x.e.added || '')) || y.i - x.i);
+    return rows;
+  }
+
+  function render() {
+    renderCats(); renderFilter();
+    $('#n').textContent = list.length ? `(${list.length})` : '';
+    const rows = visible();
+    const filtered = $('#q').value.trim() || $('#cf').value;
+    $('#shown').textContent = list.length && filtered ? `Показано ${rows.length} из ${list.length}` : '';
+    $('#list').innerHTML = rows.length ? rows.map(({ e, i }) => {
+      const tg = tagsOf(e), img = (e.images || [])[0], date = e.added ? fmtDate(e.added) : '';
+      return `<li data-i="${i}"${i === editing ? ' class="on"' : ''}>
+      <div class="ph">${img ? `<img src="${esc(img)}" alt="" loading="lazy">` : `<span>${esc(String(e.name || '?').charAt(0).toUpperCase())}</span>`}</div>
+      <div class="t"><b>${esc(e.name)}</b>
+        <span class="meta"><em>${esc(catOf(e))}</em>${esc(e.by || '')}${date ? ' · ' + date : ''}</span>
+        ${tg.length ? `<span class="tg">${tg.slice(0, 5).map(t => `<i>${esc(t)}</i>`).join('')}${tg.length > 5 ? `<i class="more">+${tg.length - 5}</i>` : ''}</span>` : ''}
+      </div>
+      <div class="act">
+        <button data-a="edit" data-i="${i}">Править</button>
+        <button class="del" data-a="del" data-i="${i}" aria-label="Удалить ${esc(e.name)}" title="Удалить">Удалить</button>
+      </div></li>`;
+    }).join('')
+      : `<li class="none">${list.length ? 'Ничего не нашлось. Сбрось поиск или фильтр.' : 'Пока пусто — нажми «+ Добавить».'}</li>`;
+  }
+  ['input', 'change'].forEach(ev => { $('#q').addEventListener(ev, render); });
+  $('#cf').addEventListener('change', render);
+  $('#sort').addEventListener('change', render);
+
+  /* ---------- редактор: справа на широком экране, поверх списка на узком ---------- */
+  const openEditor = () => document.body.classList.add('ed-open');
+  const closeEditor = () => document.body.classList.remove('ed-open');
+  addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('ed-open')) { resetForm(); closeEditor(); render(); } });
+  $('#close-ed').addEventListener('click', () => { resetForm(); closeEditor(); render(); });
+  $('#new').addEventListener('click', () => { resetForm(); render(); openEditor(); $('#url').focus(); });
+
   $('#list').addEventListener('click', async e => {
-    const b = e.target.closest('button'); if (!b) return;
-    const i = +b.dataset.i, it = list[i];
-    if (b.dataset.a === 'edit') {
+    const li = e.target.closest('li[data-i]'); if (!li) return;
+    const b = e.target.closest('button');
+    const a = b ? b.dataset.a : 'edit'; // клик по строке = править
+    const i = +li.dataset.i, it = list[i];
+    if (a === 'edit') {
       editing = i;
       $('#f-name').value = it.name; $('#f-by').value = it.by || ''; $('#f-desc').value = it.desc || '';
       $('#f-cat').value = catOf(it);
-      $('#f-tags').value = (it.cat ? it.tags || [] : (it.tags || []).slice(1)).join(', '); $('#f-repo').value = it.repo;
+      $('#f-tags').value = tagsOf(it).join(', '); $('#f-repo').value = it.repo;
       pics.forEach(p => p.blob && URL.revokeObjectURL(p.preview));
       pics = (it.images || []).map(p => ({ path: p, preview: p })); renderThumbs();
       $('#form-title').textContent = 'Правка: ' + it.name;
       $('#submit').textContent = 'Сохранить изменения'; $('#cancel').hidden = false;
-      $('#p-add').scrollIntoView({ behavior: 'smooth' });
-    } else if (b.dataset.a === 'del') {
+      render(); openEditor();
+      $('#p-add').scrollTop = 0;
+    } else if (a === 'del') {
       if (!confirm(`Удалить «${it.name}» из каталога?`)) return;
       const prev = list.slice(); list.splice(i, 1);
       busy(true); status('Удаляю…');
       try {
         await save('Remove: ' + it.name); await feedSave();
         for (const p of it.images || []) await rmFile(p);
-        resetForm(); render(); status('Удалено ✓', 'ok');
+        const wasOpen = editing === i; if (wasOpen) { resetForm(); closeEditor(); } else if (editing > i) editing--;
+        render(); status('Удалено ✓', 'ok');
       }
       catch (err) { list = prev; render(); status(err.message, 'err'); }
       busy(false);
@@ -310,10 +378,10 @@ ${items.map(e => `<item><title>${xesc(e.name)}</title><link>${xesc(b + '#' + enc
   function resetForm() {
     editing = -1; $('#form').reset(); $('#url').value = '';
     pics.forEach(p => p.blob && URL.revokeObjectURL(p.preview)); pics = []; renderThumbs();
-    $('#form-title').textContent = '2 · Добавить расширение';
+    $('#form-title').textContent = 'Новое расширение';
     $('#submit').textContent = 'Отправить в каталог'; $('#cancel').hidden = true;
   }
-  $('#cancel').addEventListener('click', resetForm);
+  $('#cancel').addEventListener('click', () => { resetForm(); closeEditor(); render(); });
 
   /* авто-подключение, если токен уже сохранён */
   if (cfg.owner && cfg.repo && cfg.token) $('#connect').click();
