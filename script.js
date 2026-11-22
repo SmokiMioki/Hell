@@ -292,6 +292,7 @@
         <div class="by">${esc(e.by || '')}</div>
         <p>${esc(e.desc || '')}</p>
         <div class="tags">${tagsHtml(e, 3)}</div>
+        ${forkHtml(e)}
       </article>`;
     }).join('');
     empty.hidden = list.length > 0;
@@ -300,6 +301,11 @@
     grid.appendChild(linkSvg);
     clearLink();
   }
+
+  /* приписка «форк» со ссылкой на оригинал (поле fork в extensions.json) */
+  const forkName = u => { const m = String(u).match(/github\.com\/([^\/\s]+\/[^\/\s#?]+)/i); return m ? m[1].replace(/\.git$/, '') : String(u).replace(/^https?:\/\//, ''); };
+  const forkHtml = e => /^https?:\/\//i.test(e.fork || '')
+    ? `<div class="fork">форк · <a href="${esc(e.fork)}" target="_blank" rel="noopener">${esc(forkName(e.fork))}</a></div>` : '';
 
   /* ---------- модалка ---------- */
   function openCard(i) {
@@ -316,6 +322,7 @@
       <div class="by">${esc(e.by || '')}</div>
       <p>${esc(e.desc || '')}</p>
       <div class="tags">${tagsHtml(e)}</div>
+      ${forkHtml(e)}
       <div class="install">
         <code id="url">${esc(e.repo)}</code>
         <button class="btn" id="copy">Копировать</button>
@@ -402,7 +409,10 @@
     grid.addEventListener('mouseleave', clearLink);
   }
 
-  grid.addEventListener('click', e => { const c = e.target.closest('.card'); if (c) openCard(+c.dataset.i); });
+  grid.addEventListener('click', e => {
+    if (e.target.closest('a')) return; // ссылка на оригинал форка открывается сама, карточку не трогаем
+    const c = e.target.closest('.card'); if (c) openCard(+c.dataset.i);
+  });
   grid.addEventListener('keydown', e => {
     if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('card')) { e.preventDefault(); openCard(+e.target.dataset.i); }
   });

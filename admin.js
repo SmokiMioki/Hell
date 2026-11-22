@@ -222,6 +222,7 @@ ${items.map(e => `<item><title>${xesc(e.name)}</title><link>${xesc(b + '#' + enc
       $('#f-cat').value = hit ? known.get(hit.toLowerCase()) : '';
       $('#f-tags').value = topics.filter(t => t !== hit).join(', ');
       $('#f-repo').value = j.html_url;
+      $('#f-fork').value = j.fork && j.parent ? j.parent.html_url : ''; // GitHub сам знает, от кого форк
       status($('#f-cat').value ? 'Поля заполнены — проверь и отправляй.' : 'Поля заполнены. Выбери главный тег — и можно отправлять.', 'ok');
     } catch (e) { status(e.message, 'err'); }
     busy(false);
@@ -250,6 +251,9 @@ ${items.map(e => `<item><title>${xesc(e.name)}</title><link>${xesc(b + '#' + enc
       tags: [],
       repo: $('#f-repo').value.trim()
     };
+    const fork = $('#f-fork').value.trim();
+    if (fork && !/^https?:\/\//i.test(fork)) return status('Ссылка на оригинал должна начинаться с https://', 'err');
+    if (fork) item.fork = fork;
     item.tags = uniqTags($('#f-tags').value.split(','), item.cat);
     if (!item.name || !item.repo) return status('Нужны название и ссылка.', 'err');
     if (!item.cat) return status('Выбери главный тег.', 'err');
@@ -353,7 +357,7 @@ ${items.map(e => `<item><title>${xesc(e.name)}</title><link>${xesc(b + '#' + enc
       editing = i;
       $('#f-name').value = it.name; $('#f-by').value = it.by || ''; $('#f-desc').value = it.desc || '';
       $('#f-cat').value = catOf(it);
-      $('#f-tags').value = tagsOf(it).join(', '); $('#f-repo').value = it.repo;
+      $('#f-tags').value = tagsOf(it).join(', '); $('#f-repo').value = it.repo; $('#f-fork').value = it.fork || '';
       pics.forEach(p => p.blob && URL.revokeObjectURL(p.preview));
       pics = (it.images || []).map(p => ({ path: p, preview: p })); renderThumbs();
       $('#form-title').textContent = 'Правка: ' + it.name;

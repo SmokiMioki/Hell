@@ -311,6 +311,9 @@ h1{
 .card .by{font-size:.85rem;color:var(--ash);margin:4px 0 14px;letter-spacing:.08em}
 .card p{font-size:1rem;color:#e8dccd}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.fork{margin-top:14px;padding-top:10px;border-top:1px dashed var(--line);font-size:.85rem;color:var(--ash);letter-spacing:.04em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fork a{color:var(--crimson);text-decoration:none;border-bottom:1px solid transparent;transition:.3s}
+.fork a:hover,.fork a:focus-visible{color:var(--bone);border-bottom-color:var(--crimson);outline:0}
 .tags span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--crimson);border:1px solid var(--line);padding:2px 9px}
 
 .empty{text-align:center;font-family:var(--serif);font-style:italic;font-size:1.6rem;color:var(--ash);padding:60px 0}
