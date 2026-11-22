@@ -928,7 +928,10 @@
       "интерфейс мессенджера"
     ],
     "repo": "https://github.com/Nufahi/st-telegram",
-    "added": "2026-10-24T10:38:34.005Z"
+    "added": "2026-10-24T10:38:34.005Z",
+    "images": [
+      "img/st-telegram-mwrj42c01.webp"
+    ]
   },
   {
     "name": "SillyTavern AlternateDescriptionsPlus",
