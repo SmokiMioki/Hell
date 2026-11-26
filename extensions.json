@@ -467,7 +467,7 @@
   {
     "name": "JS Slash Runner",
     "by": "N0VI028",
-    "desc": "Позволяет запускать пользовательские JavaScript-скрипты в SillyTavern через изолированный iframe, расширяя возможности чата и автоматизируя действия.",
+    "desc": "Позволяет запускать пользовательские JavaScript-скрипты в SillyTavern через изолированный iframe, расширяя возможности чата и автоматизируя действия. На русском интерфейсе язык расширения будет полностью на китайском.",
     "cat": "Скрипты",
     "tags": [
       "JavaScript",
@@ -477,7 +477,10 @@
       "расширение функциональности"
     ],
     "repo": "https://github.com/N0VI028/JS-Slash-Runner",
-    "added": "2026-10-24T10:04:41.730Z"
+    "added": "2026-10-24T10:04:41.730Z",
+    "images": [
+      "img/js-slash-runner-mwxggest1.webp"
+    ]
   },
   {
     "name": "SillyTavern MoonlitEchoesTheme",
