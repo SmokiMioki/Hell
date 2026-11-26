@@ -1766,7 +1766,10 @@
       "развлечения"
     ],
     "repo": "https://github.com/aika636/STDoom",
-    "added": "2026-11-13T10:45:17.953Z"
+    "added": "2026-11-13T10:45:17.953Z",
+    "images": [
+      "img/stdoom-mwximi251.webp"
+    ]
   },
   {
     "name": "SillyTavern Relationship Engine",
