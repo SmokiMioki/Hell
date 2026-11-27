@@ -823,7 +823,10 @@
       "переключатели промптов"
     ],
     "repo": "https://github.com/Nufahi/char-prompt-toggles",
-    "added": "2026-10-24T10:26:05.392Z"
+    "added": "2026-10-24T10:26:05.392Z",
+    "images": [
+      "img/char-prompt-toggles-mwzkd51h1.webp"
+    ]
   },
   {
     "name": "ST ImageManager",
