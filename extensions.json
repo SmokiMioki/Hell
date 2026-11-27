@@ -1510,7 +1510,10 @@
       "резервные копии"
     ],
     "repo": "https://github.com/aceeenvw/persona-manager",
-    "added": "2026-11-13T09:41:41.726Z"
+    "added": "2026-11-13T09:41:41.726Z",
+    "images": [
+      "img/persona-manager-mwzn2ruk1.webp"
+    ]
   },
   {
     "name": "Ace draft upgrader",
