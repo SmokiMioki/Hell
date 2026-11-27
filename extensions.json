@@ -920,7 +920,10 @@
       "промпты для изображений"
     ],
     "repo": "https://github.com/Nufahi/ST-Estate",
-    "added": "2026-10-24T10:34:48.405Z"
+    "added": "2026-10-24T10:34:48.405Z",
+    "images": [
+      "img/st-estate-mwzksf401.webp"
+    ]
   },
   {
     "name": "ST Facets",
