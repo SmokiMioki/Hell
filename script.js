@@ -434,7 +434,6 @@
   const pad = n => String(n).padStart(2, '0');
   function tickClock() { const d = new Date(); clock.textContent = `${pad(d.getHours())}:${pad(d.getMinutes())}`; }
   tickClock(); setInterval(tickClock, 15000);
-  $('#year').textContent = new Date().getFullYear();
 
   /* ---------- красная нить ---------- */
   function thread() {
