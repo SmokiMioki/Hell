@@ -331,6 +331,9 @@ em{color:var(--crimson);font-style:normal}
 /* about */
 .about{max-width:860px}
 .about p{margin-bottom:16px}
+.bebebe{display:flex;align-items:flex-end;gap:16px;margin-top:30px}
+.bebebe img{display:block;width:clamp(150px,24vw,220px);height:auto;filter:drop-shadow(0 6px 14px rgba(179,18,31,.35))}
+.about .bebebe p{margin:0 0 12%;padding:0;background:none;border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;font-style:italic;letter-spacing:.1em;color:var(--crimson)} /* .about p по умолчанию — карточка в рамке, тут нужен голый текст */
 
 /* footer */
 .foot{position:relative;z-index:2;text-align:center;padding:60px 20px 80px;color:var(--ash);font-size:.9rem;letter-spacing:.1em}
